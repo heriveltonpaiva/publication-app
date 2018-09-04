@@ -1,3 +1,74 @@
-<p>
-  publication works!
-</p>
+<form  [formGroup]="formPublicacao">
+  <h2>Painel de Publicação de Conteúdo</h2>
+
+  <div class="s">
+      <label for="name">Título</label>
+      <input type="text" class="form-control" id="titulo" formControlName="titulo">
+  </div>
+
+  <div class="row" style="margin-bottom:10px;">
+      
+      <div class="col-sm-4">	
+        <label>Seção:</label> 
+        <select class="form-control" formControlName="categoria">
+          <option [value]='0' >-- SELECIONE --</option>
+          <option [value]='1' >Desenvolvimento</option>
+          <option [value]='2' >Operações</option>
+          <option [value]='3' >Outros</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+          <label>Assunto:</label> 
+          <select class="form-control" formControlName="subcategoria">
+            <option [value]='0' >-- SELECIONE --</option>
+            <option [value]='1' >Java</option>
+            <option [value]='2' >Linux</option>
+            <option [value]='3' >Angular</option>
+          </select>
+      </div>		
+  </div>
+  
+ <label for="name">Conteúdo</label>
+ <div [froalaEditor] formControlName="conteudo">Digite seu texto aqui</div>
+ <br>
+ <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar()" value="Pré-visualizar"/>
+ <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar Conteúdo" (click)="salvarPublicacao()" *ngIf="alterar == false"/>
+ <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação" (click)="alterarPublicacao()" *ngIf="alterar"/>
+ <br>
+   
+ <div class="article" *ngIf="visualizar">
+    <h2>
+      <span>{{tituloPreview}}</span> 
+    </h2>
+    <p class="textoPublicacao">
+      Publicado em <span class="date">24 setembro 2018</span> 
+      &nbsp;&nbsp;|&nbsp;&nbsp; Development & Operation &nbsp;&nbsp;|&nbsp;&nbsp;  <a
+        href="#">Java</a> <a href="#" class="comentario">Comentários <span>0</span></a>
+    </p>
+    <div class="clr"></div>
+    <div class="post_content">
+        <div [innerHTML]="conteudoPreview">  </div>
+    </div>
+    <div class="clr"></div>
+    <br>   
+  </div>
+    <div *ngFor="let publicacao of listaPublicacoes; let ind = index">  
+      <h2>
+        <span>{{publicacao.titulo}}</span> 
+      </h2>
+      <p class="textoPublicacao">
+        Publicado em <span class="date">24 setembro 2018</span> 
+        &nbsp;&nbsp;|&nbsp;&nbsp; {{publicacao.categoria}} &nbsp;&nbsp;|&nbsp;&nbsp; {{publicacao.subcategoria}} <a
+          href="#"></a> <a href="#" class="comentario">Comentários <span>0</span></a>
+      </p>
+      <div class="clr"></div>
+      <div class="post_content">
+          <div [innerHTML]="publicacao.conteudo">  </div>
+      </div>
+      <div class="clr"></div>
+      <br> 
+      <button class="btn btn-warning" style="height:40px;margin-top:30px;" (click)="preAlterarPublicacao(publicacao)">Alterar</button>
+      <button class="btn btn-danger" style="height:40px;margin-top:30px;" (click)="removerPublicacao(publicacao._id)">Remover</button>
+    </div>  
+</form>
+
