@@ -1,0 +1,19 @@
+<div *ngIf="messageService.messages.length">
+ <div *ngFor='let message of messageService.messages'>  
+  <div class="alert alert-success" *ngIf="message.tipo == 1">
+      <strong>{{message.texto}}</strong>
+      <a class="alert-success" style="float:right;margin:2px;font-weight:bold" 
+      (click)="messageService.clear()">Fechar</a>
+  </div>
+  <div class="alert alert-danger" *ngIf="message.tipo == 2">
+      <strong>{{message.texto}}</strong>
+      <a class="alert-danger" style="float:right;margin:2px;font-weight:bold" 
+      (click)="messageService.clear()">Fechar</a>
+  </div>  
+    <div class="alert alert-info" *ngIf="message.tipo == 3">
+         <strong>{{message.texto}}</strong>
+      <a class="alert-info" style="float:right;margin:2px;font-weight:bold" 
+      (click)="messageService.clear()">Fechar</a>
+    </div>
+  </div>
+</div>
