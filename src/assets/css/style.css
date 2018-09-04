@@ -352,6 +352,7 @@ p.infopost span.date {
 	padding:2px 0 2px 12px;
 	color:#666464;
 	text-decoration:none;
+	background:url(../images/li.gif) no-repeat left center;
 }
 .fbg .fbg_ul li a:hover {
 	color:#212121;
@@ -416,6 +417,7 @@ ol li .send {
 	margin:0;
 	padding:0;
 	float:left;
+	background:url(../images/search_bg.gif) no-repeat left top;
 }
 #formsearch input.editbox_search {
 	margin:0;

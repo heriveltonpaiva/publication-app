@@ -8,9 +8,11 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { PublicationComponent } from './publication/publication.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MessageComponent } from './messages/message.component';
-import { MessageService } from './messages/message.service';
+import { MessageComponent } from './core/messages/message.component';
+import { MessageService } from './core/messages/message.service';
 import { PublicationService } from './publication/publication.service';
+import { HeaderComponent } from './core/header/header.component';
+import { FooterComponent } from './core/footer/footer.component';
 
 
 
@@ -18,7 +20,9 @@ import { PublicationService } from './publication/publication.service';
   declarations: [
     AppComponent,
     PublicationComponent,
-    MessageComponent
+    MessageComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

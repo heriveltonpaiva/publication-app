@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PublicationService } from './publication.service';
-import { MessageService } from '../messages/message.service';
+import { MessageService } from '../core/messages/message.service';
 
 @Component({
   selector: 'app-publication',
