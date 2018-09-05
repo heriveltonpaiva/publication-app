@@ -31,7 +31,6 @@ export class PublicationComponent implements OnInit {
     this.visualizar = false;
     this.alterar = false;
     this.formPublicacao.reset();
-    this.newService.getAll().subscribe(data =>  this.listaPublicacoes = data); 
   }
 
   preVisualizar(){
@@ -66,29 +65,8 @@ export class PublicationComponent implements OnInit {
       this.messageService.add(1,'Publicação alterada com sucesso.')
       this.ngOnInit(); 
      }, error => this.errorMessage = error);
-  }      
-
-   preAlterarPublicacao(publicacao){  
-    console.log(publicacao);
-    this.formPublicacao.setValue(
-      { id:publicacao._id, 
-        titulo: publicacao.titulo,
-        conteudo: publicacao.conteudo,
-        resumo: publicacao.resumo, 
-        categoria: publicacao.categoria,
-        subcategoria: publicacao.subcategoria
-      });
-      this.alterar = true;
-   }  
-     
-   removerPublicacao(id){  
-     console.log(id);
-    this.newService.delete(id).subscribe(data =>   { 
-      this.messageService.add(1,'Publicação removida com sucesso.')
-      this.ngOnInit();
-    }, error => this.errorMessage = error )   
-   }  
-
+  }
+  
   private validarCampos(){
     let erro = false;
     if(this.formPublicacao.value.titulo == null){

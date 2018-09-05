@@ -13,6 +13,8 @@ import { MessageService } from './core/messages/message.service';
 import { PublicationService } from './publication/publication.service';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
+import { PublicationListComponent } from './publication-list/publication-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -22,7 +24,9 @@ import { FooterComponent } from './core/footer/footer.component';
     PublicationComponent,
     MessageComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PublicationListComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
