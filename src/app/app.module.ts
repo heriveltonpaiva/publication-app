@@ -15,6 +15,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { PublicationListComponent } from './publication-list/publication-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { Data } from './providers/data';
 
 
 
@@ -37,7 +38,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [PublicationService, MessageService],
+  providers: [PublicationService, MessageService, Data],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

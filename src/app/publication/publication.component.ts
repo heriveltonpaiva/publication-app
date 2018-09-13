@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PublicationService } from './publication.service';
 import { MessageService } from '../core/messages/message.service';
+import { Data } from '../providers/data';
+import { isUndefined } from 'util';
+import { Router } from '@angular/router';
+import { PublicationListComponent } from '../publication-list/publication-list.component';
+
 
 @Component({
   selector: 'app-publication',
@@ -25,19 +30,26 @@ export class PublicationComponent implements OnInit {
   tituloPreview: String;
   errorMessage: String;
   listaPublicacoes;
-  constructor(private newService :PublicationService, private messageService: MessageService) { }
+
+  constructor(private router: Router, private newService :PublicationService, private messageService: MessageService, private data: Data) {}
 
   ngOnInit() {
     this.visualizar = false;
-    this.alterar = false;
-    this.formPublicacao.reset();
+    //verifica se o objeto do provider possui dados, caso possua carregue essas informações (Update Flow)
+    if(this.data.storage){
+      this.formPublicacao.setValue(this.data.storage);
+      this.alterar = true;
+    }else{
+    // novo cadastro, carrega o formulário limpo (Create Flow)
+      this.alterar = false;
+      this.formPublicacao.reset();
+    }
   }
 
   preVisualizar(){
     this.visualizar = true;
     this.conteudoPreview = this.formPublicacao.value.conteudo;
     this.tituloPreview = this.formPublicacao.value.titulo;
-    this.newService.getAll().subscribe(data =>  this.listaPublicacoes = data); 
     this.messageService.add(3,'Pré-visualização disponível.')
   }
 
@@ -50,12 +62,10 @@ export class PublicationComponent implements OnInit {
       this.newService.save(this.formPublicacao.value).subscribe(data =>  {  
         this.messageService.add(1,'Publicação cadastrada com sucesso.')
         this.ngOnInit(); 
-        }, error => this.errorMessage = error);
-      
+        }, error => this.errorMessage = error);  
    }
 
    alterarPublicacao(){ 
-     console.log(this.validarCampos())
     if(this.validarCampos()){
       return; 
     }
@@ -65,6 +75,8 @@ export class PublicationComponent implements OnInit {
       this.messageService.add(1,'Publicação alterada com sucesso.')
       this.ngOnInit(); 
      }, error => this.errorMessage = error);
+     this.data.storage = null;
+     event.preventDefault();
   }
   
   private validarCampos(){

@@ -3,12 +3,12 @@ import {Http,Response } from '@angular/http';
 
 import 'rxjs/add/operator/map';  
 import 'rxjs/add/operator/do';  
+import { Observable } from 'rxjs/Observable';
   
 @Injectable()  
 export class PublicationService {  
   
   constructor(private http: Http) { }  
-  
   save(publicacao){      
     return this.http.post('http://localhost:3000/api/publicacao/save/', publicacao)  
             .map((response: Response) =>response.json())
@@ -19,7 +19,7 @@ export class PublicationService {
           .map((response: Response) =>response.json())               
   } 
 
-  getAll(){       
+  getAll(): Observable<any[]>{       
     return this.http.get('http://localhost:3000/api/publicacao/')  
           .map((response: Response) => response.json())              
   }
