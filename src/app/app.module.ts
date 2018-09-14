@@ -18,6 +18,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { Data } from './providers/data';
 import { TopicComponent } from './topic/topic.component';
 import { TopicService } from './topic/topic-service';
+import { CategoryComponent } from './category/category.component';
+import { CategoryService } from './category/category-service';
 
 
 
@@ -30,7 +32,8 @@ import { TopicService } from './topic/topic-service';
     FooterComponent,
     PublicationListComponent,
     DashboardComponent,
-    TopicComponent
+    TopicComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,7 @@ import { TopicService } from './topic/topic-service';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [PublicationService, TopicService, MessageService, Data],
+  providers: [PublicationService, TopicService, CategoryService, MessageService, Data],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

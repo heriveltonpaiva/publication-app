@@ -1,0 +1,38 @@
+<form  [formGroup]="form">
+    <h2>Cadastrar Categoria</h2>
+    
+    <div class="row" style="margin-bottom:5px;">
+        <div class="col-sm-8">
+                <label for="name">Descrição</label>
+                <input type="text" class="form-control" id="descricao" formControlName="descricao">
+        </div>  
+        <div class="col-sm-2">
+           <input class="btn btn-success" type="submit" style="height:40px; margin-top:30px;" value="Cadastrar" (click)="salvar()" />
+        </div>
+    </div>
+   <br>
+   <br>
+   <div style="margin-top:5px;">
+   <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Descrição</th>
+          <th scope="col">Data de Cadastro</th>
+          <th scope="col" style="width:6%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categorias;">
+          <td>{{cat.descricao}}</td>
+          <td>{{cat.dataCadastro | date: "dd/MM/yyyy"}}</td>
+          <td>
+              <a (click)="preAlterar(cat)" title="Alterar" style="color:green;" ><i class="fa fa-refresh"  style="font-size:20px;"></i></a> 
+              <a (click)="remover(cat._id)" title="Remover" style="color: black;"><i class="fa fa-trash-o"  style="font-size:20px;"></i></a> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+  
+  
