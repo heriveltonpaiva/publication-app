@@ -1,0 +1,44 @@
+<form  [formGroup]="form">
+    <h2>Cadastrar Assunto</h2>
+    <div class="s">
+        <label for="name">Descrição</label>
+        <input type="text" class="form-control" id="descricao" formControlName="descricao">
+    </div>
+    <div class="row" style="margin-bottom:5px;">
+        <div class="col-sm-4">	
+          <label>Categoria:</label> 
+          <select class="form-control" formControlName="idCategoria">
+            <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
+          </select>
+        </div>		
+        <div class="col-sm-8">
+           <input class="btn btn-success" type="submit" style="height:40px; float:right; margin-top:30px;" value="Cadastrar" (click)="salvar()" />
+        </div>
+    </div>
+   <br>
+   <br>
+   <div style="margin-top:5px;">
+   <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Descrição</th>
+          <th scope="col">Categoria</th>
+          <th scope="col" style="width:6%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ass of listaAssuntos;">
+          <td>{{ass.descricao}}</td>
+          <td>{{ass.idCategoria.descricao}}</td>
+          <td>
+              <a (click)="preAlterar(ass)" title="Alterar" style="color:green;" ><i class="fa fa-refresh"  style="font-size:20px;"></i></a> 
+              <a (click)="remover(ass._id)" title="Remover" style="color: black;"><i class="fa fa-trash-o"  style="font-size:20px;"></i></a> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</form>
+  
+  

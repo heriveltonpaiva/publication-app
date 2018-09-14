@@ -16,6 +16,8 @@ import { FooterComponent } from './core/footer/footer.component';
 import { PublicationListComponent } from './publication-list/publication-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Data } from './providers/data';
+import { TopicComponent } from './topic/topic.component';
+import { TopicService } from './topic/topic-service';
 
 
 
@@ -27,7 +29,8 @@ import { Data } from './providers/data';
     HeaderComponent,
     FooterComponent,
     PublicationListComponent,
-    DashboardComponent
+    DashboardComponent,
+    TopicComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ import { Data } from './providers/data';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [PublicationService, MessageService, Data],
+  providers: [PublicationService, TopicService, MessageService, Data],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

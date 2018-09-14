@@ -1,21 +1,31 @@
 <form  [formGroup]="formPublicacao">
-    <div *ngFor="let publicacao of listaPublicacoes; let ind = index">  
+    <nav aria-label="breadcrumb" style="margin-top:2px;">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><h5>Minhas Publicações</h5></li>
+        </ol>
+      </nav>
+    <div *ngFor="let publicacao of listaPublicacoes; let ind = index" >  
       <h2>
         <span>{{publicacao.titulo}}</span> 
       </h2>
       <p class="textoPublicacao">
-        Publicado em <span class="date">24 setembro 2018</span> 
+        Published in <span class="date">{{publicacao.dataCadastro | date : "EEEE, MMMM d, y h:mm a"  }}</span> 
         &nbsp;&nbsp;|&nbsp;&nbsp; {{publicacao.categoria}} &nbsp;&nbsp;|&nbsp;&nbsp; {{publicacao.subcategoria}} <a
-          href="#"></a> <a href="#" class="comentario">Comentários <span>0</span></a>
+          href="#"></a>   |&nbsp;&nbsp;&nbsp;&nbsp;
+          <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
+          <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
+          <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
+          <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a>      
+        <!-- <a href="#" class="comentario">Comments <span>0</span></a> -->
+        <a (click)="removerPublicacao(publicacao._id)" href="#" title="Remover Publicação" style="float:right; margin-right:2px; color: black;"><i class="fa fa-trash-o"  style="font-size:20px;"></i></a> 
+        <a (click)="preAlterarPublicacao(publicacao)" href="#" title="Alterar Publicação" style="float:right; margin-right:5px; color:green;" ><i class="fa fa-refresh"  style="font-size:20px;"></i></a>  
       </p>
       <div class="clr"></div>
       <div class="post_content">
           <div [innerHTML]="publicacao.conteudo">  </div>
       </div>
-      <div class="clr"></div>
-      <br> 
-      <button class="btn btn-warning" style="height:40px;margin-top:30px;" (click)="preAlterarPublicacao(publicacao)">Alterar</button>
-      <button class="btn btn-danger" style="height:40px;margin-top:30px;" (click)="removerPublicacao(publicacao._id)">Remover</button>
+      <br>   
+      <hr>
     </div>  
 </form>
 
