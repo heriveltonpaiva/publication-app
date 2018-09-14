@@ -10,15 +10,17 @@
       
       <div class="col-sm-4">
           <label>Categoria:</label> 
-          <select class="form-control" (change)="mudarCategoria()" formControlName="idCategoria">
+          <select class="form-control" (change)="mudarCategoria()" formControlName="idCategoria" id="categoria">
+              <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
               <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
             </select>
       </div>	
 
       <div class="col-sm-4" *ngIf="renderComboAssunto">	
         <label>Assunto:</label> 
-          <select class="form-control" formControlName="idAssunto">
-            <option *ngFor="let ass of listaAssuntos;" value="{{ass._id}}">{{ass.descricao}}</option>
+          <select class="form-control" formControlName="idAssunto" id="assunto">
+            <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
+            <option *ngFor="let ass of listaAssuntos;" value="{{ass._id}}" >{{ass.descricao}}</option>
           </select>
       </div>
       	
@@ -27,25 +29,31 @@
  <label for="name">Conteúdo</label>
  <div [froalaEditor] formControlName="conteudo">Digite seu texto aqui</div>
  <br>
- <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar()" value="Pré-visualizar"/>
- <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar Conteúdo" (click)="salvarPublicacao()" *ngIf="alterar == false"/>
+ <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar()" value="Pré-visualizar" 
+ onclick="document.getElementById('divPreview').style.display = 'block'"/>
+ <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" (click)="salvarPublicacao()" *ngIf="alterar == false"/>
  <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação" (click)="alterarPublicacao()" *ngIf="alterar"/>
  <br>
    
- <div class="article" *ngIf="visualizar">
+ <div class="article" *ngIf="visualizar" id="divPreview">
+   <hr>
     <h2>
       <span>{{tituloPreview}}</span> 
     </h2>
+    <button class="btn btn-outline-danger btn-sm" onclick="document.getElementById('divPreview').style.display = 'none'" title="Remover Publicação" style="float:right; margin:8px; color:red;"><i class="fa fa-trash-o"></i></button> 
     <p class="textoPublicacao">
-      Publicado em <span class="date">24 setembro 2018</span> 
-      &nbsp;&nbsp;|&nbsp;&nbsp; Development & Operation &nbsp;&nbsp;|&nbsp;&nbsp;  <a
-        href="#">Java</a> <a href="#" class="comentario">Comentários <span>0</span></a>
+        Publicado em <span class="date">{{dataPreview | date : "dd/MM/yyyy hh:mm"  }}</span> 
+          <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
+          <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
+          <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
+          <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a> <br>
+          Categoria: {{categoriaPreview}}  &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{assuntoPreview}} <a href="#"></a> 
     </p>
     <div class="clr"></div>
     <div class="post_content">
         <div [innerHTML]="conteudoPreview">  </div>
     </div>
-    <div class="clr"></div>
+    <hr>    
     <br>   
   </div>
 </form>

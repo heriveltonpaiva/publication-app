@@ -4,7 +4,6 @@ import { MessageService } from '../core/messages/message.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Data } from '../providers/data';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-publication-list',
@@ -17,8 +16,7 @@ export class PublicationListComponent implements OnInit {
     titulo: new FormControl(''),
     conteudo: new FormControl(''),
     resumo: new FormControl(''),
-    categoria: new FormControl(''),
-    subcategoria: new FormControl(''),
+    idAssunto: new FormControl('')
   });
   listaPublicacoes;
   constructor(private router: Router, 
@@ -34,8 +32,8 @@ export class PublicationListComponent implements OnInit {
         titulo: publicacao.titulo,
         conteudo: publicacao.conteudo,
         resumo: publicacao.resumo, 
-        categoria: publicacao.categoria,
-        subcategoria: publicacao.subcategoria
+        idAssunto: publicacao.idAssunto,
+        idCategoria: publicacao.idAssunto.idCategoria._id
       }
       event.preventDefault();
       this.router.navigate(['publicacao/form']);

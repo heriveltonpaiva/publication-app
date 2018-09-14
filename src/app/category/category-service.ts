@@ -28,5 +28,10 @@ export class CategoryService {
     return this.http.delete('http://localhost:3000/api/categoria/delete/'+id)  
           .map((response: Response) =>response.json())               
   }  
+
+  findById(id){   
+    return this.http.get('http://localhost:3000/api/categoria/'+id)  
+          .map((response: Response) =>response.json())               
+  }  
   
 }  

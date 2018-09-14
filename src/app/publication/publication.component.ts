@@ -7,6 +7,7 @@ import { isUndefined } from 'util';
 import { Router } from '@angular/router';
 import { PublicationListComponent } from '../publication-list/publication-list.component';
 import { TopicService } from '../topic/topic-service';
+import { CategoryService } from '../category/category-service';
 
 
 @Component({
@@ -22,13 +23,16 @@ export class PublicationComponent implements OnInit {
     conteudo: new FormControl(''),
     resumo: new FormControl(''),
     idAssunto: new FormControl(''),
-    idCategoria: new FormControl() //atributo usado para o change apenas
+    idCategoria: new FormControl('') //atributo usado para o change apenas
   });
 
   visualizar: boolean;
   alterar: boolean;
   conteudoPreview: String; 
   tituloPreview: String;
+  categoriaPreview: String;
+  assuntoPreview: String;
+  dataPreview: Date;
   errorMessage: String;
   renderComboAssunto : boolean;
   listaPublicacoes;
@@ -36,7 +40,7 @@ export class PublicationComponent implements OnInit {
   listaCategorias;
 
   constructor(private router: Router, private newService :PublicationService, private serviceAssunto:TopicService, 
-    private messageService: MessageService, private data: Data) {}
+    private serviceCategoria:CategoryService, private messageService: MessageService, private data: Data) {}
 
   ngOnInit() {
     this.visualizar = false;
@@ -46,6 +50,10 @@ export class PublicationComponent implements OnInit {
       this.formPublicacao.setValue(this.data.storage);
       this.alterar = true;
       this.renderComboAssunto = true;
+      //realiza a busca das categorias
+      this.mudarCategoria();      
+      //depois seta o id do assunto
+      this.formPublicacao.patchValue({'idAssunto': this.formPublicacao.value.idAssunto._id});
     }else{
     // novo cadastro, carrega o formulário limpo (Create Flow)
       this.alterar = false;
@@ -58,7 +66,10 @@ export class PublicationComponent implements OnInit {
     this.visualizar = true;
     this.conteudoPreview = this.formPublicacao.value.conteudo;
     this.tituloPreview = this.formPublicacao.value.titulo;
-    this.messageService.add(3,'Pré-visualização disponível.')
+    //faz a busca na base de dados com os id's dos combobox e adiciona a descricao as variáveis criadas para exibição na pré-visualização.
+    this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  this.categoriaPreview = obj.descricao); 
+    this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => this.assuntoPreview = obj.descricao);
+    this.dataPreview = new Date();
   }
 
   salvarPublicacao(){  

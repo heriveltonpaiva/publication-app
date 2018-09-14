@@ -8,17 +8,20 @@
       <h2>
         <span>{{publicacao.titulo}}</span> 
       </h2>
+
+      <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" style="float:right; margin:8px; color:red;"><i class="fa fa-trash-o"></i></button> 
+      <button class="btn btn-outline-success btn-sm" (click)="preAlterarPublicacao(publicacao)" title="Alterar Publicação" style="float:right; margin:8px; color:black;"> <i class="fa fa-refresh"></i> </button>
       <p class="textoPublicacao">
-        Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span> 
-        &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Categoria: {{publicacao.idAssunto.idCategoria.descricao}} <a
-          href="#"></a>   |&nbsp;&nbsp;&nbsp;&nbsp;
-          <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
-          <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
-          <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
-          <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a>      
+        Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span>
+        <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
+        <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
+        <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
+        <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a> <br> 
+      
+        Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}} <a href="#"></a>  
+               
         <!-- <a href="#" class="comentario">Comments <span>0</span></a> -->
-        <a (click)="removerPublicacao(publicacao._id)" href="#" title="Remover Publicação" style="float:right; margin-right:2px; color: black;"><i class="fa fa-trash-o"  style="font-size:20px;"></i></a> 
-        <a (click)="preAlterarPublicacao(publicacao)" href="#" title="Alterar Publicação" style="float:right; margin-right:5px; color:green;" ><i class="fa fa-refresh"  style="font-size:20px;"></i></a>  
+      
       </p>
       <div class="clr"></div>
       <div class="post_content">
