@@ -31,10 +31,12 @@
  <label for="name">Conteúdo</label>
  <div [froalaEditor] formControlName="conteudo">Digite aqui o conteúdo completo da publicação</div>
  <br>
- <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar()" value="Pré-visualizar" 
- onclick="document.getElementById('divPreview').style.display = 'block'"/>
- <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" (click)="salvarPublicacao()" *ngIf="alterar == false"/>
- <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação" (click)="alterarPublicacao()" *ngIf="alterar"/>
+ <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar();" value="Pré-visualizar" 
+   onclick="if(document.getElementById('divPreview') != null){document.getElementById('divPreview').style.display = 'block'}; window.scroll(0, 0);"/>
+ <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" 
+   (click)="salvarPublicacao()" onclick="window.scroll(0, 0);" *ngIf="alterar == false"/>
+ <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação" 
+   (click)="alterarPublicacao()" onclick="window.scroll(0, 0);" *ngIf="alterar"/>
  <br>
    
  <div class="article" *ngIf="visualizar" id="divPreview">

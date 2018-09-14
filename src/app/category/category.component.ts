@@ -15,7 +15,9 @@ export class CategoryComponent implements OnInit {
     descricao: new FormControl(),
   });
 categorias;
-constructor(private router: Router, private newService :CategoryService, private messageService: MessageService) { }
+constructor(private router: Router, private newService :CategoryService, private messageService: MessageService) {
+  this.messageService.clear();
+}
 
 ngOnInit() {
   this.carregarListagem();

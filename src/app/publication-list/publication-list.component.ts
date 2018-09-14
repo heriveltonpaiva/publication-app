@@ -20,7 +20,9 @@ export class PublicationListComponent implements OnInit {
   });
   listaPublicacoes;
   constructor(private router: Router, private route : ActivatedRoute,
-    private newService :PublicationService, private messageService: MessageService, private data: Data) {}
+    private newService :PublicationService, private messageService: MessageService, private data: Data) {
+      this.messageService.clear();
+    }
 
   ngOnInit() {
     this.newService.getAll().subscribe(lista =>  this.listaPublicacoes = lista); 

@@ -37,14 +37,15 @@
           <td style="width:15%; text-align:center;">{{ass.dataCadastro | date: "dd/MM/yyyy"}}</td>
           <td style="text-align: right;">
               <button class="btn btn-outline-success btn-sm" (click)="preAlterar(ass)" title="Alterar Assunto" style="color:black;"
-              onclick="document.getElementById('btnCadastro').value = 'Alterar'"> <i class="fa fa-refresh"></i> </button>
-              <button class="btn btn-outline-danger btn-sm" (click)="remover(ass._id)" title="Remover Assunto" style="color:red;"><i class="fa fa-trash-o"></i></button> 
+              onclick="document.getElementById('btnCadastro').value = 'Alterar'; window.scroll(0, 0);"> <i class="fa fa-refresh"></i> </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="remover(ass._id)" title="Remover Assunto" 
+              onclick="window.scroll(0, 0);" style="color:red;"><i class="fa fa-trash-o"></i></button> 
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-
+  <hr>
 </form>
   
   

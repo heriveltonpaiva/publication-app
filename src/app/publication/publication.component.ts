@@ -3,9 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { PublicationService } from './publication.service';
 import { MessageService } from '../core/messages/message.service';
 import { Data } from '../providers/data';
-import { isUndefined } from 'util';
 import { Router } from '@angular/router';
-import { PublicationListComponent } from '../publication-list/publication-list.component';
 import { TopicService } from '../topic/topic-service';
 import { CategoryService } from '../category/category-service';
 
@@ -40,7 +38,9 @@ export class PublicationComponent implements OnInit {
   listaCategorias;
 
   constructor(private router: Router, private newService :PublicationService, private serviceAssunto:TopicService, 
-    private serviceCategoria:CategoryService, private messageService: MessageService, private data: Data) {}
+    private serviceCategoria:CategoryService, private messageService: MessageService, private data: Data) {
+      this.messageService.clear();
+    }
 
   ngOnInit() {
     this.visualizar = false;
@@ -63,6 +63,11 @@ export class PublicationComponent implements OnInit {
   }
 
   preVisualizar(){
+    if(this.validarCampos()){
+      this.messageService.clear();
+      this.messageService.add(2, 'Preencha todos os campos obrigatórios para visualizar a publicação.');
+      return;
+    }
     this.visualizar = true;
     this.conteudoPreview = this.formPublicacao.value.conteudo;
     this.tituloPreview = this.formPublicacao.value.titulo;
@@ -70,6 +75,7 @@ export class PublicationComponent implements OnInit {
     this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  this.categoriaPreview = obj.descricao); 
     this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => this.assuntoPreview = obj.descricao);
     this.dataPreview = new Date();
+    this.messageService.add(3,'Pré-visualização disponível.')
     console.log(this.formPublicacao.value.conteudo);
   }
 

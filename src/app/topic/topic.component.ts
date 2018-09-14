@@ -18,7 +18,9 @@ export class TopicComponent implements OnInit {
   });
   listaAssuntos;
   listaCategorias;
-  constructor(private router: Router, private newService :TopicService, private messageService: MessageService) { }
+  constructor(private router: Router, private newService :TopicService, private messageService: MessageService) { 
+    this.messageService.clear();
+   }
 
   ngOnInit() {
     this.carregarListagem();

@@ -6,7 +6,8 @@
         <span>{{publicacao.titulo}}</span> 
       </h3>
 
-      <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" style="float:right; margin:8px; color:red;"><i class="fa fa-trash-o"></i></button> 
+      <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" 
+      style="float:right; margin:8px; color:red;" onclick="window.scroll(0, 0);"> <i class="fa fa-trash-o"></i></button> 
       <button class="btn btn-outline-success btn-sm" (click)="preAlterarPublicacao(publicacao)" title="Alterar Publicação" style="float:right; margin:8px; color:black;"> <i class="fa fa-refresh"></i> </button>
       <p class="textoPublicacao">
         Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span>
