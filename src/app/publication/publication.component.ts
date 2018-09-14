@@ -6,6 +6,7 @@ import { Data } from '../providers/data';
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
 import { PublicationListComponent } from '../publication-list/publication-list.component';
+import { TopicService } from '../topic/topic-service';
 
 
 @Component({
@@ -20,8 +21,8 @@ export class PublicationComponent implements OnInit {
     titulo: new FormControl(''),
     conteudo: new FormControl(''),
     resumo: new FormControl(''),
-    categoria: new FormControl(''),
-    subcategoria: new FormControl(''),
+    idAssunto: new FormControl(''),
+    idCategoria: new FormControl() //atributo usado para o change apenas
   });
 
   visualizar: boolean;
@@ -29,19 +30,26 @@ export class PublicationComponent implements OnInit {
   conteudoPreview: String; 
   tituloPreview: String;
   errorMessage: String;
+  renderComboAssunto : boolean;
   listaPublicacoes;
+  listaAssuntos;
+  listaCategorias;
 
-  constructor(private router: Router, private newService :PublicationService, private messageService: MessageService, private data: Data) {}
+  constructor(private router: Router, private newService :PublicationService, private serviceAssunto:TopicService, 
+    private messageService: MessageService, private data: Data) {}
 
   ngOnInit() {
     this.visualizar = false;
+    this.carregarCategorias();
     //verifica se o objeto do provider possui dados, caso possua carregue essas informações (Update Flow)
     if(this.data.storage){
       this.formPublicacao.setValue(this.data.storage);
       this.alterar = true;
+      this.renderComboAssunto = true;
     }else{
     // novo cadastro, carrega o formulário limpo (Create Flow)
       this.alterar = false;
+      this.renderComboAssunto = false;
       this.formPublicacao.reset();
     }
   }
@@ -89,15 +97,19 @@ export class PublicationComponent implements OnInit {
      this.messageService.add(2,'Conteúdo: Campo obrigatório não informado.')
      erro = true;
    }  
-   if(this.formPublicacao.value.categoria == null){
-     this.messageService.add(2,'Categoria: Campo obrigatório não informado.')
-     erro = true;
-   }
-   if(this.formPublicacao.value.subcategoria == null){
-     this.messageService.add(2,'Subcategoria: Campo obrigatório não informado.')
+   if(this.formPublicacao.value.idAssunto == null){
+     this.messageService.add(2,'Assunto: Campo obrigatório não informado.')
      erro = true;
    }
    return erro;
    }
 
+   mudarCategoria(){
+     this.serviceAssunto.findByAssuntoByCategoria(this.formPublicacao.value.idCategoria).subscribe(lista =>  this.listaAssuntos = lista); 
+     this.renderComboAssunto = true;
+     console.log(this.listaAssuntos);
+   }
+  carregarCategorias(){
+    this.serviceAssunto.getAllCategorias().subscribe(lista =>  this.listaCategorias = lista); 
+  }
 }

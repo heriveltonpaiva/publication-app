@@ -8,24 +8,20 @@
 
   <div class="row" style="margin-bottom:10px;">
       
-      <div class="col-sm-4">	
-        <label>Seção:</label> 
-        <select class="form-control" formControlName="categoria">
-          <option [value]='0' >-- SELECIONE --</option>
-          <option [value]='1' >Desenvolvimento</option>
-          <option [value]='2' >Operações</option>
-          <option [value]='3' >Outros</option>
-        </select>
-      </div>
       <div class="col-sm-4">
-          <label>Assunto:</label> 
-          <select class="form-control" formControlName="subcategoria">
-            <option [value]='0' >-- SELECIONE --</option>
-            <option [value]='1' >Java</option>
-            <option [value]='2' >Linux</option>
-            <option [value]='3' >Angular</option>
+          <label>Categoria:</label> 
+          <select class="form-control" (change)="mudarCategoria()" formControlName="idCategoria">
+              <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
+            </select>
+      </div>	
+
+      <div class="col-sm-4" *ngIf="renderComboAssunto">	
+        <label>Assunto:</label> 
+          <select class="form-control" formControlName="idAssunto">
+            <option *ngFor="let ass of listaAssuntos;" value="{{ass._id}}">{{ass.descricao}}</option>
           </select>
-      </div>		
+      </div>
+      	
   </div>
   
  <label for="name">Conteúdo</label>

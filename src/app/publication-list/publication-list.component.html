@@ -9,8 +9,8 @@
         <span>{{publicacao.titulo}}</span> 
       </h2>
       <p class="textoPublicacao">
-        Published in <span class="date">{{publicacao.dataCadastro | date : "EEEE, MMMM d, y h:mm a"  }}</span> 
-        &nbsp;&nbsp;|&nbsp;&nbsp; {{publicacao.categoria}} &nbsp;&nbsp;|&nbsp;&nbsp; {{publicacao.subcategoria}} <a
+        Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span> 
+        &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Categoria: {{publicacao.idAssunto.idCategoria.descricao}} <a
           href="#"></a>   |&nbsp;&nbsp;&nbsp;&nbsp;
           <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
           <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
