@@ -19,11 +19,15 @@ export class PublicationListComponent implements OnInit {
     idAssunto: new FormControl('')
   });
   listaPublicacoes;
-  constructor(private router: Router, 
+  constructor(private router: Router, private route : ActivatedRoute,
     private newService :PublicationService, private messageService: MessageService, private data: Data) {}
 
   ngOnInit() {
     this.newService.getAll().subscribe(lista =>  this.listaPublicacoes = lista); 
+  }
+
+  visualizarConteudoCompleto(id){
+    this.router.navigate([ '../'+id], { relativeTo: this.route });
   }
 
   preAlterarPublicacao(publicacao){  

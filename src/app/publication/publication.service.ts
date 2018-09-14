@@ -23,7 +23,10 @@ export class PublicationService {
     return this.http.get('http://localhost:3000/api/publicacao/')  
           .map((response: Response) => response.json())              
   }
-
+  findById(id){   
+    return this.http.get('http://localhost:3000/api/publicacao/'+id)  
+          .map((response: Response) =>response.json())               
+  }  
   delete(id){   
     return this.http.delete('http://localhost:3000/api/publicacao/delete/'+id)  
           .map((response: Response) =>response.json())               

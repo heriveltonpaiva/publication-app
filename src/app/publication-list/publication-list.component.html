@@ -1,13 +1,10 @@
 <form  [formGroup]="formPublicacao">
-    <nav aria-label="breadcrumb" style="margin-top:2px;">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><h5>Minhas Publicações</h5></li>
-        </ol>
-      </nav>
+    <h2>Minhas Publicações</h2>
+    <hr>
     <div *ngFor="let publicacao of listaPublicacoes; let ind = index" >  
-      <h2>
+      <h3>
         <span>{{publicacao.titulo}}</span> 
-      </h2>
+      </h3>
 
       <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" style="float:right; margin:8px; color:red;"><i class="fa fa-trash-o"></i></button> 
       <button class="btn btn-outline-success btn-sm" (click)="preAlterarPublicacao(publicacao)" title="Alterar Publicação" style="float:right; margin:8px; color:black;"> <i class="fa fa-refresh"></i> </button>
@@ -25,9 +22,10 @@
       </p>
       <div class="clr"></div>
       <div class="post_content">
-          <div [innerHTML]="publicacao.conteudo">  </div>
-      </div>
-      <br>   
+          <div [innerHTML]="publicacao.resumo">  </div>
+      </div>  
+      <br> 
+      <input class="btn btn-outline-primary" style="height:38px;margin-top:10px;" value="Ler publicação completa" routerLink="../{{publicacao._id}}" /><br>
       <hr>
     </div>  
 </form>

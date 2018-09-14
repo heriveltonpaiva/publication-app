@@ -1,6 +1,6 @@
 <form  [formGroup]="formPublicacao">
   <h2>Painel de Publicação de Conteúdo</h2>
-
+  <hr>
   <div class="s">
       <label for="name">Título</label>
       <input type="text" class="form-control" id="titulo" formControlName="titulo">
@@ -24,10 +24,12 @@
           </select>
       </div>
       	
-  </div>
-  
+  </div> 
+  <label for="name">Resumo</label>
+  <div [froalaEditor] formControlName="resumo">Digite aqui o resumo da publicação</div> 
+
  <label for="name">Conteúdo</label>
- <div [froalaEditor] formControlName="conteudo">Digite seu texto aqui</div>
+ <div [froalaEditor] formControlName="conteudo">Digite aqui o conteúdo completo da publicação</div>
  <br>
  <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar()" value="Pré-visualizar" 
  onclick="document.getElementById('divPreview').style.display = 'block'"/>

@@ -1,5 +1,6 @@
 <form  [formGroup]="form">
-    <h2>Cadastrar Assunto</h2>
+    <h2>Assuntos</h2>
+    <hr>
     <div class="s">
         <label for="name">Descrição</label>
         <input type="text" class="form-control" id="descricao" formControlName="descricao">
@@ -8,31 +9,36 @@
         <div class="col-sm-4">	
           <label>Categoria:</label> 
           <select class="form-control" formControlName="idCategoria">
+            <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
             <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
           </select>
         </div>		
         <div class="col-sm-8">
-           <input class="btn btn-success" type="submit" style="height:40px; float:right; margin-top:30px;" value="Cadastrar" (click)="salvar()" />
+           <input class="btn btn-success" id="btnCadastro" type="submit" style="height:40px; float:right; margin-top:30px;" value="Cadastrar" (click)="salvar()" 
+           onclick="document.getElementById('btnCadastro').value = 'Cadastrar'" />
         </div>
     </div>
    <br>
    <br>
-   <div style="margin-top:5px;">
+   <div>
    <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">Descrição</th>
           <th scope="col">Categoria</th>
-          <th scope="col" style="width:6%;"></th>
+          <th scope="col" style="text-align:center;">Data de Cadastro</th>
+          <th scope="col" style="width:10%;"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ass of listaAssuntos;">
-          <td>{{ass.descricao}}</td>
-          <td>{{ass.idCategoria.descricao}}</td>
-          <td>
-              <a (click)="preAlterar(ass)" title="Alterar" style="color:green;" ><i class="fa fa-refresh"  style="font-size:20px;"></i></a> 
-              <a (click)="remover(ass._id)" title="Remover" style="color: black;"><i class="fa fa-trash-o"  style="font-size:20px;"></i></a> 
+          <td style="width:50%">{{ass.descricao}}</td>
+          <td style="width:25%">{{ass.idCategoria.descricao}}</td>
+          <td style="width:15%; text-align:center;">{{ass.dataCadastro | date: "dd/MM/yyyy"}}</td>
+          <td style="text-align: right;">
+              <button class="btn btn-outline-success btn-sm" (click)="preAlterar(ass)" title="Alterar Assunto" style="color:black;"
+              onclick="document.getElementById('btnCadastro').value = 'Alterar'"> <i class="fa fa-refresh"></i> </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="remover(ass._id)" title="Remover Assunto" style="color:red;"><i class="fa fa-trash-o"></i></button> 
           </td>
         </tr>
       </tbody>

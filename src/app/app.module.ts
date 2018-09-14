@@ -20,6 +20,7 @@ import { TopicComponent } from './topic/topic.component';
 import { TopicService } from './topic/topic-service';
 import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category-service';
+import { PublicationViewComponent } from './publication-view/publication-view.component';
 
 
 
@@ -33,7 +34,8 @@ import { CategoryService } from './category/category-service';
     PublicationListComponent,
     DashboardComponent,
     TopicComponent,
-    CategoryComponent
+    CategoryComponent,
+    PublicationViewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+
+.textoPublicacao {
+	margin:0 0 8px;
+	padding:2px 8px;
+	color:#fff;
+	background:#78bbe6;
+	height:50px;
+}
+textoPublicacao {
+	padding:0 2px;
+	text-decoration:none;
+	font-weight:normal;
+	color:#fff;
+}
+textoPublicacao a:hover {
+	text-decoration:underline;
+}
+textoPublicacao span.date {
+	color:#fff;
+}
+
+.tituloPublicacao {
+	margin:0 0 8px;
+	padding:6px 20px;
+	border-bottom:1px solid #e8e8e8;
+}
+
+.comentario {
+	float:right;
+	margin:-6px -12px 0 0;
+	padding:4px 12px;
+	font-size:15px;
+	font-weight:normal;
+	text-decoration:none;
+	text-align:center;
+	color:#fff;
+	background:#212121;
+}
+.comentario:hover {
+	text-decoration:none;
+}
+.comentario span {
+	font-weight:normal;
+	font-size:22px;
+}

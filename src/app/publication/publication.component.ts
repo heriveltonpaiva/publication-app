@@ -70,14 +70,13 @@ export class PublicationComponent implements OnInit {
     this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  this.categoriaPreview = obj.descricao); 
     this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => this.assuntoPreview = obj.descricao);
     this.dataPreview = new Date();
+    console.log(this.formPublicacao.value.conteudo);
   }
 
   salvarPublicacao(){  
     if(this.validarCampos())
       return;
      this.visualizar = false;
-     this.formPublicacao.value.resumo = this.formPublicacao.value.conteudo;
-     console.log(this.formPublicacao.value);
       this.newService.save(this.formPublicacao.value).subscribe(data =>  {  
         this.messageService.add(1,'Publicação cadastrada com sucesso.')
         this.ngOnInit(); 
@@ -89,7 +88,6 @@ export class PublicationComponent implements OnInit {
       return; 
     }
     this.visualizar = false;
-    this.formPublicacao.value.resumo = this.formPublicacao.value.conteudo;
     this.newService.update(this.formPublicacao.value).subscribe(data =>  {  
       this.messageService.add(1,'Publicação alterada com sucesso.')
       this.ngOnInit(); 
@@ -104,6 +102,10 @@ export class PublicationComponent implements OnInit {
       this.messageService.add(2,'Título: Campo obrigatório não informado.')
       erro = true;
    }
+   if(this.formPublicacao.value.resumo == null){
+    this.messageService.add(2,'Resumo: Campo obrigatório não informado.')
+    erro = true;
+   } 
    if(this.formPublicacao.value.conteudo == null){
      this.messageService.add(2,'Conteúdo: Campo obrigatório não informado.')
      erro = true;

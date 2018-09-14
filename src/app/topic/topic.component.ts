@@ -29,22 +29,20 @@ export class TopicComponent implements OnInit {
   salvar(){  
     if(this.validarCampos())
       return;
-    console.log(this.form.value);
-      this.newService.save(this.form.value).subscribe(data =>  {  
-      this.messageService.add(1,'Assunto cadastrado com sucesso.')
-      this.ngOnInit(); 
-      }, error => error);  
+      console.log(this.form.value)
+      if(this.form.value.id == null){
+        this.newService.save(this.form.value).subscribe(data =>  {  
+        this.messageService.add(1,'Assunto cadastrado com sucesso.')
+        this.ngOnInit(); 
+        }, error => error);  
+      }else{
+        this.newService.update(this.form.value).subscribe(data =>  {  
+          this.messageService.add(1,'Assunto alterado com sucesso.')
+          this.ngOnInit(); 
+          }, error => error);  
+      }
    }
 
-   alterar(){ 
-    if(this.validarCampos()){
-      return; 
-    }
-    this.newService.update(this.form.value).subscribe(data =>  {  
-      this.messageService.add(1,'Assunto alterado com sucesso.')
-      this.ngOnInit(); 
-     }, error =>  error);
-  }
 
   carregarListagem(){
     this.newService.getAll().subscribe(lista =>  this.listaAssuntos = lista); 
@@ -55,10 +53,9 @@ export class TopicComponent implements OnInit {
   }
   
   preAlterar(assunto){  
-    this.form.value.idCategoria;
-      this.form.value.id = assunto._id;
-      this.form.value.descricao = assunto.descricao;
-    this.router.navigate(['assunto']);
+    this.form.patchValue({'id': assunto._id});
+    this.form.patchValue({'descricao': assunto.descricao});
+    this.form.patchValue({'idCategoria': assunto.idCategoria._id});
  }  
    
  remover(id){  

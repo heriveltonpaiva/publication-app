@@ -1,0 +1,22 @@
+<div *ngIf="publicacao">  
+    <h2>
+      <span>{{publicacao.titulo}}</span> 
+    </h2>
+    <p class="textoPublicacao">
+      Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span>
+      <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
+      <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
+      <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
+      <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a> <br> 
+    
+      Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}} <a href="#"></a>  
+        
+    </p>
+    <div class="clr"></div>
+    <div class="post_content">
+        <div [innerHTML]="publicacao.conteudo">  </div>
+    </div>  
+    <br> 
+    <input class="btn btn-outline-danger" style="height:38px;margin-top:10px;" value="Voltar"(click)="goBack();"/>
+    <hr>
+</div>
