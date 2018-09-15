@@ -1,0 +1,27 @@
+h1, h3, h4, h5 {
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.error-container {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 10%;
+  transform: translateY(-50%);
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.pre-container {
+    padding: 10px;
+    max-width: 80%;
+    margin-left:150px;
+    margin-right:150px;
+    margin-top: -100px;;
+    background-color: lightgrey;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+pre {
+    overflow: scroll;
+}

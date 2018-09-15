@@ -4,6 +4,7 @@ import { MessageService } from '../core/messages/message.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Data } from '../providers/data';
+import { ErrorsService } from '../core/error-exception/error-exception-service';
 
 @Component({
   selector: 'app-publication-list',
@@ -19,13 +20,14 @@ export class PublicationListComponent implements OnInit {
     idAssunto: new FormControl('')
   });
   listaPublicacoes;
-  constructor(private router: Router, private route : ActivatedRoute,
+  constructor(private router: Router, private route : ActivatedRoute, private errorService: ErrorsService,
     private newService :PublicationService, private messageService: MessageService, private data: Data) {
       this.messageService.clear();
     }
 
   ngOnInit() {
-    this.newService.getAll().subscribe(lista =>  this.listaPublicacoes = lista); 
+    this.newService.getAll().subscribe(lista =>  {this.listaPublicacoes = lista}, 
+      error => this.errorService.tratarException(error));; 
   }
 
   visualizarConteudoCompleto(id){

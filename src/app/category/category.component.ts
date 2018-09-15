@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from '../core/messages/message.service';
 import { CategoryService } from './category-service';
+import { ErrorsService } from '../core/error-exception/error-exception-service';
 
 @Component({
   selector: 'app-category',
@@ -15,7 +16,8 @@ export class CategoryComponent implements OnInit {
     descricao: new FormControl(),
   });
 categorias;
-constructor(private router: Router, private newService :CategoryService, private messageService: MessageService) {
+constructor(private router: Router, private newService :CategoryService, 
+  private messageService: MessageService, private errorService: ErrorsService) {
   this.messageService.clear();
 }
 
@@ -30,32 +32,32 @@ salvar(){
   if(this.form.value.id == null){
     this.newService.save(this.form.value).subscribe(data =>  {  
       this.messageService.add(1,'Categoria cadastrada com sucesso.')
-    this.ngOnInit(); 
-    }, error => error); 
+    }, error => this.errorService.tratarException(error)); 
+   
   }else{
     console.log(this.form.value);
     this.newService.update(this.form.value).subscribe(data =>  {  
       this.messageService.add(1,'Categoria alterado com sucesso.')
-    this.ngOnInit(); 
-    }, error => error);
+    }, error => this.errorService.tratarException(error));
   }
+   this.ngOnInit(); 
   }
 
 carregarListagem(){
-  this.newService.getAll().subscribe(lista =>  this.categorias = lista); 
+  this.newService.getAll().subscribe(lista =>  {this.categorias = lista},
+    error => this.errorService.tratarException(error)); 
 }
   
 preAlterar(categoria){  
   this.form.patchValue({'id': categoria._id});
   this.form.patchValue({'descricao': categoria.descricao});
-  console.log(this.form.value);
 }  
    
  remover(id){  
-  this.newService.delete(id).subscribe(data =>   { 
+  this.newService.delete(id).subscribe(data => { 
     this.messageService.add(1,'Categoria removida com sucesso.')
-    this.ngOnInit();
-  }, error => error )   
+  }, error => this.errorService.tratarException(error));   
+  this.ngOnInit();
 } 
 
 private validarCampos(){
