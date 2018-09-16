@@ -8,13 +8,14 @@ export class TokenStorage {
 
   signOut() {
     window.sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem('token');
     window.sessionStorage.clear();
   }
 
   public saveToken(token: any) {
+    localStorage.setItem('token', token);
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
-    console.log("Token Salvo: "+this.getToken());
   }
 
   public getToken(): string {

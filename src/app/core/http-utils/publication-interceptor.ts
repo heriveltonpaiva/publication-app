@@ -14,11 +14,14 @@ import 'rxjs/add/operator/do';
 export class PublicationInterceptor implements HttpInterceptor {
   constructor(private router: Router){}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> | Observable<HttpUserEvent<any>> {    
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> | Observable<HttpUserEvent<any>> {
+
     if (localStorage.getItem('token') != null) {
       const params = new HttpParams().set('token', localStorage.getItem('token'));
       req = req.clone({params})
       return next.handle(req); 
+    }else if(localStorage.getItem('token') == null){
+        this.router.navigate(['login']);
     }
 
     return next.handle(req).do(

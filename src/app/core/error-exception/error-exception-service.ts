@@ -58,12 +58,10 @@ export class ErrorsService {
   tratarException(error){
     this.router.navigate(['/error'], { queryParams: this.addContextInfo(error)})
   }
-
 }
 
 class fakeHttpService {
   static post(error): Observable<any> {
-    console.log('Error sent to the server: ', error);
     return Observable.of(error);
   }
 }

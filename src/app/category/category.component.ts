@@ -44,8 +44,7 @@ salvar(){
   }
 
 carregarListagem(){
-  this.newService.getAll().subscribe(lista =>  {this.categorias = lista},
-    error => this.errorService.tratarException(error)); 
+  this.newService.getAll().subscribe(lista =>  {this.categorias = lista}); 
 }
   
 preAlterar(categoria){  

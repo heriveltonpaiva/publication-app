@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../core/authentication/authentication-service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TokenStorage } from '../core/authentication/token-storage';
+import { ErrorsService } from '../core/error-exception/error-exception-service';
+import { MessageService } from '../core/messages/message.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl(),
   });
 
-  constructor(private authService: AuthenticationService, private router: Router, private token: TokenStorage) { }
+  constructor(private authService: AuthenticationService, private errorService:ErrorsService, 
+    private router: Router, private token: TokenStorage, private messageService:MessageService) { }
 
   ngOnInit() {
   }
@@ -26,11 +29,17 @@ export class LoginComponent implements OnInit {
     if (val.login && val.password) {
         this.authService.login(val.login, val.password)
             .subscribe(res => {
+              if(res){
                     this.token.saveToken(res);
                     this.router.navigateByUrl('/');
-                }, error => console.log(error)
-            );
+              }else{
+                this.messageService.add(2, 'Usuário ou Senha incorretos.');
+              }
+      }, error => this.errorService.tratarException(error));      
     }
-}
+ }
+ logout(){
+   this.token.signOut();   
+ }
 
 }

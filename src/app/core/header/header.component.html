@@ -1,4 +1,5 @@
  <!-- Navigation -->
+ <form [formGroup]="form">
  <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#">App Publication</a>
@@ -8,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" routerLink="/">Inicio</a>
+            <a class="nav-link" routerLink="/" style="font-weight:bold;">Inicio</a>
           </li>
           <li class="nav-item active" id="painelLi">
             <a class="nav-link" routerLink="/publicacao/form">Painel</a>
@@ -23,10 +24,11 @@
             <a class="nav-link" routerLink="/categoria">Categorias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" style="font-weight:bold;">Sair</a>
+            <a class="nav-link" routerLink="javascript(0);" style="font-weight:bold;" (click)='logout();'>Sair</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+</form> 
 <!-- Page Content -->

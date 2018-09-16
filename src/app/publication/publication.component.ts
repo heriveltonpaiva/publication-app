@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PublicationService } from './publication.service';
 import { MessageService } from '../core/messages/message.service';
-import { Data } from '../providers/data';
+import { Data } from '../core/providers/data';
 import { Router } from '@angular/router';
 import { TopicService } from '../topic/topic-service';
 import { CategoryService } from '../category/category-service';
@@ -128,11 +128,11 @@ export class PublicationComponent implements OnInit {
 
    mudarCategoria(){
      this.serviceAssunto.findByAssuntoByCategoria(this.formPublicacao.value.idCategoria).subscribe(lista =>  
-      {this.listaAssuntos = lista}, error => this.errorService.tratarException(error)); 
+      {this.listaAssuntos = lista}, error => error); 
      this.renderComboAssunto = true;
    }
   carregarCategorias(){
     this.serviceAssunto.getAllCategorias().subscribe(lista =>  
-      {this.listaCategorias = lista}, error => this.errorService.tratarException(error)); 
+      {this.listaCategorias = lista}, error => error); 
   }
 }

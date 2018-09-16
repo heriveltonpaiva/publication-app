@@ -23,7 +23,11 @@ export class ErrorsHandler implements ErrorHandler {
         } else {
           // Handle Http Error (error.status === 403, 404...)
            // Http Error
-      // Send the error to the server
+        if(error.status == 401){
+           localStorage.removeItem('token');
+           router.navigateByUrl('login');
+        }
+        // Send the error to the server
           errorsService.log(error).subscribe();
           return notificationService.notify(`${error.status} - ${error.message}`);
         }

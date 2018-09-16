@@ -18,7 +18,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { PublicationListComponent } from './publication-list/publication-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { Data } from './providers/data';
+import { Data } from './core/providers/data';
 import { TopicComponent } from './topic/topic.component';
 import { TopicService } from './topic/topic-service';
 import { CategoryComponent } from './category/category.component';
