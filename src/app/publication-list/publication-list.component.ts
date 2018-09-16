@@ -23,11 +23,12 @@ export class PublicationListComponent implements OnInit {
   constructor(private router: Router, private route : ActivatedRoute, private errorService: ErrorsService,
     private newService :PublicationService, private messageService: MessageService, private data: Data) {
       this.messageService.clear();
+      this.ngOnInit();
     }
 
   ngOnInit() {
     this.newService.getAll().subscribe(lista =>  {this.listaPublicacoes = lista}, 
-      error => this.errorService.tratarException(error));; 
+      error => this.errorService.tratarException(error)); 
   }
 
   visualizarConteudoCompleto(id){

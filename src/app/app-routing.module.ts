@@ -7,9 +7,11 @@ import { TopicComponent } from './topic/topic.component';
 import { CategoryComponent } from './category/category.component';
 import { PublicationViewComponent } from './publication-view/publication-view.component'
 import { ErrorExceptionComponent } from './core/error-exception/error-exception.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent},
   { path: 'dashboard', component: DashboardComponent },
   { path: 'publicacao/form', component: PublicationComponent },
   { path: 'publicacao/list', component: PublicationListComponent },

@@ -6,6 +6,7 @@ import { Data } from '../providers/data';
 import { Router } from '@angular/router';
 import { TopicService } from '../topic/topic-service';
 import { CategoryService } from '../category/category-service';
+import { ErrorsService } from '../core/error-exception/error-exception-service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class PublicationComponent implements OnInit {
   listaAssuntos;
   listaCategorias;
 
-  constructor(private router: Router, private newService :PublicationService, private serviceAssunto:TopicService, 
+  constructor(private router: Router, private newService :PublicationService, private serviceAssunto:TopicService, private errorService:ErrorsService,
     private serviceCategoria:CategoryService, private messageService: MessageService, private data: Data) {
       this.messageService.clear();
     }
@@ -72,8 +73,10 @@ export class PublicationComponent implements OnInit {
     this.conteudoPreview = this.formPublicacao.value.conteudo;
     this.tituloPreview = this.formPublicacao.value.titulo;
     //faz a busca na base de dados com os id's dos combobox e adiciona a descricao as variáveis criadas para exibição na pré-visualização.
-    this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  this.categoriaPreview = obj.descricao); 
-    this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => this.assuntoPreview = obj.descricao);
+    this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  
+      {this.categoriaPreview = obj.descricao}, error => this.errorService.tratarException(error)); 
+    this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => 
+      {this.assuntoPreview = obj.descricao}, error => this.errorService.tratarException(error));
     this.dataPreview = new Date();
     this.messageService.add(3,'Pré-visualização disponível.')
     console.log(this.formPublicacao.value.conteudo);
@@ -86,7 +89,7 @@ export class PublicationComponent implements OnInit {
       this.newService.save(this.formPublicacao.value).subscribe(data =>  {  
         this.messageService.add(1,'Publicação cadastrada com sucesso.')
         this.ngOnInit(); 
-        }, error => this.errorMessage = error);  
+        }, error => this.errorService.tratarException(error));  
    }
 
    alterarPublicacao(){ 
@@ -97,7 +100,7 @@ export class PublicationComponent implements OnInit {
     this.newService.update(this.formPublicacao.value).subscribe(data =>  {  
       this.messageService.add(1,'Publicação alterada com sucesso.')
       this.ngOnInit(); 
-     }, error => this.errorMessage = error);
+     }, error => this.errorService.tratarException(error));
      this.data.storage = null;
      event.preventDefault();
   }
@@ -124,11 +127,12 @@ export class PublicationComponent implements OnInit {
    }
 
    mudarCategoria(){
-     this.serviceAssunto.findByAssuntoByCategoria(this.formPublicacao.value.idCategoria).subscribe(lista =>  this.listaAssuntos = lista); 
+     this.serviceAssunto.findByAssuntoByCategoria(this.formPublicacao.value.idCategoria).subscribe(lista =>  
+      {this.listaAssuntos = lista}, error => this.errorService.tratarException(error)); 
      this.renderComboAssunto = true;
-     console.log(this.listaAssuntos);
    }
   carregarCategorias(){
-    this.serviceAssunto.getAllCategorias().subscribe(lista =>  this.listaCategorias = lista); 
+    this.serviceAssunto.getAllCategorias().subscribe(lista =>  
+      {this.listaCategorias = lista}, error => this.errorService.tratarException(error)); 
   }
 }

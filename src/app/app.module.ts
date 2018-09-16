@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MessageComponent } from './core/messages/message.component';
 import { MessageService } from './core/messages/message.service';
 import { PublicationService } from './publication/publication.service';
-import { ServerErrorsInterceptor } from './core/http-utils/server-error-interceptor'
+import { PublicationInterceptor } from './core/http-utils/publication-interceptor'
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { PublicationListComponent } from './publication-list/publication-list.component';
@@ -29,6 +29,9 @@ import { HttpService } from './core/http-utils/http-service';
 import { ErrorExceptionComponent } from './core/error-exception/error-exception.component';
 import { ErrorsService } from './core/error-exception/error-exception-service';
 import { ErrorsHandler } from './core/error-exception/error-exception-handler';
+import { AuthenticationService } from './core/authentication/authentication-service';
+import { LoginComponent } from './login/login.component';
+import { TokenStorage } from './core/authentication/token-storage';
 
 
 @NgModule({
@@ -43,7 +46,8 @@ import { ErrorsHandler } from './core/error-exception/error-exception-handler';
     TopicComponent,
     CategoryComponent,
     PublicationViewComponent,
-    ErrorExceptionComponent
+    ErrorExceptionComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -57,9 +61,9 @@ import { ErrorsHandler } from './core/error-exception/error-exception-handler';
   ],
   providers: [
     PublicationService, TopicService, CategoryService, 
-    MessageService, NotificationService, ErrorsService, Data, HttpService, 
+    MessageService, NotificationService, ErrorsService, Data, TokenStorage,  HttpService, AuthenticationService, 
    {provide: ErrorHandler, useClass: ErrorsHandler},
-   {provide: HTTP_INTERCEPTORS, useClass: ServerErrorsInterceptor,multi: true},
+   {provide: HTTP_INTERCEPTORS, useClass: PublicationInterceptor,multi: true},
    { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' }
   ],
   bootstrap: [AppComponent]
