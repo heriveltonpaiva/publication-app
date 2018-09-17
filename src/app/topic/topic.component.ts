@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TopicService } from './topic-service';
 import { MessageService } from '../core/messages/message.service';
-import { Router } from '@angular/router';
+import { AbstractComponent } from '../core/arq/abstract.component';
+import { AbstractValidator } from '../core/arq/abstract.validator';
+import { CategoryService } from '../category/category-service';
 
 @Component({
   selector: 'app-topic',
   templateUrl: './topic.component.html',
   styleUrls: ['./topic.component.css']
 })
-export class TopicComponent implements OnInit {
-
+export class TopicComponent extends AbstractComponent implements AbstractValidator {
   form = new FormGroup({
     id: new FormControl(),
     descricao: new FormControl(''),
@@ -18,65 +19,39 @@ export class TopicComponent implements OnInit {
   });
   collection;
   listaCategorias;
-  constructor(private router: Router, private newService :TopicService, private messageService: MessageService) { 
-    this.messageService.clear();
-   }
+  constructor(service :TopicService, private serviceCategoria:CategoryService, messageService: MessageService){
+    super(service, messageService);
+  }
 
   ngOnInit() {
+    this.setFormulario(this.form);
     this.carregarListagem();
     this.carregarCategorias();
-    this.form.reset();
+    this.validateInputs();
+    this.inicializarCombo();
   }
   
-  salvar(){  
-    if(this.validarCampos())
-      return;
-      console.log(this.form.value)
-      if(this.form.value.id == null){
-        this.newService.save(this.form.value).subscribe(data =>  {  
-        this.messageService.add(1,'Assunto cadastrado com sucesso.')
-        this.ngOnInit(); 
-        }, error => error);  
-      }else{
-        this.newService.update(this.form.value).subscribe(data =>  {  
-          this.messageService.add(1,'Assunto alterado com sucesso.')
-          this.ngOnInit(); 
-          }, error => error);  
-      }
-   }
-
-
-  carregarListagem(){
-    this.newService.getAll().subscribe(lista =>  this.collection = lista); 
+  salvar(){
+    this.validateInputs();
+    super.salvar();
   }
 
   carregarCategorias(){
-    this.newService.getAllCategorias().subscribe(lista =>  this.listaCategorias = lista); 
+    this.serviceCategoria.getAll().subscribe(lista =>  this.listaCategorias = lista); 
   }
   
   preAlterar(assunto){  
     this.form.patchValue({'id': assunto._id});
     this.form.patchValue({'descricao': assunto.descricao});
     this.form.patchValue({'idCategoria': assunto.idCategoria._id});
- }  
+  }  
    
- remover(id){  
-  this.newService.delete(id).subscribe(data =>   { 
-    this.messageService.add(1,'Assunto removido com sucesso.')
-    this.ngOnInit();
-  }, error => error )   
- } 
+  validateInputs(){
+    this.addValidateRequiredMap('Descrição', this.getObj().descricao);
+    this.addValidateRequiredMap('Categoria', this.getObj().idCategoria);
+  };
 
-  private validarCampos(){
-    let erro = false;
-    if(this.form.value.descricao == null){
-      this.messageService.add(2,'Descrição: Campo obrigatório não informado.')
-      erro = true;
-   } 
-   if(this.form.value.idCategoria == null){
-     this.messageService.add(2,'Categoria: Campo obrigatório não informado.')
-     erro = true;
-   }
-   return erro;
-   }
+  inicializarCombo(){
+    this.form.patchValue({'idCategoria': null});
+  }
 }

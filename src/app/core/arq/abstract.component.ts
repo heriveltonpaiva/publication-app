@@ -2,6 +2,8 @@ import { OnInit } from "@angular/core";
 import { AbstractService } from "./abstract.service";
 import { FormGroup } from "@angular/forms";
 import { MessageType } from "../messages/message.type.enum";
+import { MessageComponent } from "../messages/message.component";
+import { MessageService } from "../messages/message.service";
 
 /**
  * @author Herivelton Paiva 
@@ -14,17 +16,17 @@ export class AbstractComponent implements OnInit{
   form;
   validacoes = new Map<any, any>();
 
-  constructor(public service :AbstractService) {
-    this.service.clear();
+  constructor(public service :AbstractService, public messageService: MessageService) {
+    this.clearMensagens();
   }
-  
+
   ngOnInit(){
     this.resetForm();
   }
 
   /* Cria ou atualiza o registro na base de dados */
   salvar(){  
-    this.service.clear();
+    this.clearMensagens();
     if(this.validate())
       return;
       if(!this.isAlteracao()){
@@ -49,7 +51,7 @@ export class AbstractComponent implements OnInit{
 
   /* Atualiza os valores do item, Método chamado no #Salvar()  */
   private atualizar(){
-    this.service.clear();
+    this.clearMensagens();
     this.service.update(this.getObj()).subscribe(retorno =>  
       {  
         this.addSuccessMessage(retorno.toString());
@@ -61,7 +63,7 @@ export class AbstractComponent implements OnInit{
   /** Realiza a remoção por id */
   remover(id){  
     console.log('[Remoção]');
-    this.service.clear();
+    this.clearMensagens();
     this.service.delete(id).subscribe(retorno =>
     { 
       this.addSuccessMessage(retorno.toString());
@@ -87,7 +89,7 @@ export class AbstractComponent implements OnInit{
       this.validateNotNull(obj[0], obj[1]);  
     }
     this.validacoes = new Map<any, any>();
-    return this.service.getAllMessages().length > 0;
+    return this.messageService.getAllMessages().length > 0;
   }
 
    /* Adiciona o formulário do component */
@@ -96,7 +98,7 @@ export class AbstractComponent implements OnInit{
    }
    /** Lança exceção exibindo o stacktrace na tela */
    addException(error){
-    this.service.tratarException(error)
+    this.messageService.tratarException(error)
    }
    /** Limpar o formulário */
    resetForm(){
@@ -104,16 +106,16 @@ export class AbstractComponent implements OnInit{
    }
    /* Adiciona mensagem de sucesso */
    addSuccessMessage(msg: String){
-    this.service.add(MessageType.SUCCESS, msg.toString());
+    this.messageService.add(MessageType.SUCCESS, msg.toString());
    }
    /* Adiciona mensagem de erro */
    addErrorMessage(msg: String){
-    this.service.add(MessageType.ERROR, msg.toString());
+    this.messageService.add(MessageType.ERROR, msg.toString());
    }
    /* Valida obrigatoriedade do campo */
   validateNotNull(inputName: String, input){
     if(input == null || input == ''){
-      this.service.add(MessageType.ERROR, inputName+': Campo obrigatório não informado.')
+      this.messageService.add(MessageType.ERROR, inputName+': Campo obrigatório não informado.')
     } 
    }
    private isAlteracao(){
@@ -122,6 +124,10 @@ export class AbstractComponent implements OnInit{
    /** Retorna o objeto do formulário  */
   getObj(){
     return this.form.value;
+   }
+
+   clearMensagens(){
+    this.messageService.clear();
    }
 
 }

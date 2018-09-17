@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { ErrorsService } from '../error-exception/error-exception-service';
 import { Router } from '@angular/router';
-import { AbstractService } from '../arq/abstract.service';
  
 @Injectable()
 export class MessageService extends ErrorsService{

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CategoryService } from './category-service';
 import { AbstractComponent } from '../core/arq/abstract.component';
 import { AbstractValidator } from '../core/arq/abstract.validator';
+import { MessageService } from '../core/messages/message.service';
 
 @Component({
   selector: 'app-category',
@@ -16,7 +17,9 @@ form = new FormGroup({
   descricao: new FormControl(),
 });
 
-constructor(service :CategoryService){super(service)}
+constructor(service :CategoryService, messageService: MessageService){
+  super(service, messageService);
+}
 
   ngOnInit(){
     this.setFormulario(this.form);

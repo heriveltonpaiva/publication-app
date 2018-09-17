@@ -14,13 +14,4 @@ export abstract class AbstractService {
 
   abstract findById(id);
 
-  abstract add(tipo:number, message: String);
-
-  abstract tratarException(error);
-
-  abstract redirectPage(page);
-
-  abstract getAllMessages();
-
-  abstract clear();
 }

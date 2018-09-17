@@ -1,19 +1,16 @@
-import { Injectable, Injector } from '@angular/core';   
+import { Injectable } from '@angular/core';   
 
 import 'rxjs/Rx';  
 import {Observable} from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import { AbstractService } from '../core/arq/abstract.service';
-import { MessageService } from '../core/messages/message.service';
-import { Router } from '@angular/router';
 
 const URL = 'http://localhost:3000/api/categoria';
 
 @Injectable()  
-export class CategoryService extends MessageService implements AbstractService{  
+export class CategoryService implements AbstractService{  
   
-  constructor(private http: HttpClient, router: Router, injector: Injector) {
-    super(injector, router);
+  constructor(private http: HttpClient) {
   }  
   save(categoria): Observable<any[]>{      
     return this.http.post(URL+'/save/', categoria)

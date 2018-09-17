@@ -10,9 +10,8 @@ import { IfObservable } from 'rxjs/observable/IfObservable';
   selector: 'app-messages',
   templateUrl: './message.component.html'
 })
-export class MessageComponent extends AbstractComponent {
-  constructor(public service: CategoryService) {
-    super(service)
+export class MessageComponent{
+      constructor(public service: MessageService) {
   }
   ngOnInit() {}
 }

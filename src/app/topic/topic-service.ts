@@ -12,11 +12,9 @@ import { Router } from '@angular/router';
 const URL = 'http://localhost:3000/api/assunto';
 
 @Injectable()  
-export class TopicService extends MessageService implements AbstractService{  
+export class TopicService implements AbstractService{  
   
-  constructor(private http: HttpClient, router: Router, injector: Injector) {
-    super(injector, router);
-  }   
+  constructor(private http: HttpClient) {}   
 
   save(assunto){      
     return this.http.post(URL+'/save/', assunto)  
