@@ -63,13 +63,13 @@ export class AbstractComponent implements OnInit{
   /** Realiza a remoção por id */
   remover(id){  
     console.log('[Remoção]');
-    this.clearMensagens();
+    this.clearMensagens(); 
     this.service.delete(id).subscribe(retorno =>
     { 
       this.addSuccessMessage(retorno.toString());
       this.resetForm();
       this.carregarListagem();
-    }, error => this.addException(error))  
+    }, error => this.addException(error))   
   } 
 
   /* Adiciona o campo exibido no form na pré-atualização */

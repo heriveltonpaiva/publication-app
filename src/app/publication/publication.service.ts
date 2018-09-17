@@ -31,4 +31,9 @@ export class PublicationService {
     .map((response:Response) => response).catch(err=> Observable.throw(err));                
   }  
 
+  findByAssunto(id):Observable<any[]>{
+    return this.http.get(URL+'/byAssunto/'+id)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));  
+  }
+
 }  

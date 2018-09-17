@@ -4,6 +4,7 @@ import { CategoryService } from './category-service';
 import { AbstractComponent } from '../core/arq/abstract.component';
 import { AbstractValidator } from '../core/arq/abstract.validator';
 import { MessageService } from '../core/messages/message.service';
+import { TopicService } from '../topic/topic-service';
 
 @Component({
   selector: 'app-category',
@@ -17,7 +18,7 @@ form = new FormGroup({
   descricao: new FormControl(),
 });
 
-constructor(service :CategoryService, messageService: MessageService){
+constructor(service :CategoryService, messageService: MessageService, private topicService: TopicService){
   super(service, messageService);
 }
 
@@ -32,6 +33,18 @@ constructor(service :CategoryService, messageService: MessageService){
     super.salvar();
   }
 
+  remover(id){
+  this.clearMensagens();
+    this.topicService.findByAssuntoByCategoria(id).subscribe(retorno => {
+      if(retorno.length > 0){
+        this.addErrorMessage('Não é possível realizar a remoção por violar a integridade dos dados. Há '
+        +retorno.length+' assunto(s) relacionado a categoria.');
+      }else{
+        super.remover(id);
+      }
+    })
+  }
+
  preAlterar(obj){  
   this.form.patchValue({'id': obj._id});
   this.form.patchValue({'descricao': obj.descricao});
@@ -41,5 +54,5 @@ constructor(service :CategoryService, messageService: MessageService){
  validateInputs(){
   this.addValidateRequiredMap('Descrição', this.getObj().descricao);
  };
- 
+
 }

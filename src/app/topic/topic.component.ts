@@ -5,6 +5,7 @@ import { MessageService } from '../core/messages/message.service';
 import { AbstractComponent } from '../core/arq/abstract.component';
 import { AbstractValidator } from '../core/arq/abstract.validator';
 import { CategoryService } from '../category/category-service';
+import { PublicationService } from '../publication/publication.service';
 
 @Component({
   selector: 'app-topic',
@@ -19,7 +20,8 @@ export class TopicComponent extends AbstractComponent implements AbstractValidat
   });
   collection;
   listaCategorias;
-  constructor(service :TopicService, private serviceCategoria:CategoryService, messageService: MessageService){
+  constructor(service :TopicService, private serviceCategoria:CategoryService, 
+      private publicacaoService:PublicationService,  messageService: MessageService){
     super(service, messageService);
   }
 
@@ -45,7 +47,19 @@ export class TopicComponent extends AbstractComponent implements AbstractValidat
     this.form.patchValue({'descricao': assunto.descricao});
     this.form.patchValue({'idCategoria': assunto.idCategoria._id});
   }  
-   
+  
+  remover(id){
+    this.clearMensagens();
+      this.publicacaoService.findByAssunto(id).subscribe(retorno => {
+        if(retorno.length > 0){
+          this.addErrorMessage('Não é possível realizar a remoção por violar a integridade dos dados. Há '
+          +retorno.length+ (retorno.length == 1 ? ' publicação relacionada' :' publicações relacionadas')+ ' ao assunto.');
+        }else{
+          super.remover(id);
+        }
+      })
+    }
+
   validateInputs(){
     this.addValidateRequiredMap('Descrição', this.getObj().descricao);
     this.addValidateRequiredMap('Categoria', this.getObj().idCategoria);
