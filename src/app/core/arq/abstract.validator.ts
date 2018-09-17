@@ -1,0 +1,5 @@
+export interface AbstractValidator {
+
+validateInputs();
+
+}

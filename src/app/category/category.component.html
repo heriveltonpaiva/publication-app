@@ -12,8 +12,6 @@
         </div>
     </div>
    <br>
-</form>   
-<form [formGroup]="form">   
    <br>
    <div>
    <table class="table table-striped">
@@ -25,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cat of categorias;">
+        <tr *ngFor="let cat of collection;">
           <td>{{cat.descricao}}</td>
           <td style="width:15%; text-align:center;">{{cat.dataCadastro | date: "dd/MM/yyyy"}}</td>
           <td style="text-align: right;">

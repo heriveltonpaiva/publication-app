@@ -38,8 +38,5 @@ export class LoginComponent implements OnInit {
       }, error => this.errorService.tratarException(error));      
     }
  }
- logout(){
-   this.token.signOut();   
- }
-
+ 
 }

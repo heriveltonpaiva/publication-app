@@ -12,8 +12,8 @@ import * as StackTraceParser from 'error-stack-parser';
 export class ErrorsService {
 
   constructor(
-    private injector: Injector,
-    private router: Router,
+    public injector: Injector,
+    public router: Router,
   ) {
     // Subscribe to the NavigationError
     this.router

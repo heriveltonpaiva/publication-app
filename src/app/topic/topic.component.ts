@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './topic.component.html',
   styleUrls: ['./topic.component.css']
 })
-export class TopicComponent implements OnInit {
+export class TopicComponent  implements OnInit {
 
   form = new FormGroup({
     id: new FormControl(),
