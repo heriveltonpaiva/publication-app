@@ -1,3 +1,4 @@
+import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 //npm install angular-froala-wysiwyg npm install froala-editor
@@ -50,6 +51,7 @@ import { TokenStorage } from './core/authentication/token-storage';
     LoginComponent
   ],
   imports: [
+    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
     BrowserModule,
     AppRoutingModule,
     FroalaEditorModule.forRoot(), 
@@ -68,4 +70,4 @@ import { TokenStorage } from './core/authentication/token-storage';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

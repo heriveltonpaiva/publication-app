@@ -41,14 +41,14 @@ export class ErrorsService {
     // You can include context details here (usually coming from other services: UserService...)
     const name = error.name || null;
     const appId = 'app-publication';
-    const user = 'User';
+    const user = 'user';
     const time = new Date().getTime();
     const id = `${appId}-${user}-${time}`;
     const location = this.injector.get(LocationStrategy);
     const url = location instanceof PathLocationStrategy ? location.path() : '';
     const status = error.status || error.statusText;
-    const message = error.message || error.toString();
-    
+    var message = error.message || error.toString();
+    message = message.split('?')[0]
     const stack = (error instanceof HttpErrorResponse ? null : error._body != null ? error._body : error.body == null ? StackTraceParser.parse(error) : null);
 
     const errorWithContext = {name, appId, user, time, id, url, status, message, stack};

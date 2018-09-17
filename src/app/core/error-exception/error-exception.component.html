@@ -1,18 +1,18 @@
 
 <form id="myForm">
 <div class="error-container">
-    <div *ngIf="data?.error && !routeParams.message">
-      <h1>ERROR {{ data?.error}}</h1>
-      <h5 *ngIf="data?.error === 404">Not found :(</h5>
+    <div *ngIf="data?.error && !routeParams.message" style="margin-bottom:400px;">
+      <h2>ERROR {{ data?.error}}</h2>
+      <h5 *ngIf="data?.error === 404">Página não encontrada :(</h5>
       <a mat-raised-button [routerLink]="'/'">
         <h5>Ir para Página Inicial</h5>
       </a>
     </div>
-    <div *ngIf="routeParams.message">
-      <h1 *ngIf="routeParams?.status"> ERROR {{ routeParams?.status }}</h1><br/>
-      <h3 *ngIf="routeParams?.message">{{ routeParams?.message }}</h3><br/>
-      <h1 *ngIf="routeParams?.url && routeParams?.url !== '/'">Error in {{ routeParams?.url | uppercase }} page, sorry {{ routeParams?.user }} :(</h1>
-      <h4 *ngIf="routeParams?.id">This error has been reported to the Administrator with the ID:<br> {{ routeParams?.id}}</h4>
+    <div *ngIf="routeParams.message" style="margin-top:170px;">
+      <h2 *ngIf="routeParams?.status"><b>ERROR {{ routeParams?.status }}</b></h2><br/>
+      <h2 *ngIf="routeParams?.message">{{ routeParams?.message }}</h2><br/>
+      <h3 *ngIf="routeParams?.url && routeParams?.url !== '/'">Erro na página {{ routeParams?.url | uppercase }}, desculpe {{ routeParams?.user }}</h3>
+      <h4 *ngIf="routeParams?.id">Este erro pode ser reportado para o administrator com o ID:<br> {{ routeParams?.id}}</h4>
       <a mat-raised-button
         [routerLink]="routeParams?.url"
         *ngIf="routeParams?.url && routeParams.status !== '404'">
@@ -34,7 +34,7 @@
   </div>
   
   <div class="pre-container" *ngIf="routeParams?.message">
-    <p>Error Detail:</p>
+    <p>Detalhes do erro:</p>
     <pre>
       {{ this.routeParams | json }}
     </pre>
