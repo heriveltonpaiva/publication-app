@@ -4,6 +4,9 @@ import { FormGroup } from "@angular/forms";
 import { MessageType } from "../messages/message.type.enum";
 import { MessageComponent } from "../messages/message.component";
 import { MessageService } from "../messages/message.service";
+import { HttpParams } from "@angular/common/http";
+import { Pagination } from "./pagination";
+import { IfObservable } from "rxjs/observable/IfObservable";
 
 /**
  * @author Herivelton Paiva 
@@ -13,6 +16,8 @@ import { MessageService } from "../messages/message.service";
 export class AbstractComponent implements OnInit{
   messages;
   collection;
+  showPagination;
+  pagination = new Pagination();
   form;
   validacoes = new Map<any, any>();
 
@@ -35,7 +40,7 @@ export class AbstractComponent implements OnInit{
         {  
           this.addSuccessMessage(retorno.toString())
           this.resetForm();
-          this.carregarListagem();
+          this.afterSalvar();
         }, error => this.addException(error)); 
       
       }else{
@@ -45,8 +50,14 @@ export class AbstractComponent implements OnInit{
   }
 
   /** carrega todos os objetos para exibir na listagem  */
-  carregarListagem(){
-    this.service.getAll().subscribe(lista =>  {this.collection = lista}); 
+  carregarListagem(page){
+    this.service.getAllPagination(page).subscribe(lista =>
+      {
+       this.pagination.setItems(lista);   
+       this.collection = this.pagination.getItems()
+       this.pagination.setPage(page);
+       console.log('Página '+this.pagination.getPage()+' de ' +this.pagination.getTotalPages()+ ' - Total de Registros: '+this.pagination.getTotal())
+      }); 
   }
 
   /* Atualiza os valores do item, Método chamado no #Salvar()  */
@@ -56,7 +67,7 @@ export class AbstractComponent implements OnInit{
       {  
         this.addSuccessMessage(retorno.toString());
         this.resetForm(); 
-        this.carregarListagem();
+        this.carregarListagem(this.pagination.getPage());
       }, error => this.addException(error));
   }  
   
@@ -68,7 +79,7 @@ export class AbstractComponent implements OnInit{
     { 
       this.addSuccessMessage(retorno.toString());
       this.resetForm();
-      this.carregarListagem();
+      this.afterRemover();
     }, error => this.addException(error))   
   } 
 
@@ -130,4 +141,26 @@ export class AbstractComponent implements OnInit{
     this.messageService.clear();
    }
 
+   setPagination(value){
+     this.showPagination = value;
+   }
+
+  //validacao caso seja o último elemento, para voltar para a página anterior
+   afterRemover(){
+     let page =  this.pagination.getTotalPages();
+     if(this.collection.length == 1){
+       this.carregarListagem(page - 1);
+     }else{
+       this.carregarListagem(this.pagination.getPage());
+     }  
+   }
+   //validacao caso o próximo elemento seja exibido na outra lista, para avançar para a próxima página
+   afterSalvar(){
+    let page = this.pagination.getTotalPages();
+    if(this.collection.length == this.pagination.getTamanho()){
+      this.carregarListagem(page +1);
+    }else{
+      this.carregarListagem(page);
+    }  
+   }
 }

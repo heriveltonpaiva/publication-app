@@ -3,8 +3,10 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export abstract class AbstractService {
-  
+
   abstract getAll(): Observable<any[]>;
+
+  abstract getAllPagination(page): Observable<any[]>;
 
   abstract save(obj): Observable<any[]>;
 

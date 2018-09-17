@@ -20,10 +20,15 @@ export class CategoryService implements AbstractService{
   update(categoria):Observable<any[]>{   
     return this.http.put(URL+'/update/'+categoria.id, categoria)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));              
-  } 
 
+  } 
   getAll():Observable<any[]>{       
     return this.http.get(URL)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));             
+  }
+
+  getAllPagination(page):Observable<any[]>{       
+    return this.http.get(URL+'/'+page)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
   }
 

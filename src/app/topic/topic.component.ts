@@ -26,8 +26,9 @@ export class TopicComponent extends AbstractComponent implements AbstractValidat
   }
 
   ngOnInit() {
+    this.setPagination(true);
     this.setFormulario(this.form);
-    this.carregarListagem();
+    this.carregarListagem(1);
     this.carregarCategorias();
     this.validateInputs();
     this.inicializarCombo();

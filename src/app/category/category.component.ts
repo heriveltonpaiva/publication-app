@@ -23,8 +23,9 @@ constructor(service :CategoryService, messageService: MessageService, private to
 }
 
   ngOnInit(){
+    this.setPagination(true);
     this.setFormulario(this.form);
-    this.carregarListagem();
+    this.carregarListagem(1);
     this.validateInputs();
   }
 

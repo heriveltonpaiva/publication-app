@@ -30,6 +30,11 @@ export class TopicService implements AbstractService{
     return this.http.get(URL)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
   }
+  
+  getAllPagination(page):Observable<any[]>{       
+    return this.http.get(URL+'/'+page)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));             
+  }
 
   getAllCategorias(): Observable<any[]>{       
     return this.http.get('http://localhost:3000/api/categoria/')  
