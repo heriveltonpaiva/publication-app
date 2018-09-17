@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
   templateUrl: './topic.component.html',
   styleUrls: ['./topic.component.css']
 })
-export class TopicComponent  implements OnInit {
+export class TopicComponent implements OnInit {
 
   form = new FormGroup({
     id: new FormControl(),
     descricao: new FormControl(''),
     idCategoria: new FormControl('')
   });
-  listaAssuntos;
+  collection;
   listaCategorias;
   constructor(private router: Router, private newService :TopicService, private messageService: MessageService) { 
     this.messageService.clear();
@@ -47,7 +47,7 @@ export class TopicComponent  implements OnInit {
 
 
   carregarListagem(){
-    this.newService.getAll().subscribe(lista =>  this.listaAssuntos = lista); 
+    this.newService.getAll().subscribe(lista =>  this.collection = lista); 
   }
 
   carregarCategorias(){

@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ass of listaAssuntos;">
+        <tr *ngFor="let ass of collection;">
           <td style="width:50%">{{ass.descricao}}</td>
           <td style="width:25%">{{ass.idCategoria.descricao}}</td>
           <td style="width:15%; text-align:center;">{{ass.dataCadastro | date: "dd/MM/yyyy"}}</td>

@@ -24,6 +24,11 @@ constructor(service :CategoryService){super(service)}
     this.validateInputs();
   }
 
+  salvar(){
+    this.validateInputs();
+    super.salvar();
+  }
+
  preAlterar(obj){  
   this.form.patchValue({'id': obj._id});
   this.form.patchValue({'descricao': obj.descricao});

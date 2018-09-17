@@ -21,4 +21,6 @@ export abstract class AbstractService {
   abstract redirectPage(page);
 
   abstract getAllMessages();
+
+  abstract clear();
 }

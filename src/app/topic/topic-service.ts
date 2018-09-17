@@ -1,17 +1,22 @@
-import { Injectable } from '@angular/core';   
+import { Injectable, Injector } from '@angular/core';   
 import {Response } from '@angular/http';   
 
 import 'rxjs/add/operator/map';  
 import 'rxjs/add/operator/do';  
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
+import { AbstractService } from '../core/arq/abstract.service';
+import { MessageService } from '../core/messages/message.service';
+import { Router } from '@angular/router';
  
 const URL = 'http://localhost:3000/api/assunto';
 
 @Injectable()  
-export class TopicService {  
+export class TopicService extends MessageService implements AbstractService{  
   
-  constructor(private http: HttpClient) { }  
+  constructor(private http: HttpClient, router: Router, injector: Injector) {
+    super(injector, router);
+  }   
 
   save(assunto){      
     return this.http.post(URL+'/save/', assunto)  
