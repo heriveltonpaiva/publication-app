@@ -1,22 +1,38 @@
-<div *ngIf="publicacao">  
-    <h2>
-      <span>{{publicacao.titulo}}</span> 
-    </h2>
-    <p class="textoPublicacao">
-      Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span>
-      <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
-      <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
-      <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
-      <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a> <br> 
-    
-      Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}} <a href="#"></a>  
-        
-    </p>
-    <div class="clr"></div>
-    <div class="post_content">
-        <div [innerHTML]="publicacao.conteudo">  </div>
-    </div>  
-    <br> 
-    <input class="btn btn-outline-danger" style="height:38px;margin-top:10px;" value="Voltar"(click)="goBack();"/>
-    <hr>
+<!-- Header Page -->
+  <!-- Header Page -->
+  <div>
+      <ul class="nav">
+        <li class="nav-item" style="margin-left:-10px;">
+          <a class="nav-link active" href="#"> App Publication »</a>
+        </li>
+        <li class="nav-item" style="margin-left:-25px;">
+            <a class="nav-link" href="/publicacao/list">Publicações »</a>
+        </li>
+        <li class="nav-item" style="margin-left:-25px;">
+            <a class="nav-link disabled" href="/publicacao/list" onclick="javascript(0);">Visualizar</a>
+          </li>
+      </ul>
+    </div>
+<!-- End Header Page -->
+<div class="card bg" *ngIf="publicacao">
+  <div class="card-body" style="margin-top:0px;">
+    <div class="card bg-light col-sm-14" style="margin-top:-21px; margin-left:-21px; margin-right:-21px; border-bottom:0px;">
+      <div class="card-body" style="margin:0px;">
+        <h5 class="card-title"><b>{{publicacao.titulo}}</b></h5>
+        <div style="float:right;">Publicado em: <span class="date">{{publicacao.dataCadastro | date: "dd/MM/yyyy hh:mm"}}</span></div>
+        <p class="card-text">
+          Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}}
+          <a href="#"></a>
+        </p>
+      </div>
+    </div>
+    <div class="card" style="margin-left:-18px; margin-right:-18px; border:0px;">
+      <div class="post_content" style="margin:21px;">
+        <div [innerHTML]="publicacao.conteudo"> </div>
+      </div>
+      <br>
+    </div>
+    <input class="btn btn-outline-danger" style="width:100px; height:30px;margin:5px; float:left;" value="Voltar" (click)="goBack();"
+    />
+  </div>
 </div>

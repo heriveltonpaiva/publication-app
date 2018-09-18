@@ -30,7 +30,7 @@ export class TopicService implements AbstractService{
     return this.http.get(URL)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
   }
-  
+
   getAllPagination(page):Observable<any[]>{       
     return this.http.get(URL+'/'+page)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
@@ -47,7 +47,7 @@ export class TopicService implements AbstractService{
   }
 
   findById(id){   
-    return this.http.get(URL+'/'+id)  
+    return this.http.get(URL+'/byId/'+id)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));              
   }  
 

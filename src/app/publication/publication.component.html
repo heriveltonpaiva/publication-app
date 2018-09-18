@@ -1,64 +1,86 @@
-<form  [formGroup]="formPublicacao">
-  <h2>Painel de Publicação de Conteúdo</h2>
-  <hr>
-  <div class="s">
+<form [formGroup]="formPublicacao">
+  <!-- Header Page -->
+  <div>
+    <ul class="nav">
+      <li class="nav-item" style="margin-left:-10px;">
+        <a class="nav-link active" href="#"> App Publication »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link" href="/publicacao/list">Publicações »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link disabled" href="/publicacao/form" onclick="javascript(0);">Painel de Publicações</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-14">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h4 class="card-title">Painel de Publicações</h4>
+        <p class="card-text">Essa funcionalidade permite cadastrar publicações.</p>
+      </div>
+    </div>
+  </div>
+  <!-- End Header Page -->
+  <div class="card" style="margin-top:5px; margin-bottom:2px;">
+    <div class="card-body light">
       <label for="name">Título</label>
       <input type="text" class="form-control" id="titulo" formControlName="titulo">
-  </div>
+      <div class="row" style="margin-bottom:10px;">
 
-  <div class="row" style="margin-bottom:10px;">
-      
-      <div class="col-sm-4">
-          <label>Categoria:</label> 
+        <div class="col-sm-4">
+          <label>Categoria:</label>
           <select class="form-control" (change)="mudarCategoria()" formControlName="idCategoria" id="categoria">
-              <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
-              <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
-            </select>
-      </div>	
+            <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
+            <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
+          </select>
+        </div>
 
-      <div class="col-sm-4" *ngIf="renderComboAssunto">	
-        <label>Assunto:</label> 
+        <div class="col-sm-4" *ngIf="renderComboAssunto">
+          <label>Assunto:</label>
           <select class="form-control" formControlName="idAssunto" id="assunto">
             <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
-            <option *ngFor="let ass of listaAssuntos;" value="{{ass._id}}" >{{ass.descricao}}</option>
+            <option *ngFor="let ass of listaAssuntos;" value="{{ass._id}}">{{ass.descricao}}</option>
           </select>
+        </div>
+
       </div>
-      	
-  </div> 
-  <label for="name">Resumo</label>
-  <div [froalaEditor] formControlName="resumo">Digite aqui o resumo da publicação</div> 
-
- <label for="name">Conteúdo</label>
- <div [froalaEditor] formControlName="conteudo">Digite aqui o conteúdo completo da publicação</div>
- <br>
- <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar();" value="Pré-visualizar" 
-   onclick="if(document.getElementById('divPreview') != null){document.getElementById('divPreview').style.display = 'block'}; window.scroll(0, 0);"/>
- <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" 
-   (click)="salvarPublicacao()" onclick="window.scroll(0, 0);" *ngIf="alterar == false"/>
- <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação" 
-   (click)="alterarPublicacao()" onclick="window.scroll(0, 0);" *ngIf="alterar"/>
- <br>
-   
- <div class="article" *ngIf="visualizar" id="divPreview">
-   <hr>
-    <h2>
-      <span>{{tituloPreview}}</span> 
-    </h2>
-    <button class="btn btn-outline-danger btn-sm" onclick="document.getElementById('divPreview').style.display = 'none'" title="Remover Publicação" style="float:right; margin:8px; color:red;"><i class="fa fa-trash-o"></i></button> 
-    <p class="textoPublicacao">
-        Publicado em <span class="date">{{dataPreview | date : "dd/MM/yyyy hh:mm"  }}</span> 
-          <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
-          <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
-          <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
-          <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a> <br>
-          Categoria: {{categoriaPreview}}  &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{assuntoPreview}} <a href="#"></a> 
-    </p>
-    <div class="clr"></div>
-    <div class="post_content">
-        <div [innerHTML]="conteudoPreview">  </div>
+      <label for="name">Resumo</label>
+      <div [froalaEditor] formControlName="resumo">&nbsp;</div>
+      <label for="name">Conteúdo</label>
+      <div [froalaEditor] formControlName="conteudo">&nbsp;</div>
+      <br>
+      <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar();" value="Pré-visualizar"
+        onclick="if(document.getElementById('divPreview') != null){document.getElementById('divPreview').style.display = 'block'}; window.scroll(0, 0);"
+      />
+      <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" (click)="salvarPublicacao()"
+        onclick="window.scroll(0, 0);" *ngIf="alterar == false" />
+      <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação"
+        (click)="alterarPublicacao()" onclick="window.scroll(0, 0);" *ngIf="alterar" />
     </div>
-    <hr>    
-    <br>   
   </div>
-</form>
+  <div class="card bg" *ngIf="visualizar" id="divPreview">
+    <div class="card-body" style="margin-top:0px;">
+      <div class="card bg-light col-sm-14" style="margin-top:-21px; margin-left:-21px; margin-right:-21px; border-bottom:0px;">
+        <div class="card-body" style="margin:0px;">
+          <h5 class="card-title"><b>{{tituloPreview}}</b>
+            <button class="btn btn-outline-danger btn-sm" onclick="document.getElementById('divPreview').style.display = 'none'" title="Remover Publicação"
+              style="float:right; margin:8px; color:red;"><i class="fa fa-trash-o"></i></button>
+          </h5>
+          <div style="float:right;">Publicado em: <span class="date">{{dataPreview | date: "dd/MM/yyyy hh:mm"}}</span></div>
+          <p class="card-text">
+             Categoria: {{categoriaPreview}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{assuntoPreview}}
+            <a href="#"></a>
+          </p>
+        </div>
+      </div>
+      <div class="card" style="margin-left:-18px; margin-right:-18px; border:0px;">
+        <div class="post_content" style="margin:21px;">
+          <div [innerHTML]="conteudoPreview"> </div>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
 
+</form>

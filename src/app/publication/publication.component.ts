@@ -74,12 +74,11 @@ export class PublicationComponent implements OnInit {
     this.tituloPreview = this.formPublicacao.value.titulo;
     //faz a busca na base de dados com os id's dos combobox e adiciona a descricao as variáveis criadas para exibição na pré-visualização.
     this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  
-      {this.categoriaPreview = obj.descricao}, error => this.errorService.tratarException(error)); 
+      {this.categoriaPreview = obj.descricao;}, error => this.errorService.tratarException(error)); 
     this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => 
       {this.assuntoPreview = obj.descricao}, error => this.errorService.tratarException(error));
     this.dataPreview = new Date();
     this.messageService.add(3,'Pré-visualização disponível.')
-    console.log(this.formPublicacao.value.conteudo);
   }
 
   salvarPublicacao(){  

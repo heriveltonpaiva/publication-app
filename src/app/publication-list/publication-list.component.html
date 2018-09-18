@@ -1,33 +1,51 @@
-<form  [formGroup]="formPublicacao">
-    <h2>Minhas Publicações</h2>
-    <hr>
-    <div *ngFor="let publicacao of listaPublicacoes; let ind = index" >  
-      <h3>
-        <span>{{publicacao.titulo}}</span> 
-      </h3>
+<form [formGroup]="formPublicacao">
+  <!-- Header Page -->
+  <div>
+    <ul class="nav">
+      <li class="nav-item" style="margin-left:-10px;">
+        <a class="nav-link active" href="#"> App Publication »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link disabled" href="/publicacao/list" onclick="javascript(0);">Publicações</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-14">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h4 class="card-title">Publicações</h4>
+        <p class="card-text">Essa funcionalidade permite você acompanhar as suas publicações.</p>
+      </div>
+    </div>
+  </div>
+  <!-- End Header Page -->
 
-      <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" 
-      style="float:right; margin:8px; color:red;" onclick="window.scroll(0, 0);"> <i class="fa fa-trash-o"></i></button> 
-      <button class="btn btn-outline-success btn-sm" (click)="preAlterarPublicacao(publicacao)" title="Alterar Publicação" style="float:right; margin:8px; color:black;"> <i class="fa fa-refresh"></i> </button>
-      <p class="textoPublicacao">
-        Publicado em <span class="date">{{publicacao.dataCadastro | date : "dd/MM/yyyy hh:mm"  }}</span>
-        <a><i class="fa fa-whatsapp" style="font-size:20px;"></i></a>
-        <a><i class="fa fa-facebook-square" style="font-size:20px;"></i></a>
-        <a><i class="fa fa-linkedin-square" style="font-size:20px;"></i></a>
-        <a><i class="fa fa-twitter-square"  style="font-size:20px;"></i></a> <br> 
-      
-        Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}} <a href="#"></a>  
-               
-        <!-- <a href="#" class="comentario">Comments <span>0</span></a> -->
-      
-      </p>
-      <div class="clr"></div>
-      <div class="post_content">
-          <div [innerHTML]="publicacao.resumo">  </div>
-      </div>  
-      <br> 
-      <input class="btn btn-outline-primary" style="height:38px;margin-top:10px;" value="Ler publicação completa" routerLink="../{{publicacao._id}}" /><br>
-      <hr>
-    </div>  
+  <div class="card bg" *ngFor="let publicacao of listaPublicacoes; let ind = index" style="margin-top:15px;">
+    <div class="card-body" style="margin:0px;">
+      <div class="card bg-light col-sm-14" style="margin-top:-21px; margin-left:-21px; margin-right:-21px; border-bottom:0px;">
+        <div class="card-body" style="margin:0px;">
+          <h5 class="card-title"><b>{{publicacao.titulo}}</b>
+            <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" style="color:black; float:right;margin-left:3px;"
+              onclick="window.scroll(0, 0);"> <i class="fa fa-trash-o"></i></button>
+            <button class="btn btn-outline-success btn-sm" (click)="preAlterarPublicacao(publicacao)" title="Alterar Publicação" style="color:black; float:right;">
+              <i class="fa fa-refresh"></i> </button>
+          </h5>
+
+          <div style="float:right;">Publicado em: <span class="date">{{publicacao.dataCadastro | date: "dd/MM/yyyy hh:mm"}}</span></div>
+          <p class="card-text">
+             Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}}
+            <a href="#"></a>
+          </p>
+        </div>
+      </div>
+      <!-- <a href="#" class="comentario">Comments <span>0</span></a> -->
+      <div class="card" style="margin-left:-19px; margin-right:-19px; margin-bottom:10px; border:0px;">
+        <div class="post_content" style="margin:21px;">
+          <div [innerHTML]="publicacao.resumo"> </div>
+        </div>
+        <br>
+      </div>
+      <input class="btn btn-dark botaoLerMais" style="width:100px; height:30px;margin:5px; float:right;" value="Ler mais..." routerLink="../{{publicacao._id}}"/>
+    </div>
+  </div>
 </form>
-

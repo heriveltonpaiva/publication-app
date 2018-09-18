@@ -38,7 +38,7 @@ export class CategoryService implements AbstractService{
   }  
 
   findById(id){   
-    return this.http.get(URL+'/'+id)  
+    return this.http.get(URL+'/byId/'+id)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
   }  
   
