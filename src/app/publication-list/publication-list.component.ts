@@ -1,57 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PublicationService } from '../publication/publication.service';
 import { MessageService } from '../core/messages/message.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Data } from '../core/providers/data';
-import { ErrorsService } from '../core/error-exception/error-exception-service';
+import { AbstractComponent } from '../core/arq/abstract.component';
 
 @Component({
   selector: 'app-publication-list',
   templateUrl: './publication-list.component.html',
   styleUrls: ['./publication-list.component.css']
 })
-export class PublicationListComponent implements OnInit {
-  formPublicacao = new FormGroup({
+export class PublicationListComponent extends AbstractComponent {
+  form = new FormGroup({
     id: new FormControl(),
     titulo: new FormControl(''),
     conteudo: new FormControl(''),
     resumo: new FormControl(''),
     idAssunto: new FormControl('')
   });
-  listaPublicacoes;
-  constructor(private router: Router, private route : ActivatedRoute, private errorService: ErrorsService,
-    private newService :PublicationService, private messageService: MessageService, private data: Data) {
-      this.messageService.clear();
-      this.ngOnInit();
-    }
+  constructor(service: PublicationService, messageService: MessageService, private router: Router, private route: ActivatedRoute, private data: Data) {
+    super(service, messageService);
+  }
 
   ngOnInit() {
-    this.newService.getAll().subscribe(lista =>  {this.listaPublicacoes = lista}); 
+    this.setPagination(true);
+    this.carregarListagem(1);
+    if (this.data.storage) { 
+       this.carregarListaAfterUpdate() 
+    }
   }
 
-  visualizarConteudoCompleto(id){
-    this.router.navigate([ '../'+id], { relativeTo: this.route });
-  }
-
-  preAlterarPublicacao(publicacao){  
-      this.data.storage = {
-        id:publicacao._id, 
-        titulo: publicacao.titulo,
-        conteudo: publicacao.conteudo,
-        resumo: publicacao.resumo, 
-        idAssunto: publicacao.idAssunto,
-        idCategoria: publicacao.idAssunto.idCategoria._id
+  carregarListaAfterUpdate() {
+    this.route.queryParams.subscribe(params => {
+      if (params['page']) {
+        this.service.getAllPagination(params['page']).subscribe(lista => {
+          this.pagination.setItems(lista);
+          this.collection = this.pagination.getItems()
+        });
       }
-      event.preventDefault();
-      this.router.navigate(['publicacao/form']);
-   }  
-     
-   removerPublicacao(id){  
-    this.newService.delete(id).subscribe(data =>   { 
-      this.messageService.add(1,'Publicação removida com sucesso.')
-      this.ngOnInit();
-    }, error => error )   
-   }  
+    });
+    this.data.storage = null;
+  }
 
+  preAlterarRedirectForm(publicacao) {
+    this.data.storage = {
+      id: publicacao._id,
+      titulo: publicacao.titulo,
+      conteudo: publicacao.conteudo,
+      resumo: publicacao.resumo,
+      idAssunto: publicacao.idAssunto,
+      idCategoria: publicacao.idAssunto.idCategoria._id
+    }
+    event.preventDefault();
+    this.router.navigate(['publicacao/form'], { queryParams: { page: this.pagination.getPage() } });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MessageService } from './core/messages/message.service';
 import { NotificationService } from './core/http-utils/notification-service';
 import { HttpService } from './core/http-utils/http-service';
@@ -10,7 +10,6 @@ import { HttpService } from './core/http-utils/http-service';
 })
 export class AppComponent {
   title = 'app';
-
   notification: string;
   showNotification: boolean;
   constructor(public messageService: MessageService, private notificationService: NotificationService, private httpService: HttpService) {}

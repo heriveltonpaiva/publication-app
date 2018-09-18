@@ -35,7 +35,6 @@ import { LoginComponent } from './login/login.component';
 import { TokenStorage } from './core/authentication/token-storage';
 import { PublicService } from './public/public.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,

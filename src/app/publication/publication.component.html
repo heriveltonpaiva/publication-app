@@ -1,4 +1,4 @@
-<form [formGroup]="formPublicacao">
+<form [formGroup]="form">
   <!-- Header Page -->
   <div>
     <ul class="nav">
@@ -30,7 +30,7 @@
 
         <div class="col-sm-4">
           <label>Categoria:</label>
-          <select class="form-control" (change)="mudarCategoria()" formControlName="idCategoria" id="categoria">
+          <select class="form-control" (change)="carregarAssuntosByCategoria()" formControlName="idCategoria" id="categoria">
             <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
             <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
           </select>
@@ -38,7 +38,7 @@
 
         <div class="col-sm-4" *ngIf="renderComboAssunto">
           <label>Assunto:</label>
-          <select class="form-control" formControlName="idAssunto" id="assunto">
+          <select class="form-control" formControlName="idAssunto" id="assunto" (change)="carregaObjAssunto()">
             <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
             <option *ngFor="let ass of listaAssuntos;" value="{{ass._id}}">{{ass.descricao}}</option>
           </select>
@@ -53,10 +53,10 @@
       <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar();" value="Pré-visualizar"
         onclick="if(document.getElementById('divPreview') != null){document.getElementById('divPreview').style.display = 'block'}; window.scroll(0, 0);"
       />
-      <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" (click)="salvarPublicacao()"
+      <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" (click)="salvar()"
         onclick="window.scroll(0, 0);" *ngIf="alterar == false" />
       <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação"
-        (click)="alterarPublicacao()" onclick="window.scroll(0, 0);" *ngIf="alterar" />
+        (click)="salvar()" onclick="window.scroll(0, 0);" *ngIf="alterar" />
     </div>
   </div>
   <div class="card bg" *ngIf="visualizar" id="divPreview">

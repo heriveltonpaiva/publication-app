@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, HostListener, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PublicationService } from './publication.service';
 import { MessageService } from '../core/messages/message.service';
 import { Data } from '../core/providers/data';
-import { Router } from '@angular/router';
 import { TopicService } from '../topic/topic-service';
 import { CategoryService } from '../category/category-service';
-import { ErrorsService } from '../core/error-exception/error-exception-service';
+import { AbstractComponent } from '../core/arq/abstract.component';
+import { AbstractValidator } from '../core/arq/abstract.validator';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -14,35 +15,63 @@ import { ErrorsService } from '../core/error-exception/error-exception-service';
   templateUrl: './publication.component.html',
   styleUrls: ['./publication.component.css']
 })
-export class PublicationComponent implements OnInit {
+export class PublicationComponent extends AbstractComponent implements AbstractValidator {
 
-  formPublicacao = new FormGroup({
+  form = new FormGroup({
     id: new FormControl(),
     titulo: new FormControl(''),
     conteudo: new FormControl(''),
     resumo: new FormControl(''),
-    idAssunto: new FormControl(''),
+    idAssunto: new FormControl([Validators.required]),
     idCategoria: new FormControl('') //atributo usado para o change apenas
   });
-
-  visualizar: boolean;
-  alterar: boolean;
-  conteudoPreview: String; 
+  
+  conteudoPreview: String;
   tituloPreview: String;
   categoriaPreview: String;
   assuntoPreview: String;
   dataPreview: Date;
-  errorMessage: String;
-  renderComboAssunto : boolean;
-  listaPublicacoes;
+
+  renderComboAssunto: boolean;
   listaAssuntos;
   listaCategorias;
+  visualizar: boolean;
+  alterar: boolean;
+  pageAlteracao:number;
+ 
+  constructor(service: PublicationService, messageService: MessageService,
+    private serviceAssunto: TopicService, private serviceCategoria: CategoryService, 
+    private router :Router, private route: ActivatedRoute, private data: Data) {
+    super(service, messageService);
+  }
 
-  constructor(private router: Router, private newService :PublicationService, private serviceAssunto:TopicService, private errorService:ErrorsService,
-    private serviceCategoria:CategoryService, private messageService: MessageService, private data: Data) {
-      this.messageService.clear();
+  ngOnInit() {
+    this.visualizar = false;
+    this.alterar = false;
+    this.renderComboAssunto = false;
+    this.setPagination(false);
+    this.validateInputs();
+    this.carregarCategorias();
+   
+    this.route.queryParams.subscribe(params => {
+        if(params['page']){
+          this.pageAlteracao = params['page'];
+          this.carregarObjAlteracao();   
+        } 
+    });
+  }
+
+  carregarObjAlteracao(){
+    if(this.data.storage){
+      this.form.setValue(this.data.storage);
+      this.alterar = true;
+      this.renderComboAssunto = true;
+      this.carregarAssuntosByCategoria(); 
+      this.form.patchValue({'idAssunto': this.getObj().idAssunto._id});
     }
+  }
 
+  /**  
   ngOnInit() {
     this.visualizar = false;
     this.carregarCategorias();
@@ -62,76 +91,76 @@ export class PublicationComponent implements OnInit {
       this.formPublicacao.reset();
     }
   }
+  */
 
-  preVisualizar(){
-    if(this.validarCampos()){
-      this.messageService.clear();
-      this.messageService.add(2, 'Preencha todos os campos obrigatórios para visualizar a publicação.');
-      return;
+
+  preVisualizar() {
+    this.clearMensagens();
+    this.validateInputs();
+    if (!this.validate()) {
+      this.visualizar = true;
+      this.conteudoPreview = this.getObj().conteudo;
+      this.tituloPreview = this.getObj().titulo;
+      this.dataPreview = new Date();
+      this.addInfoMessage('Pré-visualização disponível.')
     }
-    this.visualizar = true;
-    this.conteudoPreview = this.formPublicacao.value.conteudo;
-    this.tituloPreview = this.formPublicacao.value.titulo;
-    //faz a busca na base de dados com os id's dos combobox e adiciona a descricao as variáveis criadas para exibição na pré-visualização.
-    this.serviceAssunto.findById(this.formPublicacao.value.idAssunto).subscribe(obj =>  
-      {this.categoriaPreview = obj.descricao;}, error => this.errorService.tratarException(error)); 
-    this.serviceCategoria.findById(this.formPublicacao.value.idCategoria).subscribe(obj => 
-      {this.assuntoPreview = obj.descricao}, error => this.errorService.tratarException(error));
-    this.dataPreview = new Date();
-    this.messageService.add(3,'Pré-visualização disponível.')
   }
 
-  salvarPublicacao(){  
-    if(this.validarCampos())
-      return;
-     this.visualizar = false;
-      this.newService.save(this.formPublicacao.value).subscribe(data =>  {  
-        this.messageService.add(1,'Publicação cadastrada com sucesso.')
-        this.ngOnInit(); 
-        }, error => this.errorService.tratarException(error));  
-   }
-
-   alterarPublicacao(){ 
-    if(this.validarCampos()){
-      return; 
-    }
+  salvar() {
     this.visualizar = false;
-    this.newService.update(this.formPublicacao.value).subscribe(data =>  {  
-      this.messageService.add(1,'Publicação alterada com sucesso.')
-      this.ngOnInit(); 
-     }, error => this.errorService.tratarException(error));
-     this.data.storage = null;
-     event.preventDefault();
+    this.validateInputs();
+    super.salvar();
+    if(this.isAlteracao()){
+       this.data.storage = this.getObj();
+       event.preventDefault();
+       this.router.navigate(['publicacao/list'], { queryParams: { page: this.pageAlteracao } });
+    }
   }
-  
-  private validarCampos(){
-    let erro = false;
-    if(this.formPublicacao.value.titulo == null){
-      this.messageService.add(2,'Título: Campo obrigatório não informado.')
-      erro = true;
+  /** 
+  alterarPublicacao(){ 
+   if(this.validarCampos()){
+     return; 
    }
-   if(this.formPublicacao.value.resumo == null){
-    this.messageService.add(2,'Resumo: Campo obrigatório não informado.')
-    erro = true;
-   } 
-   if(this.formPublicacao.value.conteudo == null){
-     this.messageService.add(2,'Conteúdo: Campo obrigatório não informado.')
-     erro = true;
-   }  
-   if(this.formPublicacao.value.idAssunto == null){
-     this.messageService.add(2,'Assunto: Campo obrigatório não informado.')
-     erro = true;
-   }
-   return erro;
-   }
+   this.visualizar = false;
+   this.newService.update(this.formPublicacao.value).subscribe(data =>  {  
+     this.messageService.add(1,'Publicação alterada com sucesso.')
+     this.ngOnInit(); 
+    }, error => this.errorService.tratarException(error));
+    this.data.storage = null;
+    event.preventDefault();
+ }*/
 
-   mudarCategoria(){
-     this.serviceAssunto.findByAssuntoByCategoria(this.formPublicacao.value.idCategoria).subscribe(lista =>  
-      {this.listaAssuntos = lista}, error => error); 
-     this.renderComboAssunto = true;
-   }
-  carregarCategorias(){
-    this.serviceAssunto.getAllCategorias().subscribe(lista =>  
-      {this.listaCategorias = lista}, error => error); 
+  validateInputs() {
+    this.addValidateRequiredMap('Título', this.getObj().titulo);
+    this.addValidateRequiredMap('Resumo', this.getObj().resumo);
+    this.addValidateRequiredMap('Conteúdo', this.getObj().conteudo);
+    this.addValidateRequiredMap('Categoria', this.getObj().idCategoria);
+  };
+
+  /* Carrega o combo de assuntos de acordo com a categoria selecionada */
+  carregarAssuntosByCategoria() {
+    this.serviceAssunto.findByAssuntoByCategoria(this.getObj().idCategoria).subscribe(lista => {
+      this.listaAssuntos = lista
+    }, error => this.addException(error));
+    this.renderComboAssunto = true;
+  }
+  /** Carrega o combo com todas as categorias */
+  carregarCategorias() {
+    this.serviceAssunto.getAllCategorias().subscribe(lista => {
+      this.listaCategorias = lista
+    }, error => error);
+  }
+  /* Método chamado na view quando selecionado o assunto o objeto é carregado */
+  carregaObjAssunto() {
+    this.serviceAssunto.findById(this.getObj().idAssunto).subscribe(retorno => {
+      this.assuntoPreview = retorno.descricao;
+    }, error => this.addException(error));
+    this.carregarObjCategoria();
+  }
+  /* Carrega o objeto categoria selecionado */
+  private carregarObjCategoria() {
+    this.serviceCategoria.findById(this.getObj().idCategoria).subscribe(retorno => {
+      this.categoriaPreview = retorno.descricao;
+    }, error => this.addException(error));
   }
 }

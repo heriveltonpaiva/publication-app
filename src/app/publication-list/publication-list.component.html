@@ -1,4 +1,4 @@
-<form [formGroup]="formPublicacao">
+<form [formGroup]="form">
   <!-- Header Page -->
   <div>
     <ul class="nav">
@@ -13,27 +13,36 @@
   <div class="col-sm-14">
     <div class="card bg-light">
       <div class="card-body">
-        <h4 class="card-title">Publicações</h4>
+        <h4 class="card-title" onclick="gotoTop();">Publicações</h4>
         <p class="card-text">Essa funcionalidade permite você acompanhar as suas publicações.</p>
       </div>
     </div>
   </div>
   <!-- End Header Page -->
 
-  <div class="card bg" *ngFor="let publicacao of listaPublicacoes; let ind = index" style="margin-top:15px;">
+  <div class="card bg" *ngFor="let publicacao of collection; let ind = index" style="margin-top:15px;">
     <div class="card-body" style="margin:0px;">
       <div class="card bg-light col-sm-14" style="margin-top:-21px; margin-left:-21px; margin-right:-21px; border-bottom:0px;">
         <div class="card-body" style="margin:0px;">
           <h5 class="card-title"><b>{{publicacao.titulo}}</b>
-            <button class="btn btn-outline-danger btn-sm" (click)="removerPublicacao(publicacao._id)" title="Remover Publicação" style="color:black; float:right;margin-left:3px;"
-              onclick="window.scroll(0, 0);"> <i class="fa fa-trash-o"></i></button>
-            <button class="btn btn-outline-success btn-sm" (click)="preAlterarPublicacao(publicacao)" title="Alterar Publicação" style="color:black; float:right;">
-              <i class="fa fa-refresh"></i> </button>
-          </h5>
 
+            <button class="btn btn-outline-danger btn-sm" (click)="remover(publicacao._id)" title="Remover Publicação" style="color:black; float:right;margin-left:3px;"
+              onclick="window.scroll(0, 0);"> <i class="fa fa-trash-o"></i>
+            </button>
+            <button class="btn btn-outline-success btn-sm" (click)="preAlterarRedirectForm(publicacao)" title="Alterar Publicação" style="color:black; float:right;">
+              <i class="fa fa-refresh"></i>
+            </button>
+            <button class="btn btn-outline-primary btn-sm" (click)="desabilitarView(publicacao._id)" title="Desabilitar Visualização na Área Pública"
+              style="color:black;float:right; margin-right:3px;" *ngIf="publicacao.areaPublica"> <i class="fa fa-eye"
+                id="disabled_view"></i> </button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="habilitarView(publicacao._id)" title="Habilitar Visualização na Área Pública"
+              style="color:black;float:right; margin-right:3px;" *ngIf="!publicacao.areaPublica"> <i class="fa fa-eye-slash"
+                id="enabled_view"></i>
+            </button>
+          </h5>
           <div style="float:right;">Publicado em: <span class="date">{{publicacao.dataCadastro | date: "dd/MM/yyyy hh:mm"}}</span></div>
           <p class="card-text">
-             Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}}
+            Categoria: {{publicacao.idAssunto.idCategoria.descricao}} &nbsp;&nbsp;|&nbsp;&nbsp; Assunto: {{publicacao.idAssunto.descricao}}
             <a href="#"></a>
           </p>
         </div>
@@ -45,7 +54,35 @@
         </div>
         <br>
       </div>
-      <input class="btn btn-dark botaoLerMais" style="width:100px; height:30px;margin:5px; float:right;" value="Ler mais..." routerLink="../{{publicacao._id}}"/>
+      <input class="btn btn-dark botaoLerMais" style="width:100px; height:30px;margin:5px; float:right;" value="Ler mais..." routerLink="../{{publicacao._id}}"
+      />
     </div>
   </div>
+  <div class="card-body" style="margin:0px;">
+    <!-- Pagination -->
+    <nav class="Page navigation" style="float:left; margin-top:15px;">
+      <ul class="pagination" style="color:#007bff;">
+        <li class="page-item"><a class="page">Página {{pagination.page}} de {{pagination.totalPages}} | Total de Registros:
+            {{pagination.total}}
+          </a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Page navigation example" style="float:right;" *ngIf="showPagination" id="divPag">
+      <ul class="pagination" style="color:#007bff;">
+        <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagem(pagination.page - 1)"
+            onclick="window.scroll(0, 0);">Anterior</a></li>
+        <div *ngFor="let item of pagination.arrayPages(); let i = index;">
+          <li class="page-item active" *ngIf="pagination.page == i+1">
+            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+          </li>
+          <li class="page-item" *ngIf="pagination.page != i+1" onclick="window.scroll(0, 0);">
+            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+          </li>
+        </div>
+        <li class="page-item"><a class="page-link" *ngIf="pagination.page < pagination.totalPages" (click)="carregarListagem(pagination.page + 1);"
+            onclick="window.scroll(0, 0);">Próximo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- End Pagination -->
 </form>

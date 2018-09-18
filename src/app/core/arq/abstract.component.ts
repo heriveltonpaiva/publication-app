@@ -2,11 +2,8 @@ import { OnInit } from "@angular/core";
 import { AbstractService } from "./abstract.service";
 import { FormGroup } from "@angular/forms";
 import { MessageType } from "../messages/message.type.enum";
-import { MessageComponent } from "../messages/message.component";
 import { MessageService } from "../messages/message.service";
-import { HttpParams } from "@angular/common/http";
 import { Pagination } from "./pagination";
-import { IfObservable } from "rxjs/observable/IfObservable";
 
 /**
  * @author Herivelton Paiva 
@@ -54,7 +51,7 @@ export class AbstractComponent implements OnInit {
       this.pagination.setItems(lista);
       this.collection = this.pagination.getItems()
       this.pagination.setPage(page);
-      console.log('Página ' + this.pagination.getPage() + ' de ' + this.pagination.getTotalPages() + ' - Total de Registros: ' + this.pagination.getTotal())
+      console.log('Página ' + this.pagination.getPage() + ' de ' + this.pagination.getTotalPages() + ' - Total de Registros: ' + this.pagination.getTotal());
     });
   }
 
@@ -90,7 +87,7 @@ export class AbstractComponent implements OnInit {
   }
 
   /* Realiza validações dos campos obrigatórios */
-  private validate() {
+  validate() {
     console.log('[Validação]');
     for (let obj of Array.from(this.validacoes.entries())) {
       this.validateNotNull(obj[0], obj[1]);
@@ -129,12 +126,16 @@ export class AbstractComponent implements OnInit {
       this.messageService.add(MessageType.ERROR, inputName + ': Campo obrigatório não informado.')
     }
   }
-  private isAlteracao() {
+  isAlteracao() {
     return this.getObj().id != null;
   }
   /** Retorna o objeto do formulário  */
   getObj() {
     return this.form.value;
+  }
+
+  redirecionar(url){
+    //return this.
   }
 
   clearMensagens() {
@@ -147,42 +148,46 @@ export class AbstractComponent implements OnInit {
 
   /* Habilita visualização na área pública */
   habilitarView(id) {
-    this.getObj().id = id; 
+    this.getObj().id = id;
     this.getObj().areaPublica = true;
     this.clearMensagens();
     this.service.updatePublicArea(this.getObj()).subscribe(() => {
       this.carregarListagem(this.pagination.getPage());
       this.addInfoMessage('Visualização na Área Pública Ativada! O item poderá ser visualizado no Dashboard.')
     }, error => this.addException(error));
-    
+
   }
   /* Desabilita visualização na área pública */
-  desabilitarView(id) { 
+  desabilitarView(id) {
     this.getObj().id = id;
     this.getObj().areaPublica = false;
     this.clearMensagens();
     this.service.updatePublicArea(this.getObj()).subscribe(() => {
-    this.carregarListagem(this.pagination.getPage());
-    this.addInfoMessage('Visualização na Área Pública Desativada! O item não poderá ser visualizado no Dashboard.')
-   }, error => this.addException(error));
+      this.carregarListagem(this.pagination.getPage());
+      this.addInfoMessage('Visualização na Área Pública Desativada! O item não poderá ser visualizado no Dashboard.')
+    }, error => this.addException(error));
   }
 
   //validacao caso seja o último elemento, para voltar para a página anterior
   afterRemover() {
-    let page = this.pagination.getTotalPages();
-    if (this.collection.length == 1) {
-      this.carregarListagem(page - 1);
-    } else {
-      this.carregarListagem(this.pagination.getPage());
+    if (this.showPagination) {
+      let page = this.pagination.getTotalPages();
+      if (this.collection.length == 1) {
+        this.carregarListagem(page - 1);
+      } else {
+        this.carregarListagem(this.pagination.getPage());
+      }
     }
   }
   //validacao caso o próximo elemento seja exibido na outra lista, para avançar para a próxima página
   afterSalvar() {
-    let page = this.pagination.getTotalPages();
-    if (this.collection.length == this.pagination.getTamanho()) {
-      this.carregarListagem(page + 1);
-    } else {
-      this.carregarListagem(page);
+    if (this.showPagination) {
+      let page = this.pagination.getTotalPages();
+      if (this.collection.length == this.pagination.getTamanho()) {
+        this.carregarListagem(page + 1);
+      } else {
+        this.carregarListagem(page);
+      }
     }
   }
 }
