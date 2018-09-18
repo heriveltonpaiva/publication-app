@@ -12,6 +12,8 @@ export abstract class AbstractService {
 
   abstract update(obj):Observable<any[]>;
 
+  abstract updatePublicArea(obj):Observable<any[]>;
+
   abstract delete(id):Observable<any[]>;
 
   abstract findById(id);

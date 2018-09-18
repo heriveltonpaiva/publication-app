@@ -16,7 +16,8 @@ export class TopicComponent extends AbstractComponent implements AbstractValidat
   form = new FormGroup({
     id: new FormControl(),
     descricao: new FormControl(''),
-    idCategoria: new FormControl('')
+    idCategoria: new FormControl(''),
+    areaPublica: new FormControl(false)
   });
   collection;
   listaCategorias;

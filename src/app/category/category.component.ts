@@ -13,47 +13,49 @@ import { TopicService } from '../topic/topic-service';
 })
 export class CategoryComponent extends AbstractComponent implements AbstractValidator {
 
-form = new FormGroup({
-  id: new FormControl(),
-  descricao: new FormControl(),
-});
+  form = new FormGroup({
+    id: new FormControl(),
+    descricao: new FormControl(),
+    areaPublica: new FormControl(false)
+  });
 
-constructor(service :CategoryService, messageService: MessageService, private topicService: TopicService){
-  super(service, messageService);
-}
+  constructor(service: CategoryService, messageService: MessageService, private topicService: TopicService) {
+    super(service, messageService);
+  }
 
-  ngOnInit(){
+  ngOnInit() {
     this.setPagination(true);
     this.setFormulario(this.form);
     this.carregarListagem(1);
     this.validateInputs();
   }
 
-  salvar(){
+  salvar() {
     this.validateInputs();
     super.salvar();
   }
 
-  remover(id){
-  this.clearMensagens();
+  remover(id) {
+    this.clearMensagens();
     this.topicService.findByAssuntoByCategoria(id).subscribe(retorno => {
-      if(retorno.length > 0){
+      if (retorno.length > 0) {
         this.addErrorMessage('Não é possível realizar a remoção por violar a integridade dos dados. Há '
-        +retorno.length+' assunto(s) relacionado a categoria.');
-      }else{
+          + retorno.length + ' assunto(s) relacionado a categoria.');
+      } else {
         super.remover(id);
       }
     })
   }
 
- preAlterar(obj){  
-  this.form.patchValue({'id': obj._id});
-  this.form.patchValue({'descricao': obj.descricao});
-  this.validateInputs();
- }  
+  preAlterar(obj) {
+    this.form.patchValue({ 'id': obj._id });
+    this.form.patchValue({ 'descricao': obj.descricao });
+    this.validateInputs();
+  }
 
- validateInputs(){
-  this.addValidateRequiredMap('Descrição', this.getObj().descricao);
- };
+  validateInputs() {
+    this.addValidateRequiredMap('Descrição', this.getObj().descricao);
+  };
+
 
 }

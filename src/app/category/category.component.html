@@ -25,7 +25,7 @@
   <div class="card" style="margin-top:5px; margin-bottom:2px;">
     <div class="card-body light">
       <div class="row" style="margin-bottom:2px;">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
           <label for="name">Descrição</label>
           <input type="text" class="form-control" id="descricao" formControlName="descricao">
         </div>
@@ -41,7 +41,7 @@
             <tr>
               <th scope="col">Descrição</th>
               <th scope="col" style="text-align:center;">Data de Cadastro</th>
-              <th scope="col" style="width:10%;"></th>
+              <th scope="col" style="width:12%;"></th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +49,10 @@
               <td>{{cat.descricao}}</td>
               <td style="width:15%; text-align:center;">{{cat.dataCadastro | date: "dd/MM/yyyy"}}</td>
               <td style="text-align: right;">
+                <button class="btn btn-outline-primary btn-sm" (click)="desabilitarView(cat._id)" title="Desabilitar Visualização na Área Pública" style="color:black;" *ngIf="cat.areaPublica">
+                  <i class="fa fa-eye" id="disabled_view"></i> </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="habilitarView(cat._id)" title="Habilitar Visualização na Área Pública" style="color:black;" *ngIf="!cat.areaPublica">
+                    <i class="fa fa-eye-slash" id="enabled_view"></i> </button>
                 <button class="btn btn-outline-success btn-sm" (click)="preAlterar(cat)" title="Alterar Categoria" style="color:black;" onclick="document.getElementById('btnCadastro').value = 'Alterar'; window.scroll(0, 0);">
                   <i class="fa fa-refresh"></i> </button>
                 <button class="btn btn-outline-danger btn-sm" (click)="remover(cat._id)" title="Remover Categoria" onclick="window.scroll(0, 0);"
@@ -57,12 +61,13 @@
             </tr>
           </tbody>
         </table>
-        <nav class="Page navigation" style="float:left; margin-bottom:-18px; margin-top:10px;">
-            <ul class="pagination" style="color:#007bff;">
-              <li class="page-item"><a class="page"  >Página {{pagination.page}} de {{pagination.totalPages}} | Total de Registros: {{pagination.total}}</a></li>
-            </ul>
-        </nav>
         <!-- Pagination -->
+        <nav class="Page navigation" style="float:left; margin-bottom:-18px; margin-top:10px;">
+          <ul class="pagination" style="color:#007bff;">
+            <li class="page-item"><a class="page">Página {{pagination.page}} de {{pagination.totalPages}} | Total de Registros:
+                {{pagination.total}}</a></li>
+          </ul>
+        </nav>
         <nav aria-label="Page navigation example" style="float:right; margin-bottom:-20px;" *ngIf="showPagination">
           <ul class="pagination" style="color:#007bff;">
             <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagem(pagination.page - 1)">Anterior</a></li>

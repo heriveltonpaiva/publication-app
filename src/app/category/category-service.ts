@@ -22,6 +22,12 @@ export class CategoryService implements AbstractService{
     .map((response:Response) => response).catch(err=> Observable.throw(err));              
 
   } 
+  updatePublicArea(categoria):Observable<any[]>{   
+    return this.http.put(URL+'/updateAreaPublica/'+categoria.id, categoria)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));              
+
+  }
+
   getAll():Observable<any[]>{       
     return this.http.get(URL)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             

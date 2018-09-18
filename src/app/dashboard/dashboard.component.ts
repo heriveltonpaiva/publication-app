@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../core/messages/message.service';
+import { PublicService } from '../public/public.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,11 +9,14 @@ import { MessageService } from '../core/messages/message.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private messageService: MessageService) { 
-    this.messageService.clear();
+  categorias;
+
+  constructor(private publicService: PublicService) { 
+    
   }
 
   ngOnInit() {
+    this.publicService.getAllCategoria().subscribe(data => this.categorias =  data);
   }
 
 }

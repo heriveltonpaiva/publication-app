@@ -1,94 +1,98 @@
 <form [formGroup]="form">
-   <!-- Header Page -->
-   <div>
-      <ul class="nav">
-        <li class="nav-item" style="margin-left:-10px;">
-          <a class="nav-link active" href="#"> App Publication »</a>
-        </li>
-        <li class="nav-item" style="margin-left:-25px;">
-          <a class="nav-link" href="/assunto">Assuntos »</a>
-        </li>
-        <li class="nav-item" style="margin-left:-25px;">
-          <a class="nav-link disabled" href="/assunto" onclick="javascript(0);">Cadastrar/Listar</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col-sm-14">
-      <div class="card bg-light">
-        <div class="card-body">
-          <h4 class="card-title">Assuntos</h4>
-          <p class="card-text">Essa funcionalidade permite cadastrar assuntos para publicação.</p>
-        </div>
+  <!-- Header Page -->
+  <div>
+    <ul class="nav">
+      <li class="nav-item" style="margin-left:-10px;">
+        <a class="nav-link active" href="#"> App Publication »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link" href="/assunto">Assuntos »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link disabled" href="/assunto" onclick="javascript(0);">Cadastrar/Listar</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-14">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h4 class="card-title">Assuntos</h4>
+        <p class="card-text">Essa funcionalidade permite cadastrar assuntos para publicação.</p>
       </div>
     </div>
-    <!-- End Header Page -->
-    <div class="card" style="margin-top:5px; margin-bottom:2px;">
-      <div class="card-body light">
-  <div class="s">
-    <label for="name">Descrição</label>
-    <input type="text" class="form-control" id="descricao" formControlName="descricao">
   </div>
-  <div class="row" style="margin-bottom:5px;">
-    <div class="col-sm-4">
-      <label>Categoria</label>
-      <select class="form-control" formControlName="idCategoria">
-        <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
-        <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
-      </select>
-    </div>
-    <div class="col-sm-8">
-      <input class="btn btn-primary" id="btnCadastro" type="submit" style="height:40px; float:right; margin-top:30px;" value="Cadastrar"
-        (click)="salvar()" onclick="document.getElementById('btnCadastro').value = 'Cadastrar'" />
-    </div>
-  </div>
-  <br>
-  <br>
-  <div>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Descrição</th>
-          <th scope="col">Categoria</th>
-          <th scope="col" style="text-align:center;">Data de Cadastro</th>
-          <th scope="col" style="width:10%;"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ass of collection;">
-          <td style="width:50%">{{ass.descricao}}</td>
-          <td style="width:25%">{{ass.idCategoria.descricao}}</td>
-          <td style="width:15%; text-align:center;">{{ass.dataCadastro | date: "dd/MM/yyyy"}}</td>
-          <td style="text-align: right;">
-            <button class="btn btn-outline-success btn-sm" (click)="preAlterar(ass)" title="Alterar Assunto" style="color:black;" onclick="document.getElementById('btnCadastro').value = 'Alterar'; window.scroll(0, 0);">
-            <i class="fa fa-refresh"></i> </button>
-            <button class="btn btn-outline-danger btn-sm" (click)="remover(ass._id)" title="Remover Assunto" onclick="window.scroll(0, 0);"
-              style="color:red;"><i class="fa fa-trash-o"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- Pagination -->
-    <nav class="Page navigation" style="float:left; margin-bottom:-18px; margin-top:10px;">
-      <ul class="pagination" style="color:#007bff;">
-        <li class="page-item"><a class="page">Página {{pagination.page}} de {{pagination.totalPages}} | Total de Registros:{{pagination.total}}</a></li>
-      </ul>
-    </nav>
-    <nav aria-label="Page navigation example" style="float:right; margin-bottom:-20px;" *ngIf="showPagination">
-      <ul class="pagination" style="color:#007bff;">
-        <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagem(pagination.page - 1)">Anterior</a></li>
-        <div *ngFor="let item of pagination.arrayPages(); let i = index;">
-          <li class="page-item active" *ngIf="pagination.page == i+1">
-            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
-          </li>
-          <li class="page-item" *ngIf="pagination.page != i+1">
-            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
-          </li>
+  <!-- End Header Page -->
+  <div class="card" style="margin-top:5px; margin-bottom:2px;">
+    <div class="card-body light">
+      <div class="s">
+        <label for="name">Descrição</label>
+        <input type="text" class="form-control" id="descricao" formControlName="descricao">
+      </div>
+      <div class="row" style="margin-bottom:5px;">
+        <div class="col-sm-4">
+          <label>Categoria</label>
+          <select class="form-control" formControlName="idCategoria">
+            <option [ngValue]="null" selected="selected">-- SELECIONE --</option>
+            <option *ngFor="let cat of listaCategorias;" value="{{cat._id}}">{{cat.descricao}}</option>
+          </select>
         </div>
-        <li class="page-item"><a class="page-link" *ngIf="pagination.page < pagination.totalPages" (click)="carregarListagem(pagination.page + 1);">Próximo</a></li>
-      </ul>
-    </nav>
-    <!-- End Pagination -->
+        <div class="col-sm-8">
+          <input class="btn btn-primary" id="btnCadastro" type="submit" style="height:40px; float:right; margin-top:30px;" value="Cadastrar"
+            (click)="salvar()" onclick="document.getElementById('btnCadastro').value = 'Cadastrar'" />
+        </div>
+      </div>
+      <br>
+      <br>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Descrição</th>
+              <th scope="col">Categoria</th>
+              <th scope="col" style="text-align:center;">Data de Cadastro</th>
+              <th scope="col" style="width:12%;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ass of collection;">
+              <td style="width:50%">{{ass.descricao}}</td>
+              <td style="width:23%">{{ass.idCategoria.descricao}}</td>
+              <td style="width:15%; text-align:center;">{{ass.dataCadastro | date: "dd/MM/yyyy"}}</td>
+              <td style="text-align: right;">
+                <button class="btn btn-outline-primary btn-sm" (click)="desabilitarView(ass._id)" title="Desabilitar Visualização na Área Pública" style="color:black;" *ngIf="ass.areaPublica">
+                  <i class="fa fa-eye" id="disabled_view"></i> </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="habilitarView(ass._id)" title="Habilitar Visualização na Área Pública" style="color:black;" *ngIf="!ass.areaPublica">
+                    <i class="fa fa-eye-slash" id="enabled_view"></i> </button>
+                <button class="btn btn-outline-success btn-sm" (click)="preAlterar(ass)" title="Alterar Assunto" style="color:black;" onclick="document.getElementById('btnCadastro').value = 'Alterar'; window.scroll(0, 0);">
+                  <i class="fa fa-refresh"></i> </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="remover(ass._id)" title="Remover Assunto" onclick="window.scroll(0, 0);"
+                  style="color:red;"><i class="fa fa-trash-o"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Pagination -->
+        <nav class="Page navigation" style="float:left; margin-bottom:-18px; margin-top:10px;">
+          <ul class="pagination" style="color:#007bff;">
+            <li class="page-item"><a class="page">Página {{pagination.page}} de {{pagination.totalPages}} | Total de Registros: {{pagination.total}}</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Page navigation example" style="float:right; margin-bottom:-20px;" *ngIf="showPagination">
+          <ul class="pagination" style="color:#007bff;">
+            <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagem(pagination.page - 1)">Anterior</a></li>
+            <div *ngFor="let item of pagination.arrayPages(); let i = index;">
+              <li class="page-item active" *ngIf="pagination.page == i+1">
+                <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+              </li>
+              <li class="page-item" *ngIf="pagination.page != i+1">
+                <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+              </li>
+            </div>
+            <li class="page-item"><a class="page-link" *ngIf="pagination.page < pagination.totalPages" (click)="carregarListagem(pagination.page + 1);">Próximo</a></li>
+          </ul>
+        </nav>
+        <!-- End Pagination -->
+      </div>
+    </div>
   </div>
-</div>
-</div>
 </form>

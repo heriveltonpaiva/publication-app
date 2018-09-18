@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';   
+import { Injectable } from '@angular/core';   
 import {Response } from '@angular/http';   
 
 import 'rxjs/add/operator/map';  
@@ -6,8 +6,6 @@ import 'rxjs/add/operator/do';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { AbstractService } from '../core/arq/abstract.service';
-import { MessageService } from '../core/messages/message.service';
-import { Router } from '@angular/router';
  
 const URL = 'http://localhost:3000/api/assunto';
 
@@ -25,6 +23,11 @@ export class TopicService implements AbstractService{
     return this.http.put(URL+'/update/'+assunto.id, assunto)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));              
   } 
+
+  updatePublicArea(assunto):Observable<any[]>{   
+    return this.http.put(URL+'/updateAreaPublica/'+assunto.id, assunto)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));              
+  }
 
   getAll(): Observable<any[]>{       
     return this.http.get(URL)  

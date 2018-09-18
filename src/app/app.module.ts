@@ -33,6 +33,7 @@ import { ErrorsHandler } from './core/error-exception/error-exception-handler';
 import { AuthenticationService } from './core/authentication/authentication-service';
 import { LoginComponent } from './login/login.component';
 import { TokenStorage } from './core/authentication/token-storage';
+import { PublicService } from './public/public.service';
 
 
 @NgModule({
@@ -62,7 +63,7 @@ import { TokenStorage } from './core/authentication/token-storage';
     HttpClientModule
   ],
   providers: [
-    PublicationService, TopicService, CategoryService, 
+    PublicationService, TopicService, CategoryService, PublicService,
     MessageService, NotificationService, ErrorsService, Data, TokenStorage,  HttpService, AuthenticationService, 
    {provide: ErrorHandler, useClass: ErrorsHandler},
    {provide: HTTP_INTERCEPTORS, useClass: PublicationInterceptor,multi: true},
