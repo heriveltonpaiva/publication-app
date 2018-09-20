@@ -28,6 +28,7 @@ export class ErrorsHandler implements ErrorHandler {
            localStorage.removeItem('token');
            router.navigateByUrl('login');
         }
+       
         // Send the error to the server
           errorsService.log(error).subscribe();
           return notificationService.notify(`${error.status} - ${error.message}`);

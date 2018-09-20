@@ -3,7 +3,7 @@
   <div>
     <ul class="nav">
       <li class="nav-item" style="margin-left:-10px;">
-        <a class="nav-link active" href="#"> App Publication »</a>
+        <a class="nav-link active" href="#">Publication App »</a>
       </li>
       <li class="nav-item" style="margin-left:-25px;">
         <a class="nav-link" href="/publicacao/list">Publicações »</a>
@@ -51,8 +51,7 @@
       <div [froalaEditor] formControlName="conteudo">&nbsp;</div>
       <br>
       <input class="btn btn-primary" type="button" style="height:40px;margin-top:30px;" (click)="preVisualizar();" value="Pré-visualizar"
-        onclick="if(document.getElementById('divPreview') != null){document.getElementById('divPreview').style.display = 'block'}; window.scroll(0, 0);"
-      />
+        onclick="if(document.getElementById('divPreview') != null){document.getElementById('divPreview').style.display = 'block'}; window.scroll(0, 0);"/>
       <input class="btn btn-success" type="submit" style="height:40px;margin-top:30px; float:right;" value="Publicar" (click)="salvar()"
         onclick="window.scroll(0, 0);" *ngIf="alterar == false" />
       <input class="btn btn-warning" type="submit" style="height:40px;margin-top:30px; float:right;" value="Alterar Publicação"

@@ -1,11 +1,27 @@
- <!-- Jumbotron Header -->
- <header class="jumbotron my-4">
-  <h1 class="display-3">A Warm Welcome!</h1>
-  <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-  <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
-</header>
+<div class="alert alert-info" role="alert" style="margin-top:20px;">
+  <h4 class="alert-heading">Bem vindo ao Publication!</h4>
+  <p> Crie e compartilhe publicações para diversas áreas e assuntos, utilizando essa interface responsiva que lhe proporcionará
+    a melhor experiência. <br> Dashboard com componentes personalizáveis, possibilitando a criação de publicações públicas
+    e privadas, você define o que apresentar ao público.</p>
+</div>
+<div class="card mb-3" *ngFor="let publicacao of collection; let ind = index">
+  <div class="card-body">
+    <div style="float:right; margin-top:-5px;"><small class="text-muted">Publicado em <span class="date">{{publicacao.dataCadastro
+          | date: "dd/MM/yyyy hh:mm"}}</span></small></div>
 
-<!-- Page Features -->
+    <h5 class="card-title">{{publicacao.titulo}}</h5>
+    <div style="float:right; margin-top:-20px;"><small class="text-muted">
+        {{publicacao.idAssunto.idCategoria.descricao}}&nbsp;|&nbsp;{{publicacao.idAssunto.descricao}}
+        <a href="#"></a>
+      </small></div>
+    <br>
+    <div [innerHTML]="publicacao.resumo"> </div>
+    <button type="button" style="float:right;" class="btn btn-link">Ler essa publicação</button>
+  </div>
+</div>
+
+<!-- Angular Social Share buttons -->
+<!-- http://jasonwatmore.com/post/2018/06/01/angular-2-social-sharing-buttons-for-facebook-google-plus-twitter-linkedin-and-pinterest-->
 <div class="row text-center">
   <div class="col-lg-3 col-md-6 mb-4" *ngFor="let cat of categorias;">
     <div class="card">
@@ -19,5 +35,3 @@
       </div>
     </div>
   </div>
-</div>
-<!-- /.row -->
