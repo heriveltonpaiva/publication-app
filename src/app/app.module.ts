@@ -34,6 +34,7 @@ import { AuthenticationService } from './core/authentication/authentication-serv
 import { LoginComponent } from './login/login.component';
 import { TokenStorage } from './core/authentication/token-storage';
 import { PublicService } from './public/public.service';
+import { FileUploadService } from './core/arq/fileupload.service';
 
 @NgModule({
   declarations: [
@@ -62,8 +63,8 @@ import { PublicService } from './public/public.service';
     HttpClientModule
   ],
   providers: [
-    PublicationService, TopicService, CategoryService, PublicService,
-    MessageService, NotificationService, ErrorsService, Data, TokenStorage,  HttpService, AuthenticationService, 
+    PublicationService, TopicService, CategoryService, PublicService, FileUploadService,
+    MessageService, NotificationService, ErrorsService, Data, TokenStorage, HttpService, AuthenticationService, 
    {provide: ErrorHandler, useClass: ErrorsHandler},
    {provide: HTTP_INTERCEPTORS, useClass: PublicationInterceptor,multi: true},
    { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' }

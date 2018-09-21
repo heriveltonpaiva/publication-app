@@ -5,6 +5,7 @@ import { AbstractComponent } from '../core/arq/abstract.component';
 import { AbstractValidator } from '../core/arq/abstract.validator';
 import { MessageService } from '../core/messages/message.service';
 import { TopicService } from '../topic/topic-service';
+import { FileUploadService } from '../core/arq/fileupload.service';
 
 @Component({
   selector: 'app-category',
@@ -12,14 +13,15 @@ import { TopicService } from '../topic/topic-service';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent extends AbstractComponent implements AbstractValidator {
-
+  selectedFile: File;
+  imagePath: any;
   form = new FormGroup({
     id: new FormControl(),
     descricao: new FormControl(),
     areaPublica: new FormControl(false)
   });
 
-  constructor(service: CategoryService, messageService: MessageService, private topicService: TopicService) {
+  constructor(service: CategoryService, messageService: MessageService, private topicService: TopicService, private fileService: FileUploadService) {
     super(service, messageService);
   }
 
@@ -57,5 +59,17 @@ export class CategoryComponent extends AbstractComponent implements AbstractVali
     this.addValidateRequiredMap('Descrição', this.getObj().descricao);
   };
 
+  onFileChanged(event) {
+    console.log(event);
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+    this.onUpload();
+  }
+
+  onUpload() {
+    const formData: FormData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    this.fileService.getFileBase64(formData).subscribe(retorno => {this.imagePath = 'data:image/jpg;base64,'+retorno});
+  }
 
 }
