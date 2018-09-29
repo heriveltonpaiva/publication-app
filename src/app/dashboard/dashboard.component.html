@@ -7,7 +7,7 @@
 <div class="card mb-3" *ngFor="let publicacao of collection; let ind = index">
   <div class="card-body">
     <div style="float:right; margin-top:-5px;"><small class="text-muted">Publicado em <span class="date">{{publicacao.dataCadastro
-          | date: "dd/MM/yyyy hh:mm"}}</span></small></div>
+          | date: "dd/MM/yyyy H:mm"}}</span></small></div>
 
     <h5 class="card-title">{{publicacao.titulo}}</h5>
     <div style="float:right; margin-top:-20px;"><small class="text-muted">
@@ -16,7 +16,7 @@
       </small></div>
     <br>
     <div [innerHTML]="publicacao.resumo"> </div>
-    <button type="button" style="float:right;" class="btn btn-link">Ler essa publicação</button>
+    <button type="button" style="float:right;" class="btn btn-link" routerLink="/publicacao/{{publicacao._id}}">Ler essa publicação</button>
   </div>
 </div>
 
@@ -25,13 +25,15 @@
 <div class="row text-center">
   <div class="col-lg-3 col-md-6 mb-4" *ngFor="let cat of categorias;">
     <div class="card">
-      <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+        <img class="card-img-top" src="http://placehold.it/500x325" alt="" *ngIf="!cat.idArquivo">
+
+      <img [src]="cat.idArquivo.data" width="253" height="165" *ngIf="cat.idArquivo">
       <div class="card-body">
         <h4 class="card-title">{{cat.descricao}}</h4>
         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
       </div>
       <div class="card-footer">
-        <a href="#" class="btn btn-primary">Find Out More!</a>
+        <a href="#" class="btn btn-primary">Saiba mais!</a>
       </div>
     </div>
   </div>

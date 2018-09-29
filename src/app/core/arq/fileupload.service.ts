@@ -14,6 +14,12 @@ export class FileUploadService{
   getFileBase64(file): Observable<any[]>{      
     return this.http.post(URL, file)
     .map((response:any) => response).catch(err=>  Observable.throw(err));
-  } 
+  }
+
+  saveArquivo(arquivo):Observable<any[]>{      
+    return this.http.post(URL+'/save/', arquivo)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));
+  }
+
 
 }

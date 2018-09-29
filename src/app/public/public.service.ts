@@ -28,7 +28,10 @@ export class PublicService implements AbstractService{
 
   getAll(): Observable<any[]>{return null}
 
-  getAllPagination(page): Observable<any[]>{return null;}
+  getAllPagination(page):Observable<any[]>{       
+    return this.http.get(URL+'/publicacao/'+page)  
+    .map((response) => response.json()).catch(err=> Observable.throw(err));             
+  }
 
   save(obj): Observable<any[]>{return null;}
 

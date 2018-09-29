@@ -6,6 +6,7 @@ import { AbstractValidator } from '../core/arq/abstract.validator';
 import { MessageService } from '../core/messages/message.service';
 import { TopicService } from '../topic/topic-service';
 import { FileUploadService } from '../core/arq/fileupload.service';
+import { Arquivo } from '../core/arq/arquivo';
 
 @Component({
   selector: 'app-category',
@@ -15,10 +16,12 @@ import { FileUploadService } from '../core/arq/fileupload.service';
 export class CategoryComponent extends AbstractComponent implements AbstractValidator {
   selectedFile: File;
   imagePath: any;
+  arquivo: Arquivo;
   form = new FormGroup({
     id: new FormControl(),
     descricao: new FormControl(),
-    areaPublica: new FormControl(false)
+    areaPublica: new FormControl(false),
+    idArquivo: new FormControl()
   });
 
   constructor(service: CategoryService, messageService: MessageService, private topicService: TopicService, private fileService: FileUploadService) {
@@ -34,7 +37,15 @@ export class CategoryComponent extends AbstractComponent implements AbstractVali
 
   salvar() {
     this.validateInputs();
-    super.salvar();
+    if(this.arquivo != null){
+      this.fileService.saveArquivo(this.arquivo).subscribe(idArquivo => 
+      {
+        this.form.value.idArquivo = idArquivo;
+        super.salvar();
+      });
+    }else{
+      this.addErrorMessage('Imagem: Campo obrigatório não informado.')
+    }
   }
 
   remover(id) {
@@ -67,9 +78,17 @@ export class CategoryComponent extends AbstractComponent implements AbstractVali
   }
 
   onUpload() {
+    this.arquivo = new Arquivo();
     const formData: FormData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
-    this.fileService.getFileBase64(formData).subscribe(retorno => {this.imagePath = 'data:image/jpg;base64,'+retorno});
+    this.fileService.getFileBase64(formData).subscribe(retorno => {
+      this.arquivo.data = retorno;
+      this.imagePath = 'data:image/jpg;base64,'+retorno
+    });
+    this.arquivo.name = this.selectedFile.name;
+    this.arquivo.contentType = this.selectedFile.type;
+    this.arquivo.size = this.selectedFile.size;
+    console.log(this.arquivo);
   }
 
 }
