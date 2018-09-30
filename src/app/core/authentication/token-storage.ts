@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
-const TOKEN_KEY = 'AuthToken';
+import { User } from '../user/user';
+const TOKEN_KEY = 'token';
+const USERNAME_KEY = 'username';
+const USER_ID_KEY = 'idUser';
+const USER_ADMIN_KEY = 'userAdmin';
 
 @Injectable()
 export class TokenStorage {
   constructor() { }
 
   signOut() {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem('token');
-    window.sessionStorage.clear();
+    localStorage.removeItem(TOKEN_KEY);
   }
 
-  public saveToken(token: any) {
-    localStorage.setItem('token', token);
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+  public saveToken(auth: any) {
+    localStorage.setItem(TOKEN_KEY, auth);
+  }
+
+  public saveUser(user: any){
+    localStorage.setItem(USERNAME_KEY, user.login);
+    localStorage.setItem(USER_ID_KEY, user._id);
+    localStorage.setItem(USER_ADMIN_KEY, user.userAdmin);
   }
 
   public getToken(): string {
-    return sessionStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY);
+  }
+
+  public isAuthenticated(){
+    return this.getToken() != null;
   }
 }

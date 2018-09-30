@@ -9,8 +9,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-
-          <li class="nav-item dropdown active">
+          <li class="nav-item dropdown active" *ngIf="tokenStorage.isAuthenticated()">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               Publicações
@@ -23,20 +22,20 @@
               <a class="dropdown-item" routerLink="/assunto">Gerenciar Assuntos</a>
             </div>
           </li>
-          <li class="nav-item dropdown active">
+          <li class="nav-item dropdown active" *ngIf="tokenStorage.isAuthenticated()">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Bem vindo, Herivelton 
-                <img src="http://placehold.it/500x325" width="30" height="30" alt="">
+                Bem vindo, {{usuarioLogado.name}}
+                <img src="/assets/img/user.png" width="30" height="30" alt="">
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left:50px;">
                   <a class="dropdown-item" href="#">Meus Dados</a>
                   <a class="dropdown-item" href="#">Alterar Usuário</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" (click)='logout();'>Sair</a>
+                  <a class="dropdown-item" routerLink="javascript(0);" (click)='logout();'>Sair</a>
               </div>
             </li>
-          <li class="nav-item active">
+          <li class="nav-item active" *ngIf="!tokenStorage.isAuthenticated()">
             <a class="nav-link" routerLink="javascript(0);" style="font-weight:bold;" routerLink="/login">Entrar</a>
           </li>
         </ul>

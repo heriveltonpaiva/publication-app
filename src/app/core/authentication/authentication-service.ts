@@ -7,7 +7,9 @@ export class AuthenticationService {
     constructor(private http: HttpClient) {}
     login(login:string, password:string): Observable<any[]>{              
         return this.http.post('http://localhost:3000/api/generate-token/', {login, password})
-        .map((response: any) => response.token).catch(err=> Observable.throw(err));
+        .map((response: any) => response).catch(err=> Observable.throw(err));
       }  
+    
+    
 }
           

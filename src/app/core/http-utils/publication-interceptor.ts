@@ -3,6 +3,8 @@ import {HttpInterceptor, HttpRequest, HttpHandler, HttpUserEvent, HttpErrorRespo
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/do';
+import { TokenStorage } from '../authentication/token-storage';
+const TOKEN_KEY = 'token';
 
 /**
  * @author Herivelton Paiva
@@ -12,18 +14,16 @@ import 'rxjs/add/operator/do';
  */
 @Injectable()
 export class PublicationInterceptor implements HttpInterceptor {
-  constructor(private router: Router){}
-
+  constructor(private router: Router, private tokenStorage: TokenStorage){}
+  
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> | Observable<HttpUserEvent<any>> {
-
-    if (localStorage.getItem('token') != null) {
-      const params = new HttpParams().set('token', localStorage.getItem('token'));
+    if (this.tokenStorage.isAuthenticated()) {
+      const params = new HttpParams().set(TOKEN_KEY, this.tokenStorage.getToken());
       req = req.clone({params})
       return next.handle(req); 
-    }else if(localStorage.getItem('token') == null){
+    }else{
         this.router.navigate(['login']);
     }
-
     return next.handle(req).do(
       (err: any) => {
         if (err instanceof HttpErrorResponse) {

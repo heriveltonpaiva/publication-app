@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../authentication/authentication-servi
 import { ErrorsService } from '../../error-exception/error-exception-service';
 import { TokenStorage } from '../../authentication/token-storage';
 import { MessageService } from '../../messages/message.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit {
         this.authService.login(val.login, val.password)
             .subscribe(res => {
               if(res){
-                    this.token.saveToken(res);
+                    this.token.saveToken((<any>res).token);
+                    this.token.saveUser((<any>res).data);
                     this.router.navigateByUrl('/');
               }else{
                 this.messageService.add(2, 'Usuário ou Senha incorretos.');

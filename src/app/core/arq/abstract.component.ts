@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 import { MessageType } from "../messages/message.type.enum";
 import { MessageService } from "../messages/message.service";
 import { Pagination } from "./pagination";
+import { User } from "../user/user";
 
 /**
  * @author Herivelton Paiva 
@@ -17,9 +18,10 @@ export class AbstractComponent implements OnInit {
   pagination = new Pagination();
   form;
   validacoes = new Map<any, any>();
-
+  usuarioLogado;
   constructor(public service: AbstractService, public messageService: MessageService) {
     this.clearMensagens();
+    this.usuarioLogado = new User();
   }
 
   ngOnInit() {
