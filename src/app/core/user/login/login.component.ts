@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../core/authentication/authentication-service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { TokenStorage } from '../core/authentication/token-storage';
-import { ErrorsService } from '../core/error-exception/error-exception-service';
-import { MessageService } from '../core/messages/message.service';
+import { AuthenticationService } from '../../authentication/authentication-service';
+import { ErrorsService } from '../../error-exception/error-exception-service';
+import { TokenStorage } from '../../authentication/token-storage';
+import { MessageService } from '../../messages/message.service';
 
 @Component({
   selector: 'app-login',

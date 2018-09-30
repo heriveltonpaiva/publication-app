@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PublicationService } from '../publication/publication.service';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { PublicationService } from '../publication.service';
 
 @Component({
   selector: 'app-publication-view',
@@ -11,7 +11,8 @@ import { Location } from '@angular/common';
 export class PublicationViewComponent implements OnInit {
   publicacao : any;
 
-  constructor(private route: ActivatedRoute, private location: Location, private publicacaoService: PublicationService) {}
+  constructor(private route: ActivatedRoute, private location: Location, 
+      private publicacaoService: PublicationService) {}
   ngOnInit() {
     this.getPublicacao();
   }

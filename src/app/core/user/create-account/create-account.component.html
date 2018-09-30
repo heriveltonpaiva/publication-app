@@ -1,0 +1,32 @@
+<form [formGroup]="form">
+    <!-- Header Page -->
+    <div>
+      <ul class="nav">
+        <li class="nav-item" style="margin-left:-10px;">
+          <a class="nav-link active" href="#"> Publication App »</a>
+        </li>
+        <li class="nav-item" style="margin-left:-25px;">
+          <a class="nav-link disabled" href="/createAccount" onclick="javascript(0);">Criar uma conta</a>
+        </li>
+      </ul>
+    </div>
+    <!-- End Header Page -->
+    <div class="card" style="margin-top:5px; margin-bottom:2px;">
+      <div class="card-body light">
+        <div class="row" style="margin-bottom:2px;">
+          <div class="col-sm-12">
+            <label for="name">Login</label>
+            <input type="text" class="form-control" id="descricao" formControlName="login">
+            <label for="name">Senha</label>
+            <input type="password" class="form-control" id="password" formControlName="password">
+            <label for="name">E-mail</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+          </div>
+          <div class="col-sm-2">
+            <input class="btn btn-primary" id="btnCadastro" type="submit" style="height:40px; margin-top:30px;" value="Cadastrar" (click)="salvar()"
+              onclick="document.getElementById('btnCadastro').value = 'Cadastrar'" />
+          </div>
+        </div>
+        </div>
+      </div>
+  </form>

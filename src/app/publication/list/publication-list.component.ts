@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { PublicationService } from '../publication/publication.service';
-import { MessageService } from '../core/messages/message.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Data } from '../core/providers/data';
-import { AbstractComponent } from '../core/arq/abstract.component';
+import { AbstractComponent } from '../../core/arq/abstract.component';
+import { PublicationService } from '../publication.service';
+import { MessageService } from '../../core/messages/message.service';
+import { Data } from '../../core/providers/data';
 
 @Component({
   selector: 'app-publication-list',
@@ -19,7 +19,8 @@ export class PublicationListComponent extends AbstractComponent {
     resumo: new FormControl(''),
     idAssunto: new FormControl('')
   });
-  constructor(service: PublicationService, messageService: MessageService, private router: Router, private route: ActivatedRoute, private data: Data) {
+  constructor(service: PublicationService, messageService: MessageService, private router: Router, 
+    private route: ActivatedRoute, private data: Data) {
     super(service, messageService);
   }
 

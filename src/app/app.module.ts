@@ -10,6 +10,8 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { PublicationComponent } from './publication/publication.component';
+import { PublicationViewComponent } from './publication/view/publication-view.component';
+import { PublicationListComponent } from './publication/list/publication-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MessageComponent } from './core/messages/message.component';
 import { MessageService } from './core/messages/message.service';
@@ -17,24 +19,27 @@ import { PublicationService } from './publication/publication.service';
 import { PublicationInterceptor } from './core/http-utils/publication-interceptor'
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
-import { PublicationListComponent } from './publication-list/publication-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Data } from './core/providers/data';
 import { TopicComponent } from './topic/topic.component';
 import { TopicService } from './topic/topic-service';
 import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category-service';
-import { PublicationViewComponent } from './publication-view/publication-view.component';
 import { NotificationService } from './core/http-utils/notification-service';
 import { HttpService } from './core/http-utils/http-service';
 import { ErrorExceptionComponent } from './core/error-exception/error-exception.component';
 import { ErrorsService } from './core/error-exception/error-exception-service';
 import { ErrorsHandler } from './core/error-exception/error-exception-handler';
 import { AuthenticationService } from './core/authentication/authentication-service';
-import { LoginComponent } from './login/login.component';
 import { TokenStorage } from './core/authentication/token-storage';
-import { PublicService } from './public/public.service';
 import { FileUploadService } from './core/arq/fileupload.service';
+import { UserComponent } from './core/user/user.component';
+import { LoginComponent } from './core/user/login/login.component';
+import { CreateAccountComponent } from './core/user/create-account/create-account.component';
+import { CreateAccountService } from './core/user/create-account/create-account-service';
+import { UserListComponent } from './core/user/list/user-list.component';
+import { UserViewComponent } from './core/user/view/user-view.component';
+import { PublicService } from './dashboard/public.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,11 @@ import { FileUploadService } from './core/arq/fileupload.service';
     CategoryComponent,
     PublicationViewComponent,
     ErrorExceptionComponent,
-    LoginComponent
+    LoginComponent,
+    CreateAccountComponent,
+    UserComponent,
+    UserListComponent,
+    UserViewComponent
   ],
   imports: [
     LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
@@ -63,7 +72,7 @@ import { FileUploadService } from './core/arq/fileupload.service';
     HttpClientModule
   ],
   providers: [
-    PublicationService, TopicService, CategoryService, PublicService, FileUploadService,
+    PublicationService, TopicService, CategoryService, PublicService, FileUploadService, CreateAccountService,
     MessageService, NotificationService, ErrorsService, Data, TokenStorage, HttpService, AuthenticationService, 
    {provide: ErrorHandler, useClass: ErrorsHandler},
    {provide: HTTP_INTERCEPTORS, useClass: PublicationInterceptor,multi: true},

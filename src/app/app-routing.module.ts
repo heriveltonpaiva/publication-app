@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PublicationComponent } from './publication/publication.component';
-import { PublicationListComponent } from './publication-list/publication-list.component';
+import { PublicationViewComponent } from './publication/view/publication-view.component';
+import { PublicationListComponent } from './publication/list/publication-list.component';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TopicComponent } from './topic/topic.component';
 import { CategoryComponent } from './category/category.component';
-import { PublicationViewComponent } from './publication-view/publication-view.component'
 import { ErrorExceptionComponent } from './core/error-exception/error-exception.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './core/user/login/login.component';
+import { CreateAccountComponent } from './core/user/create-account/create-account.component';
+import { UserComponent } from './core/user/user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -18,6 +21,8 @@ const routes: Routes = [
   { path: 'publicacao/:id', component: PublicationViewComponent },
   { path: 'assunto', component: TopicComponent },
   { path: 'categoria', component: CategoryComponent },
+  { path: 'createAccount', component: CreateAccountComponent},
+  { path: 'usuario', component: UserComponent},
   { path: 'error', component: ErrorExceptionComponent,  data: { error: 404 } },
   { path: 'assets', redirectTo: '/'},
   { path: '**', redirectTo: 'error'}

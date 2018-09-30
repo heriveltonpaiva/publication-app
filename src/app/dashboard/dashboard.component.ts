@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MessageService } from '../core/messages/message.service';
-import { PublicService } from '../public/public.service';
 import { AbstractComponent } from '../core/arq/abstract.component';
+import { PublicService } from './public.service';
 
 @Component({
   selector: 'app-dashboard',

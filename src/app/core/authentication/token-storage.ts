@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-
 const TOKEN_KEY = 'AuthToken';
+
 @Injectable()
 export class TokenStorage {
-
   constructor() { }
 
   signOut() {

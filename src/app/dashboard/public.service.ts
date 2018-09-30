@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/Rx';  
 import {Observable} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Http } from '@angular/http';
 import { AbstractService } from '../core/arq/abstract.service';
 
