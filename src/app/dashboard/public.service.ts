@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import { Http } from '@angular/http';
 import { AbstractService } from '../core/arq/abstract.service';
 
-const URL = 'http://localhost:3000/api/public/';
+const URL = 'http://localhost:3000/api/public';
 
 @Injectable()  
 export class PublicService implements AbstractService{  
@@ -31,7 +31,7 @@ export class PublicService implements AbstractService{
     return this.http.get(URL+'/publicacao/'+page)  
     .map((response) => response.json()).catch(err=> Observable.throw(err));             
   }
-
+  
   save(obj): Observable<any[]>{return null;}
 
   update(obj):Observable<any[]>{return null;}

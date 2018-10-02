@@ -29,8 +29,9 @@
                 <img src="/assets/img/user.png" width="30" height="30" alt="">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left:50px;">
-                  <a class="dropdown-item" href="#">Meus Dados</a>
-                  <a class="dropdown-item" href="#">Alterar Usuário</a>
+                  <a class="dropdown-item" routerLink="/usuario/list">Todos Usuários</a>
+                  <a class="dropdown-item" routerLink="/usuario/{{usuarioLogado.id}}">Meus Dados</a>
+                  <a class="dropdown-item" routerLink="/usuario/form">Alterar Usuário</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" routerLink="javascript(0);" (click)='logout();'>Sair</a>
               </div>

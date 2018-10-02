@@ -11,6 +11,8 @@ import { ErrorExceptionComponent } from './core/error-exception/error-exception.
 import { LoginComponent } from './core/user/login/login.component';
 import { CreateAccountComponent } from './core/user/create-account/create-account.component';
 import { UserComponent } from './core/user/user.component';
+import { UserViewComponent } from './core/user/view/user-view.component';
+import { UserListComponent } from './core/user/list/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -22,7 +24,9 @@ const routes: Routes = [
   { path: 'assunto', component: TopicComponent },
   { path: 'categoria', component: CategoryComponent },
   { path: 'createAccount', component: CreateAccountComponent},
-  { path: 'usuario', component: UserComponent},
+  { path: 'usuario/form',  component: UserComponent},
+  { path: 'usuario/list', component: UserListComponent},
+  { path: 'usuario/:id',   component: UserViewComponent},
   { path: 'error', component: ErrorExceptionComponent,  data: { error: 404 } },
   { path: 'assets', redirectTo: '/'},
   { path: '**', redirectTo: 'error'}

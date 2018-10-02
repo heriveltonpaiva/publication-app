@@ -1,3 +1,25 @@
-<p>
-  user-view works!
-</p>
+  <!-- Header Page -->
+  <div>
+      <ul class="nav">
+        <li class="nav-item" style="margin-left:-10px;">
+          <a class="nav-link active" href="#"> App Publication »</a>
+        </li>
+        <li class="nav-item" style="margin-left:-25px;">
+            <a class="nav-link" href="/usuario/list">Usuários »</a>
+        </li>
+        <li class="nav-item" style="margin-left:-25px;">
+            <a class="nav-link disabled" href="/usuario/form" onclick="javascript(0);">Visualizar</a>
+          </li>
+      </ul>
+    </div>
+<!-- End Header Page -->
+<div class="card bg" *ngIf="usuario">
+  <div class="card-body" style="margin-top:0px;">
+    <div class="card bg-light col-sm-14" style="margin-top:-21px; margin-left:-21px; margin-right:-21px; border-bottom:0px;">
+      <div class="card-body" style="margin:0px;">
+        <h5 class="card-title"><b>{{usuario.login}}</b></h5>
+      </div>
+    </div>
+    <input class="btn btn-outline-danger" style="width:100px; height:30px;margin:5px; float:left;" value="Voltar" (click)="goBack();"/>
+  </div>
+</div>

@@ -40,6 +40,7 @@ import { CreateAccountService } from './core/user/create-account/create-account-
 import { UserListComponent } from './core/user/list/user-list.component';
 import { UserViewComponent } from './core/user/view/user-view.component';
 import { PublicService } from './dashboard/public.service';
+import { UserService } from './core/user/user.service';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { PublicService } from './dashboard/public.service';
     HttpClientModule
   ],
   providers: [
-    PublicationService, TopicService, CategoryService, PublicService, FileUploadService, CreateAccountService,
+    PublicationService, TopicService, CategoryService, PublicService, FileUploadService, CreateAccountService, UserService,
     MessageService, NotificationService, ErrorsService, Data, TokenStorage, HttpService, AuthenticationService, 
    {provide: ErrorHandler, useClass: ErrorsHandler},
    {provide: HTTP_INTERCEPTORS, useClass: PublicationInterceptor,multi: true},
