@@ -17,6 +17,7 @@ export class ErrorsHandler implements ErrorHandler {
     const router = this.injector.get(Router);
 
     if (error instanceof HttpErrorResponse) {
+        console.log(error.message);
         // Server or connection error happened
         if (!navigator.onLine) {
           // Handle offline error

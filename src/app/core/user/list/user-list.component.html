@@ -6,10 +6,10 @@
           <a class="nav-link active" href="#"> Publication App »</a>
         </li>
         <li class="nav-item" style="margin-left:-25px;">
-          <a class="nav-link" href="/categoria">Usuários »</a>
+          <a class="nav-link" href="/usuario/list">Usuários »</a>
         </li>
         <li class="nav-item" style="margin-left:-25px;">
-          <a class="nav-link disabled" href="/categoria" onclick="javascript(0);">Listagem</a>
+          <a class="nav-link disabled" href="/usuario/list" onclick="javascript(0);">Listagem</a>
         </li>
       </ul>
     </div>
@@ -27,6 +27,7 @@
         <tr>
           <th scope="col">Nome</th>
           <th scope="col">Login</th>
+          <th scope="col">Resumo</th>
           <th scope="col">Administrador</th>
           <th scope="col" style="text-align:center;">Data de Cadastro</th>
           <th scope="col" style="width:12%;"></th>
@@ -36,6 +37,7 @@
         <tr *ngFor="let user of collection;">
           <td>{{user.name}}</td>
           <td>{{user.login}}</td>
+          <td><div [innerHTML]="user.resumo"> </div></td>
           <td>{{user.admin}}</td>
           <td style="width:15%; text-align:center;">{{user.dataCadastro | date: "dd/MM/yyyy"}}</td>
           <td style="text-align: right;">

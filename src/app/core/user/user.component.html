@@ -1,3 +1,58 @@
-<p>
-  user works!
-</p>
+<form [formGroup]="form">
+  <!-- Header Page -->
+  <div>
+    <ul class="nav">
+      <li class="nav-item" style="margin-left:-10px;">
+        <a class="nav-link active" href="#"> Publication App »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link" href="/usuario/form">Usuário »</a>
+      </li>
+      <li class="nav-item" style="margin-left:-25px;">
+        <a class="nav-link disabled" href="/usuario/form" onclick="javascript(0);">Meus Dados</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-14">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h4 class="card-title">Meus Dados</h4>
+        <p class="card-text">Essa funcionalidade permite a alteração das minhas informações visíveis ao público externo.</p>
+      </div>
+    </div>
+  </div>
+  <!-- End Header Page -->
+  <div class="card-body">
+
+    <div class="card-body light">
+      <div class="row" style="margin-bottom:2px;">
+        <div class="col-sm-2" style="margin:50px;">
+          <div class="text-center" *ngIf="!imagePath">
+            <img src="/assets/img/user.png" class="rounded">
+          </div>
+          <div class="text-center" *ngIf="imagePath">
+              <img [src]="imagePath" width="200" height="200" class="rounded">
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <label for="name">Login</label>
+          <input type="text" class="form-control" id="descricao" formControlName="login" readonly>
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" id="nome" formControlName="name">
+          <label for="name">E-mail</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <label for="fileUploadName">Foto</label>
+          <input type="file" class="form-control-file" id="fileUploadName" (change)="onFileChanged($event)" #fileInput>
+        </div>
+      </div>
+    </div>
+      <div class="card" style="margin-top:-20px; margin-bottom:2px;border:0px;">
+        <div class="card-body light">
+          <label for="name">Resumo</label>
+          <div [froalaEditor] formControlName="resumo">&nbsp;</div>
+          <br>
+          <input class="btn btn-success" id="btnCadastro" type="submit" style="float:right;" value="Atualizar Dados" (click)="salvar()"/>
+        </div>
+      </div>
+  </div>
+</form>

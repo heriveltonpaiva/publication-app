@@ -26,12 +26,13 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Bem vindo, {{usuarioLogado.name}}
-                <img src="/assets/img/user.png" width="30" height="30" alt="">
+                <img src="/assets/img/user.png" width="30" height="30" alt="" *ngIf="!usuarioLogado.idArquivo">
+                <img [src]="usuarioLogado.foto" width="30" height="30" alt="" *ngIf="usuarioLogado.idArquivo">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left:50px;">
-                  <a class="dropdown-item" routerLink="/usuario/list">Todos Usuários</a>
-                  <a class="dropdown-item" routerLink="/usuario/{{usuarioLogado.id}}">Meus Dados</a>
-                  <a class="dropdown-item" routerLink="/usuario/form">Alterar Usuário</a>
+                  <a class="dropdown-item" routerLink="/usuario/{{usuarioLogado.id}}">Quem sou</a>
+                  <a class="dropdown-item" routerLink="/usuario/form">Meus Dados</a>
+                  <a class="dropdown-item" routerLink="/usuario/list">Usuários</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" routerLink="javascript(0);" (click)='logout();'>Sair</a>
               </div>
