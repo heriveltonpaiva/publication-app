@@ -7,6 +7,7 @@ import { Arquivo } from '../arq/arquivo';
 import { FileUploadService } from '../arq/fileupload.service';
 import { TokenStorage } from '../authentication/token-storage';
 import { Router } from '@angular/router';
+import { MessageType } from '../messages/message.type.enum';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +19,7 @@ export class UserComponent extends AbstractComponent implements OnInit{
   imagePath: any;
   arquivo: Arquivo;
   arquivoUpload:Boolean;
+  usuario:any;
   form = new FormGroup({
     name: new FormControl(),
     login: new FormControl(),
@@ -39,18 +41,18 @@ export class UserComponent extends AbstractComponent implements OnInit{
 
    salvar() {
     this.validateInputs();
-    this.form.value.id = this.usuarioLogado.id;
+    this.form.value.id = this.getUsuarioLogado().id;
     if(this.arquivoUpload){
       this.fileService.saveArquivo(this.arquivo).subscribe(idArquivo => 
       {
         this.form.value.idArquivo = idArquivo;
-        super.salvar();
+        this.atualizarDadosUsuario()
       });
-    }else if(this.usuarioLogado.foto != null){
-        this.getObj().idArquivo = this.usuarioLogado.idArquivo;
-        console.log(this.getObj());
-        super.salvar();
-    }else{
+    }else if(this.getUsuarioLogado().idArquivo != null){
+       this.form.value.idArquivo = this.getUsuarioLogado().idArquivo._id;
+       console.log(this.form.value)
+       this.atualizarDadosUsuario()
+    }else if(this.form.value.idArquivo == null){
       this.addErrorMessage('Foto: Campo obrigatório não informado.')
     }
   }
@@ -75,17 +77,26 @@ export class UserComponent extends AbstractComponent implements OnInit{
   }
 
   carregarDadosUsuario(){
-    this.form.patchValue({'name': this.usuarioLogado.name});
-    this.form.patchValue({'login': this.usuarioLogado.login});
-    //this.form.patchValue({'password': this.usuarioLogado.password});
-    this.form.patchValue({'email': this.usuarioLogado.email});
-    this.form.patchValue({'resumo': this.usuarioLogado.resumo});
-    this.imagePath = this.usuarioLogado.foto;
+    this.form.patchValue({'name': this.getUsuarioLogado().name});
+    this.form.patchValue({'login': this.getUsuarioLogado().login});
+    this.form.patchValue({'email': this.getUsuarioLogado().email});
+    this.form.patchValue({'resumo': this.getUsuarioLogado().resumo});
+      if(this.getUsuarioLogado().idArquivo){
+        this.imagePath = this.getUsuarioLogado().idArquivo.data;
+      }
+    this.usuario = this.getUsuarioLogado();
   }
-
   validateInputs() {
     this.addValidateRequiredMap('Nome', this.getObj().name);
     this.addValidateRequiredMap('E-mail', this.getObj().email);
     this.addValidateRequiredMap('Resumo', this.getObj().resumo);
   };
+
+  private atualizarDadosUsuario() {
+    this.clearMensagens();
+    this.service.update(this.getObj()).subscribe(retorno => {
+      localStorage.setItem('user', JSON.stringify(retorno));
+      this.addSuccessMessage("Dados atualizados com sucesso.");
+    }, error => this.addException(error));
+  }
 }

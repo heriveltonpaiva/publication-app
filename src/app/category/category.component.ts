@@ -71,9 +71,7 @@ export class CategoryComponent extends AbstractComponent implements AbstractVali
   };
 
   onFileChanged(event) {
-    console.log(event);
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
     this.onUpload();
   }
 

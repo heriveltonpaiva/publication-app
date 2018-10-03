@@ -1,5 +1,4 @@
 <!-- Navigation -->
-<form [formGroup]="form">
   <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" routerLink="/"><b>Publication App</b></a>
@@ -25,12 +24,12 @@
           <li class="nav-item dropdown active" *ngIf="tokenStorage.isAuthenticated()">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Bem vindo, {{usuarioLogado.name}}
-                <img src="/assets/img/user.png" width="30" height="30" alt="" *ngIf="!usuarioLogado.idArquivo">
-                <img [src]="usuarioLogado.foto" width="30" height="30" alt="" *ngIf="usuarioLogado.idArquivo">
+                <span id="nameLogin">Bem vindo, {{usuario.name}} </span>
+                <img src="/assets/img/user.png" width="30" height="30" alt="" *ngIf="!usuario.idArquivo">
+                <img [src]="usuario.idArquivo.data" width="30" height="30" alt="" *ngIf="usuario.idArquivo">
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left:50px;">
-                  <a class="dropdown-item" routerLink="/usuario/{{usuarioLogado.id}}">Quem sou</a>
+                  <a class="dropdown-item" routerLink="/usuario/{{usuario.id}}">Sobre o autor</a>
                   <a class="dropdown-item" routerLink="/usuario/form">Meus Dados</a>
                   <a class="dropdown-item" routerLink="/usuario/list">Usuários</a>
                   <div class="dropdown-divider"></div>
@@ -44,5 +43,4 @@
       </div>
     </div>
   </nav>
-</form>
 <!-- Page Content -->

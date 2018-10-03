@@ -1,31 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../user.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { AbstractComponent } from '../../arq/abstract.component';
+import { MessageService } from '../../messages/message.service';
+import { TokenStorage } from '../../authentication/token-storage';
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.css']
 })
-export class UserViewComponent implements OnInit {
-
+export class UserViewComponent extends AbstractComponent implements OnInit {
   usuario : any;
-
-  constructor(private route: ActivatedRoute, private location: Location, 
-      private usuarioService: UserService) {}
-  ngOnInit() {
-    this.getUsuario();
+  constructor(usuarioService: UserService, messageService: MessageService, 
+    private location: Location, private token:TokenStorage) {
+        super(usuarioService, messageService);
+        this.getUsuario(); 
   }
+  ngOnInit() {this.getUsuario();}
 
   getUsuario(): void {
-    this.route.params.subscribe(params => {
-      this.usuarioService.findById(params['id']).subscribe(data => this.usuario = data);
-    });
+    if(this.token.isAuthenticated){
+      this.usuario = this.getUsuarioLogado();
+    }
   }
-
   goBack(): void {
     this.location.back();
   }
-
 }

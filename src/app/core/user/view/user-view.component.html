@@ -1,25 +1,53 @@
-  <!-- Header Page -->
-  <div>
-      <ul class="nav">
-        <li class="nav-item" style="margin-left:-10px;">
-          <a class="nav-link active" href="#"> App Publication »</a>
-        </li>
-        <li class="nav-item" style="margin-left:-25px;">
-            <a class="nav-link" href="/usuario/list">Usuários »</a>
-        </li>
-        <li class="nav-item" style="margin-left:-25px;">
-            <a class="nav-link disabled" href="/usuario/form" onclick="javascript(0);">Visualizar</a>
-          </li>
-      </ul>
+<!-- Header Page -->
+<div>
+  <ul class="nav">
+    <li class="nav-item" style="margin-left:-10px;">
+      <a class="nav-link active" href="#"> App Publication »</a>
+    </li>
+    <li class="nav-item" style="margin-left:-25px;">
+      <a class="nav-link" href="/usuario/list">Usuário »</a>
+    </li>
+    <li class="nav-item" style="margin-left:-25px;">
+      <a class="nav-link disabled" onclick="javascript(0);">Sobre o Autor</a>
+    </li>
+  </ul>
+</div>
+<div class="col-sm-14" *ngIf="usuario">
+  <div class="card bg-light">
+    <div class="card-body">
+      <h4 class="card-title">Sobre o Autor</h4>
     </div>
-<!-- End Header Page -->
-<div class="card bg" *ngIf="usuario">
-  <div class="card-body" style="margin-top:0px;">
-    <div class="card bg-light col-sm-14" style="margin-top:-21px; margin-left:-21px; margin-right:-21px; border-bottom:0px;">
-      <div class="card-body" style="margin:0px;">
-        <h5 class="card-title"><b>{{usuario.login}}</b></h5>
-      </div>
-    </div>
-    <input class="btn btn-outline-danger" style="width:100px; height:30px;margin:5px; float:left;" value="Voltar" (click)="goBack();"/>
   </div>
 </div>
+<!-- End Header Page -->
+  <div class="card-body" *ngIf="usuario">
+    <div class="card-body light">
+      <div class="row" style="margin-bottom:2px;">
+        <div class="col-sm-4" style="margin:10px;">
+          <div class="text-center" *ngIf="!usuario.idArquivo">
+            <img src="/assets/img/user.png" class="rounded">
+          </div>
+          <div class="text-center" *ngIf="usuario.idArquivo">
+            <img [src]="usuario.idArquivo.data" width="300" height="300" class="rounded">
+          </div>
+        </div>
+        <div class="col-sm-6">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Nome:</b> {{usuario.name}}</li>
+                <li class="list-group-item"><b>E-mail:</b> {{usuario.email}}</li>
+                <li class="list-group-item"><b>Data de Cadastro:</b> <span class="date">{{usuario.dataCadastro | date: "dd/MM/yyyy"}}</span></li>
+                <li class="list-group-item"><b>Status:</b> <span *ngIf="usuario.ativo">Ativo</span><span *ngIf="!usuario.ativo">Inativo</span></li>
+                <li class="list-group-item"><b>Permissão:</b> <span *ngIf="usuario.admin">Administrador</span><span *ngIf="!usuario.admin">Publicador</span></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:-20px; margin-bottom:2px;border:0px;">
+      <div class="card-body light">
+        <label for="name"><b>Resumo</b></label>
+        <div [innerHTML]="usuario.resumo"> </div>
+      </div>
+      <input class="btn btn-outline-danger" style="width:100px; height:30px;margin:5px; float:left;" value="Voltar" (click)="goBack();" />
+
+    </div>
+  </div>

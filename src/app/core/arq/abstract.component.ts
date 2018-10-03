@@ -5,6 +5,7 @@ import { MessageType } from "../messages/message.type.enum";
 import { MessageService } from "../messages/message.service";
 import { Pagination } from "./pagination";
 import { User } from "../user/user";
+import { Arquivo } from "./arquivo";
 
 /**
  * @author Herivelton Paiva 
@@ -18,10 +19,10 @@ export class AbstractComponent implements OnInit {
   pagination = new Pagination();
   form;
   validacoes = new Map<any, any>();
-  usuarioLogado;
+  private usuarioLogado: User;
   constructor(public service: AbstractService, public messageService: MessageService) {
     this.clearMensagens();
-    this.usuarioLogado = new User();
+    this.getUsuarioLogado();
   }
 
   ngOnInit() {
@@ -191,5 +192,17 @@ export class AbstractComponent implements OnInit {
         this.carregarListagem(page);
       }
     }
+  }
+  getUsuarioLogado():any{
+     this.usuarioLogado = new User();
+     try{
+        if(localStorage.getItem('user') != null){
+          this.usuarioLogado = JSON.parse(localStorage.getItem('user'));
+          this.usuarioLogado.id = JSON.parse(localStorage.getItem('user'))._id;
+        }
+    }catch(error){
+      localStorage.clear();
+    }
+     return this.usuarioLogado;
   }
 }
