@@ -2,10 +2,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TokenStorage } from '../authentication/token-storage';
 import { MessageService } from '../messages/message.service';
 import { Router } from '@angular/router';
-import { PublicService } from '../../dashboard/public.service';
 import { AbstractComponent } from '../arq/abstract.component';
-import { UserService } from '../user/user.service';
 import { User } from '../user/user';
+import { PublicationService } from '../../publication/publication.service';
 
 @Component({
   selector: 'app-header',
@@ -14,9 +13,9 @@ import { User } from '../user/user';
 })
 export class HeaderComponent extends AbstractComponent{
   usuario = new User();
-  constructor(publicService: PublicService, messageService:MessageService, private ref: ChangeDetectorRef,
+  constructor(service: PublicationService, messageService:MessageService, private ref: ChangeDetectorRef,
     private router: Router, private tokenStorage: TokenStorage) {
-      super(publicService, messageService);
+      super(service, messageService);
       this.ref.detach();       
       setInterval(() => {
         this.usuario = this.getUsuarioLogado();

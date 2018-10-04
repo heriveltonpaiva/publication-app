@@ -9,12 +9,15 @@
     <div style="float:right; margin-top:-5px;"><small class="text-muted">Publicado em <span class="date">{{publicacao.dataCadastro
           | date: "dd/MM/yyyy H:mm"}}</span></small></div>
 
-    <h5 class="card-title">{{publicacao.titulo}}</h5>
-    <div style="float:right; margin-top:-20px;"><small class="text-muted">
+    <h5 class="card-title" style="margin-top:-5px;">{{publicacao.titulo}}</h5>
+    
+    <div style="float:right; margin-top:-15px;">
+        <small class="text-muted">Autor: <a routerLink="/usuario/{{publicacao.idUsuario._id}}">{{publicacao.idUsuario.name}}</a></small>
+    </div>
+    <div style="float:left; margin-top:-15px;"><small class="text-muted">
         {{publicacao.idAssunto.idCategoria.descricao}}&nbsp;|&nbsp;{{publicacao.idAssunto.descricao}}
         <a href="#"></a>
-      </small></div>
-    <br>
+      </small></div><br>
     <div [innerHTML]="publicacao.resumo"> </div>
     <button type="button" style="float:right;" class="btn btn-link" routerLink="/publicacao/{{publicacao._id}}">Ler essa publicação</button>
   </div>

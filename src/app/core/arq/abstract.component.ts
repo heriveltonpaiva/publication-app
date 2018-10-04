@@ -134,6 +134,7 @@ export class AbstractComponent implements OnInit {
   }
   /** Retorna o objeto do formulário  */
   getObj() {
+    this.form.value.idUsuario = this.getUsuarioLogado().id;
     return this.form.value;
   }
 

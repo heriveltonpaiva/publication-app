@@ -39,8 +39,9 @@ import { CreateAccountComponent } from './core/user/create-account/create-accoun
 import { CreateAccountService } from './core/user/create-account/create-account-service';
 import { UserListComponent } from './core/user/list/user-list.component';
 import { UserViewComponent } from './core/user/view/user-view.component';
-import { PublicService } from './dashboard/public.service';
+import { DashboardService } from './dashboard/dashboard.service';
 import { UserService } from './core/user/user.service';
+import { UserPublicService } from './core/user/view/user-public.service';
 
 @NgModule({
   declarations: [
@@ -73,8 +74,8 @@ import { UserService } from './core/user/user.service';
     HttpClientModule
   ],
   providers: [
-    PublicationService, TopicService, CategoryService, PublicService, FileUploadService, CreateAccountService, UserService,
-    MessageService, NotificationService, ErrorsService, Data, TokenStorage, HttpService, AuthenticationService, 
+    PublicationService, TopicService, CategoryService, DashboardService, FileUploadService, CreateAccountService, UserService,
+    MessageService, NotificationService, ErrorsService, Data, TokenStorage, HttpService, AuthenticationService, UserPublicService,
    {provide: ErrorHandler, useClass: ErrorsHandler},
    {provide: HTTP_INTERCEPTORS, useClass: PublicationInterceptor,multi: true},
    { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' }

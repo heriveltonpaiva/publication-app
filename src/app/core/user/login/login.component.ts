@@ -5,10 +5,7 @@ import { AuthenticationService } from '../../authentication/authentication-servi
 import { ErrorsService } from '../../error-exception/error-exception-service';
 import { TokenStorage } from '../../authentication/token-storage';
 import { MessageService } from '../../messages/message.service';
-import { User } from '../user';
-import { HeaderComponent } from '../../header/header.component';
 import { UserService } from '../user.service';
-import { PublicService } from '../../../dashboard/public.service';
 
 @Component({
   selector: 'app-login',
@@ -22,9 +19,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(private authService: AuthenticationService, private errorService:ErrorsService, private userService:UserService, 
-    private router: Router, private token: TokenStorage, private messageService: MessageService, private publicService: PublicService) { 
-      
-    }
+    private router: Router, private token: TokenStorage, private messageService: MessageService) {}
 
   ngOnInit() {}
 
@@ -34,7 +29,6 @@ export class LoginComponent implements OnInit {
         this.authService.login(val.login, val.password)
             .subscribe(res => {
               if(res){
-                    console.log((<any>res).data)
                     this.token.saveToken((<any>res).token);
                     this.token.saveUser((<any>res).data);
                     this.router.navigateByUrl('/');
