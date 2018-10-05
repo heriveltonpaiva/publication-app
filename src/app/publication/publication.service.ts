@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/Rx';  
 import {Observable} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AbstractService } from '../core/arq/abstract.service';
 
 const URL = 'http://localhost:3000/api/publicacao';
@@ -38,7 +38,13 @@ export class PublicationService implements AbstractService{
   findById(id):Observable<any[]>{   
     return this.http.get(URL+'/byId/'+id)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));                
-  }  
+  } 
+
+  findByUser(idUsuario, page):Observable<any[]>{ 
+    return this.http.get(URL+'/byUser/'+idUsuario+'/'+page)  
+    .map((response:Response) => response).catch(err=> Observable.throw(err));                
+  } 
+
   delete(id):Observable<any[]>{   
     return this.http.delete(URL+'/delete/'+id)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));                

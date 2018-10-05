@@ -58,5 +58,7 @@ export class TopicService implements AbstractService{
     return this.http.delete(URL+'/delete/'+id)  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
   }  
+
+  findByUser():Observable<any[]>{return null};
   
 }  

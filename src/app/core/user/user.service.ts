@@ -28,5 +28,6 @@ export class UserService implements AbstractService{
   delete(id):Observable<any[]>{return null}; 
   updatePublicArea(obj):Observable<any[]>{return null};
   getAll():Observable<any[]>{return null};
+  findByUser():Observable<any[]>{return null};
 
 }  

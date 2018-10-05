@@ -26,7 +26,7 @@ export class PublicationListComponent extends AbstractComponent {
 
   ngOnInit() {
     this.setPagination(true);
-    this.carregarListagem(1);
+    this.carregarListagemByUsuario(1);
     if (this.data.storage) { 
        this.carregarListaAfterUpdate() 
     }
@@ -35,7 +35,7 @@ export class PublicationListComponent extends AbstractComponent {
   carregarListaAfterUpdate() {
     this.route.queryParams.subscribe(params => {
       if (params['page']) {
-        this.service.getAllPagination(params['page']).subscribe(lista => {
+        this.service.findByUser(this.getUsuarioLogado().id, params['page']).subscribe(lista => {
           this.pagination.setItems(lista);
           this.collection = this.pagination.getItems()
         });
@@ -55,5 +55,13 @@ export class PublicationListComponent extends AbstractComponent {
     }
     event.preventDefault();
     this.router.navigate(['publicacao/form'], { queryParams: { page: this.pagination.getPage() } });
+  }
+
+  carregarListagemByUsuario(numPage:number) {
+    this.service.findByUser(this.getUsuarioLogado().id, numPage).subscribe(lista => {
+      this.pagination.setItems(lista);
+      this.collection = this.pagination.getItems()
+      this.pagination.setPage(1);
+      });
   }
 }

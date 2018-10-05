@@ -27,5 +27,9 @@ export class DashboardService{
     return this.http.get(URL+'/publicacao/'+page)  
     .map((response) => response.json()).catch(err=> Observable.throw(err));             
   }
+  findPublicacaoById(id):Observable<any[]>{   
+    return this.http.get(URL+'/publicacao/byId/'+id)  
+    .map((response) => response).catch(err=> Observable.throw(err));                
+  }
   
 }  

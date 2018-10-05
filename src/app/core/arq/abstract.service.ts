@@ -18,4 +18,6 @@ export abstract class AbstractService {
 
   abstract findById(id);
 
+  abstract findByUser(idUsuario, page):Observable<any[]>;
+
 }
