@@ -35,7 +35,7 @@ export class AbstractComponent implements OnInit {
     if (this.validate())
       return;
     if (!this.isAlteracao()) {
-      console.log('[Cadastro]');
+     // console.log('[Cadastro]');
       this.service.save(this.getObj()).subscribe(retorno => {
         this.addSuccessMessage(retorno.toString())
         this.resetForm();
@@ -43,7 +43,7 @@ export class AbstractComponent implements OnInit {
       }, error => this.addException(error));
 
     } else {
-      console.log('[Alteração]');
+      //console.log('[Alteração]');
       this.atualizar();
     }
   }
@@ -54,7 +54,7 @@ export class AbstractComponent implements OnInit {
       this.pagination.setItems(lista);
       this.collection = this.pagination.getItems()
       this.pagination.setPage(page);
-      console.log('Página ' + this.pagination.getPage() + ' de ' + this.pagination.getTotalPages() + ' - Total de Registros: ' + this.pagination.getTotal());
+      //console.log('Página ' + this.pagination.getPage() + ' de ' + this.pagination.getTotalPages() + ' - Total de Registros: ' + this.pagination.getTotal());
     });
   }
 
@@ -70,7 +70,7 @@ export class AbstractComponent implements OnInit {
 
   /** Realiza a remoção por id */
   remover(id) {
-    console.log('[Remoção]');
+    //console.log('[Remoção]');
     this.clearMensagens();
     this.service.delete(id).subscribe(retorno => {
       this.addSuccessMessage(retorno.toString());
@@ -91,7 +91,7 @@ export class AbstractComponent implements OnInit {
 
   /* Realiza validações dos campos obrigatórios */
   validate() {
-    console.log('[Validação]');
+    //console.log('[Validação]');
     for (let obj of Array.from(this.validacoes.entries())) {
       this.validateNotNull(obj[0], obj[1]);
     }

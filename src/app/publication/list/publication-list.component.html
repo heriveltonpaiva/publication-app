@@ -69,17 +69,17 @@
     </nav>
     <nav aria-label="Page navigation example" style="float:right;" *ngIf="showPagination" id="divPag">
       <ul class="pagination" style="color:#007bff;">
-        <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagem(pagination.page - 1)"
+        <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagemByUsuario(pagination.page - 1)"
             onclick="window.scroll(0, 0);">Anterior</a></li>
         <div *ngFor="let item of pagination.arrayPages(); let i = index;">
           <li class="page-item active" *ngIf="pagination.page == i+1">
-            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+            <a class="page-link" (click)="carregarListagemByUsuario(i+1);">{{i+1}}</a>
           </li>
           <li class="page-item" *ngIf="pagination.page != i+1" onclick="window.scroll(0, 0);">
-            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+            <a class="page-link" (click)="carregarListagemByUsuario(i+1);">{{i+1}}</a>
           </li>
         </div>
-        <li class="page-item"><a class="page-link" *ngIf="pagination.page < pagination.totalPages" (click)="carregarListagem(pagination.page + 1);"
+        <li class="page-item"><a class="page-link" *ngIf="pagination.page < pagination.totalPages" (click)="carregarListagemByUsuario(pagination.page + 1);"
             onclick="window.scroll(0, 0);">Próximo</a></li>
       </ul>
     </nav>

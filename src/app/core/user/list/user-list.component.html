@@ -38,7 +38,7 @@
           <tr *ngFor="let user of collection;">
             <td style="width:15%;">
               <div class="text-center" *ngIf="!user.idArquivo">
-                <img src="/assets/img/user.png" class="rounded">
+                <img src="/assets/img/user.png" width="100" height="100" style="float:left" class="rounded">
               </div>
               <div class="text-center" *ngIf="user.idArquivo" style="float:left">
                 <img [src]="user.idArquivo.data" width="100" height="100" class="rounded">
@@ -48,21 +48,21 @@
             <td style="width:15%;"><i>{{user.login}}</i></td>
             <td style="width:15%; text-align:center;">{{user.dataCadastro | date: "dd/MM/yyyy"}}</td>
             <td style="text-align: right;">
-              <button class="btn btn-outline-primary btn-sm" title="Visualizar Usuário" style="width:30px;color:black;">
+              <button class="btn btn-outline-primary btn-sm" title="Visualizar Usuário" style="width:30px;color:black;" [disabled]="true">
                 <i class="fa fa-search"></i>
               </button>
-              <button class="btn btn-outline-warning btn-sm" title="Ativar Usuário" style="width:30px;color:black;" *ngIf="!user.ativo">
+              <button class="btn btn-outline-warning btn-sm" title="Ativar Usuário" style="width:30px;color:black;" *ngIf="!user.ativo" [disabled]="true">
                 <i class="fa fa-thumbs-o-up"></i> 
               </button>
-              <button class="btn btn-outline-warning btn-sm" title="Inativar Usuário" style="width:30px;color:black;" *ngIf="user.ativo">
+              <button class="btn btn-outline-warning btn-sm" title="Inativar Usuário" style="width:30px;color:black;" *ngIf="user.ativo" [disabled]="true">
                 <i class="fa fa-thumbs-o-down"></i></button>
-              <button class="btn btn-outline-primary btn-sm" title="Tornar Administrador" style="width:30px;color:black;" *ngIf="!user.admin">
+              <button class="btn btn-outline-primary btn-sm" title="Tornar Administrador" style="width:30px;color:black;" *ngIf="!user.admin" [disabled]="true">
                 <i class="fa fa-group"></i> 
               </button>
-              <button class="btn btn-outline-secondary btn-sm" title="Tornar Publicador" style="color:black; width:30px;" *ngIf="user.admin">
+              <button class="btn btn-outline-secondary btn-sm" title="Tornar Publicador" style="color:black; width:30px;" *ngIf="user.admin" [disabled]="true">
                 <i class="fa fa-group"></i>
               </button>
-              <button class="btn btn-outline-danger btn-sm" (click)="remover(user._id)" title="Remover Usuário" onclick="window.scroll(0, 0);" style="width:30px;color:red;">
+              <button class="btn btn-outline-danger btn-sm" (click)="remover(user._id)" title="Remover Usuário" onclick="window.scroll(0, 0);" style="width:30px;color:red;" [disabled]="true">
                 <i class="fa fa-trash-o"></i>
               </button>
             </td>

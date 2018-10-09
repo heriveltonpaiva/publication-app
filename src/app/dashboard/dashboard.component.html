@@ -31,7 +31,7 @@
     <nav class="Page navigation" style="float:left; margin-top:15px;">
       <ul class="pagination" style="color:#007bff;">
         <li class="page-item"><a class="page">Página {{pagination.page}} de {{pagination.totalPages}} | Total de
-            Registros:
+            Publicações:
             {{pagination.total}}
           </a></li>
       </ul>
@@ -57,7 +57,7 @@
 </div>
   <!-- Angular Social Share buttons -->
 <!-- http://jasonwatmore.com/post/2018/06/01/angular-2-social-sharing-buttons-for-facebook-google-plus-twitter-linkedin-and-pinterest-->
-<div class="card mb-12" style="max-width: 70rem; border:0px; margin-bottom:10px;">
+<div class="card mb-12" style="max-width: 70rem; border:0px; margin-bottom:10px;" *ngIf="categorias?.length > 0">
   <div class="card-body">
     <h4 class="card-title" style="text-align:center;">Categorias</h4>
     <div class="row text-center">

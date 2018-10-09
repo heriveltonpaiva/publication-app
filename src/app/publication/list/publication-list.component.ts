@@ -62,6 +62,6 @@ export class PublicationListComponent extends AbstractComponent {
       this.pagination.setItems(lista);
       this.collection = this.pagination.getItems()
       this.pagination.setPage(1);
-      });
+      }, error => this.addException(error));
   }
 }

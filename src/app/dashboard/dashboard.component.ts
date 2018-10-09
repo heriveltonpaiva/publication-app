@@ -26,4 +26,12 @@ export class DashboardComponent extends AbstractComponent  {
       this.collection = this.pagination.getItems()
     });
   }
+
+  carregarListagem(page) {
+    this.dashboardService.getAllPagination(page).subscribe(lista => {
+      this.pagination.setItems(lista);
+      this.collection = this.pagination.getItems()
+      this.pagination.setPage(page);
+    });
+  }
 }
