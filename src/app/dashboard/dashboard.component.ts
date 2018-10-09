@@ -18,9 +18,11 @@ export class DashboardComponent extends AbstractComponent  {
   }
   
   ngOnInit() {
+    this.setPagination(true);
     this.dashboardService.getAllCategoria().subscribe(data => this.categorias = data);
     this.dashboardService.getAllPagination(1).subscribe(lista => {
       this.pagination.setItems(lista);
+      this.pagination.setPage(1);
       this.collection = this.pagination.getItems()
     });
   }

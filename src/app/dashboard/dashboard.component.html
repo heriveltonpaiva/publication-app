@@ -1,7 +1,9 @@
 <div class="alert alert-info" role="alert" style="margin-top:20px;">
   <h4 class="alert-heading">Bem vindo ao Publication!</h4>
-  <p> Crie e compartilhe publicações para diversas áreas e assuntos, utilizando essa interface responsiva que lhe proporcionará
-    a melhor experiência. <br> Dashboard com componentes personalizáveis, possibilitando a criação de publicações públicas
+  <p> Crie e compartilhe publicações para diversas áreas e assuntos, utilizando essa interface responsiva que lhe
+    proporcionará
+    a melhor experiência. <br> Dashboard com componentes personalizáveis, possibilitando a criação de publicações
+    públicas
     e privadas, você define o que apresentar ao público.</p>
 </div>
 <div class="card mb-3" *ngFor="let publicacao of collection; let ind = index">
@@ -10,29 +12,102 @@
           | date: "dd/MM/yyyy H:mm"}}</span></small></div>
 
     <h5 class="card-title" style="margin-top:-5px;">{{publicacao.titulo}}</h5>
-    
+
     <div style="float:right; margin-top:-15px;">
-        <small class="text-muted">Autor: <a routerLink="/usuario/{{publicacao.idUsuario._id}}">{{publicacao.idUsuario.name}}</a></small>
+      <small class="text-muted">Autor: <a routerLink="/usuario/{{publicacao.idUsuario._id}}">{{publicacao.idUsuario.name}}</a></small>
     </div>
     <div style="float:left; margin-top:-15px;"><small class="text-muted">
         {{publicacao.idAssunto.idCategoria.descricao}}&nbsp;|&nbsp;{{publicacao.idAssunto.descricao}}
         <a href="#"></a>
       </small></div><br>
     <div [innerHTML]="publicacao.resumo"> </div>
-    <button type="button" style="float:right;" class="btn btn-link" routerLink="/publicacao/{{publicacao._id}}">Ler essa publicação</button>
+    <button type="button" style="float:right;" class="btn btn-link" routerLink="/publicacao/{{publicacao._id}}">Ler
+      essa publicação</button>
   </div>
 </div>
-
-<!-- Angular Social Share buttons -->
+<div class="card mb-12" style="max-width: 70rem; border:0px; margin-bottom:10px;">
+<div class="card-body" style="margin:0px;">
+    <!-- Pagination -->
+    <nav class="Page navigation" style="float:left; margin-top:15px;">
+      <ul class="pagination" style="color:#007bff;">
+        <li class="page-item"><a class="page">Página {{pagination.page}} de {{pagination.totalPages}} | Total de
+            Registros:
+            {{pagination.total}}
+          </a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Page navigation example" style="float:right;" *ngIf="showPagination" id="divPag">
+      <ul class="pagination" style="color:#007bff;">
+        <li class="page-item"><a class="page-link" *ngIf="pagination.page > 1" (click)="carregarListagem(pagination.page - 1)"
+            onclick="window.scroll(0, 0);">Anterior</a></li>
+        <div *ngFor="let item of pagination.arrayPages(); let i = index;">
+          <li class="page-item active" *ngIf="pagination.page == i+1">
+            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+          </li>
+          <li class="page-item" *ngIf="pagination.page != i+1" onclick="window.scroll(0, 0);">
+            <a class="page-link" (click)="carregarListagem(i+1);">{{i+1}}</a>
+          </li>
+        </div>
+        <li class="page-item"><a class="page-link" *ngIf="pagination.page < pagination.totalPages" (click)="carregarListagem(pagination.page + 1);"
+            onclick="window.scroll(0, 0);">Próximo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- End Pagination -->
+</div>
+  <!-- Angular Social Share buttons -->
 <!-- http://jasonwatmore.com/post/2018/06/01/angular-2-social-sharing-buttons-for-facebook-google-plus-twitter-linkedin-and-pinterest-->
-<div class="row text-center">
-  <div class="col-lg-3 col-md-6 mb-4" *ngFor="let cat of categorias;">
-    <div class="card">
-        <img class="card-img-top" src="http://placehold.it/500x325" alt="" *ngIf="!cat.idArquivo">
-
-      <img [src]="cat.idArquivo.data" width="253" height="165" *ngIf="cat.idArquivo">
-      <div class="card-body">
-        <h5 class="card-title">{{cat.descricao}}</h5>
+<div class="card mb-12" style="max-width: 70rem; border:0px; margin-bottom:10px;">
+  <div class="card-body">
+    <h4 class="card-title" style="text-align:center;">Categorias</h4>
+    <div class="row text-center">
+      <div class="col-lg-3 col-md-6 mb-4" *ngFor="let cat of categorias;">
+        <div class="card">
+          <img class="card-img-top" src="http://placehold.it/500x325" alt="" width="150" height="200" *ngIf="!cat.idArquivo">
+          <img [src]="cat.idArquivo.data" width="243" height="200" *ngIf="cat.idArquivo">
+          <div class="card-body">
+            <h5 class="card-title"><a href="#">{{cat.descricao}}</a></h5>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+<hr/>
+<div class="card mb-12" style="max-width: 70rem; border:0px;">
+  <div class="card-body">
+    <h4 class="card-title" style="text-align:center;">Tecnologias do Projeto</h4>
+    <div class="card-group">
+      <div class="card" style="border:0px">
+        <div style="text-align:center;">
+          <img src="/assets/img/tecnologies/angular.png" alt="Angular" width="120" height="120" class="rounded-circle">
+        </div>
+        <h6 class="card-title" style="text-align:center;">Angular</h6>
+      </div>
+      <div class="card" style="border:0px;">
+        <div style="text-align:center;">
+          <img src="/assets/img/tecnologies/nodeJS.png" alt="Node" width="120" height="120" class="rounded-circle">
+        </div>
+        <h6 class="card-title" style="text-align:center;">NodeJS</h6>
+      </div>
+      <div class="card" style="border:0px;">
+        <div style="text-align:center;">
+          <img src="/assets/img/tecnologies/mongodb.png" alt="MongoDB" width="120" height="120" class="rounded-circle">
+        </div>
+        <h6 class="card-title" style="text-align:center;">MongoDB</h6>
+      </div>
+      <div class="card" style="border:0px;">
+        <div style="text-align:center;">
+          <img src="/assets/img/tecnologies/bootstrap.png" alt="Express" width="120" height="120" class="rounded-circle">
+        </div>
+        <h6 class="card-title" style="text-align:center;">Bootstrap 4</h6>
+      </div>
+      <div class="card" style="border:0px;">
+        <div style="text-align:center;">
+          <img src="/assets/img/tecnologies/jwt.png" alt="JWT" width="120" height="120" class="rounded-circle">
+        </div>
+        <h6 class="card-title" style="text-align:center;">JWT</h6>
+      </div>
+    </div>
+  </div>
+</div>
