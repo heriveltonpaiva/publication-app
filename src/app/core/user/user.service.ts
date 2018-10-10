@@ -4,8 +4,9 @@ import 'rxjs/Rx';
 import {Observable} from 'rxjs';
 import { AbstractService } from '../arq/abstract.service';
 import { HttpClient } from '@angular/common/http';
+import { ConfigURL } from '../authentication/config-url';
 
-const URL = 'http://localhost:3000/api/usuario';
+const URL = ConfigURL.SERVER_URL+'/usuario';
 
 @Injectable()  
 export class UserService implements AbstractService{   

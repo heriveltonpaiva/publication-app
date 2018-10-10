@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';  
 import {Observable} from 'rxjs';
 import { HttpClient} from '@angular/common/http';
+import { ConfigURL } from '../authentication/config-url';
 
-const URL = 'http://localhost:3000/api/fileupload';
+const URL = ConfigURL.SERVER_URL+'/fileupload';
 
 @Injectable()  
 export class FileUploadService{  

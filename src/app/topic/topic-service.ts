@@ -6,8 +6,9 @@ import 'rxjs/add/operator/do';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { AbstractService } from '../core/arq/abstract.service';
+import { ConfigURL } from '../core/authentication/config-url';
  
-const URL = 'http://localhost:3000/api/assunto';
+const URL = ConfigURL.SERVER_URL+'/assunto';
 
 @Injectable()  
 export class TopicService implements AbstractService{  
@@ -40,7 +41,7 @@ export class TopicService implements AbstractService{
   }
 
   getAllCategorias(): Observable<any[]>{       
-    return this.http.get('http://localhost:3000/api/categoria/')  
+    return this.http.get(ConfigURL.SERVER_URL+'/categoria/')  
     .map((response:Response) => response).catch(err=> Observable.throw(err));             
   }
   

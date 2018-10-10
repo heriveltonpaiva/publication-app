@@ -4,8 +4,9 @@ import 'rxjs/Rx';
 import {Observable} from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import { AbstractService } from '../core/arq/abstract.service';
+import { ConfigURL } from '../core/authentication/config-url';
 
-const URL = 'http://localhost:3000/api/categoria';
+const URL = ConfigURL.SERVER_URL+'/categoria';
 
 @Injectable()  
 export class CategoryService implements AbstractService{  

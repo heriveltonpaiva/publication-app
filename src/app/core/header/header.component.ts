@@ -35,4 +35,7 @@ export class HeaderComponent extends AbstractComponent{
       this.router.navigateByUrl('login');
     }
   }
+  isAuthenticated(){
+    return this.tokenStorage.isAuthenticated();
+  }
 }

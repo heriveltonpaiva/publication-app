@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/Rx';  
 import {Observable} from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AbstractService } from '../core/arq/abstract.service';
+import { ConfigURL } from '../core/authentication/config-url';
 
-const URL = 'http://localhost:3000/api/publicacao';
+const URL = ConfigURL.SERVER_URL+'/publicacao';
 
 @Injectable()  
 export class PublicationService implements AbstractService{  

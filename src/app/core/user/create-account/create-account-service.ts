@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';  
 import {Observable} from 'rxjs';
 import { Http } from '@angular/http';
+import { ConfigURL } from '../../authentication/config-url';
 
-const URL = 'http://localhost:3000/api/public';
+const URL = ConfigURL.SERVER_URL+'/public';
 
 @Injectable()  
 export class CreateAccountService{  
