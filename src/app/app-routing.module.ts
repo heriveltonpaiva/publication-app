@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'usuario/form',  component: UserComponent},
   { path: 'usuario/list', component: UserListComponent},
   { path: 'usuario/:id',   component: UserViewComponent},
-  { path: 'error', component: ErrorExceptionComponent,  data: { error: 404 } },
+  { path: 'error', component: ErrorExceptionComponent,  data: { error: 404 }},
   { path: 'assets', redirectTo: '/'},
   { path: '**', redirectTo: 'error'}
 ];
@@ -39,7 +39,7 @@ const routesError: Routes = [
 ]*/
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes)],
+  imports: [ RouterModule.forRoot(routes, {useHash: true})],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

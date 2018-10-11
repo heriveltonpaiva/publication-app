@@ -2,10 +2,10 @@
 <div>
   <ul class="nav">
     <li class="nav-item" style="margin-left:-10px;">
-      <a class="nav-link active" href="#"> App Publication »</a>
+      <a class="nav-link active" routerLink="/"> App Publication »</a>
     </li>
     <li class="nav-item" style="margin-left:-25px;">
-      <a class="nav-link" href="/usuario/list">Usuário »</a>
+      <a class="nav-link" routerLink="/usuario/list">Usuário »</a>
     </li>
     <li class="nav-item" style="margin-left:-25px;">
       <a class="nav-link disabled" onclick="javascript(0);">Sobre o Autor</a>
@@ -48,6 +48,5 @@
         <div [innerHTML]="usuario.resumo"> </div>
       </div>
       <input class="btn btn-outline-danger" style="width:100px; height:30px;margin:5px; float:left;" value="Voltar" (click)="goBack();" />
-
     </div>
   </div>

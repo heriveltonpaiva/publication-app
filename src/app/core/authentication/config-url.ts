@@ -1,3 +1,5 @@
+/* Quando for subir o projeto para produção 
+   e necessário alterar a url para o endereço DNS */
 export enum ConfigURL {
-    SERVER_URL = 'http://paiva-sistemas.com:3000/api'
+    SERVER_URL = 'http://localhost:3000/api'
 }
